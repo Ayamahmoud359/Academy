@@ -9,17 +9,14 @@ namespace Academy.Models
         public string ChildName { get; set; }
         ///Put the child age in date attribute <summary>
         [DataType(DataType.Date)]
-        public string ChildAge { get; set; }
+        public string BirthDate { get; set; }
         public string? Image { get; set; }
         public bool? IsActive { get; set; }
         ///Parent Id
         [ForeignKey("Parent")]
         public int ParentId { get; set; }
         public Parent Parent { get; set; }
-        ///Champion Id
-
-        [ForeignKey("Champion")]
-        public int? ChampionId { get; set; }
-        public Champions? Champion { get; set; }
+         /// List of Champion
+          public ICollection<ChampionChild> ChampionChildren { get; set; } = new List<ChampionChild>();
     }
 }

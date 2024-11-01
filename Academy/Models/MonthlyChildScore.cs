@@ -11,7 +11,11 @@ namespace Academy.Models
         public Child Child { get; set; }
         public int Score { get; set; }
         [DataType(DataType.Date)]
-        public string ScoreDate  { get; set; }
+        public string? ScoreDate  { get; set; }
+        //Department Id
+        [ForeignKey("Department")]
+        public int? DepartmentId { get; set; }
+        public Department? Department { get; set; }
         ///Trainer Id
 
         [ForeignKey("Trainer")]

@@ -17,6 +17,10 @@ namespace Academy.Models
         public bool IsAbsent { get; set; }
         public DateTime AbsentDate { get; set; }
         public string Type { get; set; }
+        //Department Id
+        [ForeignKey("Department")]
+        public int? DepartmentId { get; set; }
+        public Department? Department { get; set; }
         [ForeignKey("Category")]
         public int? CategoryId { get; set; }
         public Category? Category { get; set; }

@@ -16,5 +16,6 @@ namespace Academy.Models
         public Department Department { get; set; }
         ///list of SubCategory
         public ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
+        public ICollection<CategoryTrainers> CategoryTrainers { get; set; } = new List<CategoryTrainers>();
     }
 }

@@ -14,5 +14,8 @@ namespace Academy.Models
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public ICollection<SubCategoryTrainer> SubCategoryTrainers { get; set; } = new List<SubCategoryTrainer>();
+
     }
 }

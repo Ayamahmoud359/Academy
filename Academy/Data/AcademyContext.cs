@@ -30,11 +30,17 @@ namespace CRM.Data
         public virtual DbSet<ChildAbscess> Abscesses { get; set; }
         public virtual DbSet<Subscriptions> Subscriptions { get; set; }
         public virtual DbSet<MonthlyChildScore> MonthlyChildScores { get; set; }
+        public virtual DbSet<CategoryTrainers> CategoryTrainers { get; set; }
+        public virtual DbSet<SubCategoryTrainer> SubCategoryTrainer { get; set; }
+        public virtual DbSet<ChampionChild> ChampionChildren { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<PageContent>().HasData(new PageContent { PageContentId = 1, PageTitleAr = "من نحن", PageTitleEn = "About", ContentAr = "من نحن", ContentEn = "About Page" });
-          
+            
+
+           
+
             OnModelCreatingPartial(modelBuilder);
         }
 
