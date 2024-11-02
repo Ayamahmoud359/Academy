@@ -4,14 +4,14 @@
 
 .bookmark-icon {
     .btn {
-        color: var(--#{$prefix}secondary-color);
-        background-color: var(--#{$prefix}light) !important;
+        color: $text-muted;
+        background-color: var(--#{$prefix}light);
         box-shadow: $box-shadow;
         font-size: $font-size-base;
         &:hover,
         &.active {
             border-color: transparent;
-            color: var(--#{$prefix}danger);
+            color: $danger;
         }
     }
 }
@@ -33,7 +33,7 @@
             left: 0;
             top: 0;
             bottom: 0;
-            background-color: rgba(var(--#{$prefix}dark-rgb), 0.4);
+            background-color: rgba($dark, 0.4);
             opacity: 0;
             transition: all 0.5s ease;
         }
@@ -80,10 +80,11 @@
 
 //
 .nft-hero {
-    background-image: url('../images/nft/bg-home.jpg');
+    background-image: url('../../../images/nft/bg-home.jpg');
     background-size: cover;
     background-position: bottom;
     padding: 222px 0 150px 0;
+
     .bg-overlay {
         background-color: #05175f;
         opacity: 0.85;

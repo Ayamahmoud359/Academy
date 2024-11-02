@@ -41,7 +41,7 @@ function updateQuantity(quantityInput) {
     var productRow = quantityInput.closest('.product');
     var price;
     if (productRow || productRow.getElementsByClassName('product-price'))
-        Array.from(productRow.getElementsByClassName('product-price')).forEach(function (e) {
+    Array.from(productRow.getElementsByClassName('product-price')).forEach(function (e) {
             price = parseFloat(e.innerHTML);
         });
 

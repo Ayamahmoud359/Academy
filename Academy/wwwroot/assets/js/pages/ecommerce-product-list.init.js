@@ -251,7 +251,7 @@ var productListAll = new gridjs.Grid({
 						'<div class="avatar-sm bg-light rounded p-1"><img src="' + row.product.img + '" alt="" class="img-fluid d-block"></div>' +
 						'</div>' +
 						'<div class="flex-grow-1">' +
-						'<h5 class="fs-14 mb-1"><a href="/ecommerce/productdetails" class="text-body">' + row.product.title + '</a></h5>' +
+						'<h5 class="fs-14 mb-1"><a href="/Ecommerce/OrderDetails" class="text-dark">' + row.product.title + '</a></h5>' +
 						'<p class="text-muted mb-0">Category : <span class="fw-medium">' + row.product.category + '</span></p>' +
 						'</div>' +
 						'</div>');
@@ -299,8 +299,8 @@ var productListAll = new gridjs.Grid({
 						'<i class="ri-more-fill"></i>' +
 						'</button>' +
 						'<ul class="dropdown-menu dropdown-menu-end">' +
-						'<li><a class="dropdown-item" href="/ecommerce/productdetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
-						'<li><a class="dropdown-item edit-list" data-edit-id=' + x + ' href="/ecommerce/addproduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
+						'<li><a class="dropdown-item" href="/Ecommerce/OrderDetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
+						'<li><a class="dropdown-item edit-list" data-edit-id=' + x + ' href="/Ecommerce/CreateProduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
 						'<li class="dropdown-divider"></li>' +
 						'<li><a class="dropdown-item remove-list" href="#" data-id=' + x + ' data-bs-toggle="modal" data-bs-target="#removeItemModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
 						'</ul>' +
@@ -423,7 +423,7 @@ var productListPublished = new gridjs.Grid({
 						'<div class="avatar-sm bg-light rounded p-1"><img src="' + row.product.img + '" alt="" class="img-fluid d-block"></div>' +
 						'</div>' +
 						'<div class="flex-grow-1">' +
-						'<h5 class="fs-14 mb-1"><a href="/ecommerce/productdetails" class="text-body">' + row.product.title + '</a></h5>' +
+						'<h5 class="fs-14 mb-1"><a href="/Ecommerce/OrderDetails" class="text-dark">' + row.product.title + '</a></h5>' +
 						'<p class="text-muted mb-0">Category : <span class="fw-medium">' + row.product.category + '</span></p>' +
 						'</div>' +
 						'</div>');
@@ -470,8 +470,8 @@ var productListPublished = new gridjs.Grid({
 						'<i class="ri-more-fill"></i>' +
 						'</button>' +
 						'<ul class="dropdown-menu dropdown-menu-end">' +
-						'<li><a class="dropdown-item" href="/ecommerce/productdetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
-						'<li><a class="dropdown-item" href="/ecommerce/addproduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
+						'<li><a class="dropdown-item" href="/Ecommerce/OrderDetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
+						'<li><a class="dropdown-item" href="/Ecommerce/CreateProduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
 						'<li class="dropdown-divider"></li>' +
 						'<li><a class="dropdown-item remove-list" href="#" data-id=' + row._cells[0].data + ' data-bs-toggle="modal" data-bs-target="#removeItemModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
 						'</ul>' +
@@ -711,7 +711,8 @@ function removeItems() {
 	removeItem.addEventListener('show.bs.modal', function (event) {
 		isSelected = 0;
 		document.getElementById("delete-product").addEventListener("click", function () {
-			Array.from(document.querySelectorAll(".gridjs-table tr")).forEach(function (element) {
+			Array.from(document.querySelectorAll(".gridjs-table tr"))
+			.forEach(function (element) {
 				var filtered = '';
 				if (element.classList.contains("gridjs-tr-selected")) {
 					var getid = element.querySelector('.form-check-input').value;

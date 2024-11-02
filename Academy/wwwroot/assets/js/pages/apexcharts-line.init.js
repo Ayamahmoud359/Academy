@@ -9,11 +9,10 @@ File: Line Chart init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
-            return colors.map(function (value) {
+            return colors.map(function(value) {
                 var newValue = value.replace(" ", "");
                 if (newValue.indexOf(",") === -1) {
                     var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
@@ -30,8 +29,6 @@ function getChartColorsArray(chartId) {
                     }
                 }
             });
-        } else {
-            console.warn('data-colors attributes not found on', chartId);
         }
     }
 }
@@ -823,7 +820,7 @@ if (linechartannotationsColors) {
                     size: 0
                 },
                 image: {
-                    path: './assets/images/logo-sm.png',
+                    path: '/assets/images/logo-sm.png',
                     width: 40,
                     height: 40
                 }
@@ -1220,18 +1217,18 @@ if (linechartrealtimeColors) {
         },
     };
 
-    var charts = new ApexCharts(document.querySelector("#line_chart_realtime"), options);
-    charts.render();
+    var chart = new ApexCharts(document.querySelector("#line_chart_realtime"), options);
+    chart.render();
 }
 
 
-window.setInterval(function () {
+window.setInterval(function() {
     getNewSeries(lastDate, {
         min: 10,
         max: 90
     })
 
-    charts.updateSeries([{
+    chart.updateSeries([{
         data: data
     }])
 }, 1000)

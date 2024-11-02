@@ -30,28 +30,29 @@
     }
 }
 
-.auth-one-bg{
-    background-image: url("../images/auth-one-bg.jpg");
+.auth-one-bg {
+    background-image: url("../../../images/auth-one-bg.jpg");
     background-position: center;
     background-size: cover;
 
-    .bg-overlay{
-        background: linear-gradient(to right, var(--#{$prefix}primary-text-emphasis), var(--#{$prefix}primary));
+    .bg-overlay {
+        background: linear-gradient(to right, darken($primary, 6%), $primary);
         opacity: 0.9;
     }
-}
 
-.shape{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    pointer-events: none;
-    >svg {
-        width: 100%;
-        height: auto;
-        fill: var(--#{$prefix}body-bg);
+    .shape {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: none;
+
+        > svg {
+            width: 100%;
+            height: auto;
+            fill: var(--#{$prefix}body-bg);
+        }
     }
 }
 
@@ -88,25 +89,25 @@
         display: inline-block;
         position: relative;
         z-index: 9;
-        background-color: var(--#{$prefix}secondary-bg);
+        background-color: var(--#{$prefix}card-bg-custom);
         padding: 2px 16px;
     }
 }
 
 // Auth cover
 
-.auth-bg-cover{
+.auth-bg-cover {
     background: $auth-bg-cover;
 
-    > .bg-overlay{
-        background-image: url("../images/cover-pattern.png");
+    > .bg-overlay {
+        background-image: url("../../../images/cover-pattern.png");
         background-position: center;
         background-size: cover;
         opacity: 1;
         background-color: transparent;
     }
 
-    .footer{
+    .footer {
         color: rgba($white, .5);
     }
 }
@@ -119,7 +120,7 @@
         padding-left: 13px;
 
         &.valid {
-            color: var(--#{$prefix}success);
+            color: $success;
 
             &::before {
                 position: relative;
@@ -129,7 +130,7 @@
         }
 
         &.invalid {
-            color: var(--#{$prefix}danger);
+            color: $danger;
 
             &::before {
                 position: relative;

@@ -6,18 +6,23 @@
 @each $color,
 $value in $theme-colors {
     .list-group-fill-#{$color} {
-        &.list-group-item {
-            color: color-contrast($value);
-            background-color: var(--#{$prefix}#{$color}) !important;
-            border-color: var(--#{$prefix}#{$color});
+        .list-group-item {
+            &.active {
+                background-color: $value !important;
+                border-color: $value;
+            }
         }
     }
+}
+
+.list-group-fill-light {
+    color: $dark !important;
 }
 
 .list-group-item {
     margin-bottom: 0px;
     .list-text {
-        color: var(--#{$prefix}secondary-color);
+        color: $text-muted;
     }
     &.active {
         box-shadow: $element-shadow;

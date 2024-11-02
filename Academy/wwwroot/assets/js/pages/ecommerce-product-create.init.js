@@ -176,7 +176,7 @@ var dropzone = new Dropzone(".dropzone", {
                     } else {
                         console.log('Form Action Not Found.');
                     }
-                    window.location.replace("apps-ecommerce-products.html");
+                    window.location.replace("/Ecommerce/Products");
                     return false;
                 }
 

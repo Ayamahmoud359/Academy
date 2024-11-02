@@ -41,7 +41,6 @@ var checkAll = document.getElementById("checkAll");
 if (checkAll) {
     checkAll.onclick = function () {
         var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
-        var checkedCount = document.querySelectorAll('.form-check-all input[type="checkbox"]:checked').length;
         for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = this.checked;
             if (checkboxes[i].checked) {
@@ -50,12 +49,9 @@ if (checkAll) {
                 checkboxes[i].closest("tr").classList.remove("table-active");
             }
         }
-
-        (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'none' : document.getElementById("remove-actions").style.display = 'block';
     };
 }
 var perPage = 8;
-var editlist = false;
 
 //Table
 var options = {
@@ -77,7 +73,6 @@ var options = {
         }),
     ],
 };
-
 // Init list
 var orderList = new List("orderList", options).on("updated", function (list) {
     list.matchingItems.length == 0 ?
@@ -118,7 +113,7 @@ xhttp.onload = function () {
     var json_records = JSON.parse(this.responseText);
     Array.from(json_records).forEach(function(element){
         orderList.add({
-            id: '<a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ'+element.id+'</a>',
+            id: '<a href="/Ecommerce/OrderDetails" class="fw-medium link-primary">#VZ'+element.id+'</a>',
             customer_name: element.customer_name,
             product_name: element.product_name,
             date: str_dt(element.date),
@@ -129,7 +124,7 @@ xhttp.onload = function () {
         orderList.sort('id', { order: "desc" });
         refreshCallbacks();
     });
-    orderList.remove("id", `<a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ2101</a>`);
+    orderList.remove("id", `<a href="/Ecommerce/OrderDetails" class="fw-medium link-primary">#VZ2101</a>`);
 }
 xhttp.open("GET", "/assets/json/orders-list.init.json");
 xhttp.send();
@@ -202,12 +197,14 @@ document.getElementById("showModal").addEventListener("show.bs.modal", function 
     if (e.relatedTarget.classList.contains("edit-item-btn")) {
         document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Update";
+        document.getElementById("add-btn").style.display = "none";
+        document.getElementById("edit-btn").style.display = "block";
     } else if (e.relatedTarget.classList.contains("add-btn")) {
         document.getElementById("modal-id").style.display = "none";
         document.getElementById("exampleModalLabel").innerHTML = "Add Order";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Add Order";
+        document.getElementById("edit-btn").style.display = "none";
+        document.getElementById("add-btn").style.display = "block";
     } else {
         document.getElementById("exampleModalLabel").innerHTML = "List Order";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
@@ -220,6 +217,7 @@ document.getElementById("showModal").addEventListener("hidden.bs.modal", functio
 });
 
 document.querySelector("#orderList").addEventListener("click", function () {
+    refreshCallbacks();
     ischeckboxcheck();
 });
 
@@ -279,83 +277,71 @@ function SearchData() {
 }
 
 var count = 13;
-var forms = document.querySelectorAll('.tablelist-form')
-Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-                if (
-                    customerNameField.value !== "" &&
-                    productNameField.value !== "" &&
-                    dateField.value !== "" &&
-                    amountField.value !== "" &&
-                    paymentField.value !== "" && !editlist
-                ) {
-                    orderList.add({
-                        id: '<a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">#VZ'+count+"</a>",
-                        customer_name: customerNameField.value,
-                        product_name: productNameField.value,
-                        date: dateField.value,
-                        amount: "$" + amountField.value,
-                        payment: paymentField.value,
-                        status: isStatus(statusField.value),
-                    });
-                    orderList.sort('id', { order: "desc" });
-                    document.getElementById("close-modal").click();
-                    clearFields();
-                    refreshCallbacks();
-                    filterOrder("All");
-                    count++;
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order inserted successfully!',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        showCloseButton: true
-                    });
-                } else if (
-                    customerNameField.value !== "" &&
-                    productNameField.value !== "" &&
-                    dateField.value !== "" &&
-                    amountField.value !== "" &&
-                    paymentField.value !== "" && editlist
-                ){
-                    var editValues = orderList.get({
-                        id: idField.value,
-                    });
-                    Array.from(editValues).forEach(function (x) {
-                        isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                        var selectedid = isid.body.firstElementChild.innerHTML;
-                        if (selectedid == itemId) {
-                            x.values({
-                                id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
-                                customer_name: customerNameField.value,
-                                product_name: productNameField.value,
-                                date: dateField.value.slice(0, 14) +'<small class="text-muted">' +dateField.value.slice(14, 22),
-                                amount: amountField.value,
-                                payment: paymentField.value,
-                                status: isStatus(statusField.value),
-                            });
-                        }
-                    });
-                    document.getElementById("close-modal").click();
-                    clearFields();
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order updated Successfully!',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        showCloseButton: true
-                    });
-                }
-            }
-        }, false)
+addBtn.addEventListener("click", function (e) {
+    if (
+        customerNameField.value !== "" &&
+        productNameField.value !== "" &&
+        dateField.value !== "" &&
+        amountField.value !== "" &&
+        paymentField.value !== ""
+    ) {
+        orderList.add({
+            id: '<a href="/Ecommerce/OrderDetails" class="fw-medium link-primary">#VZ'+count+"</a>",
+            customer_name: customerNameField.value,
+            product_name: productNameField.value,
+            date: dateField.value,
+            amount: "$" + amountField.value,
+            payment: paymentField.value,
+            status: isStatus(statusField.value),
+        });
+        orderList.sort('id', { order: "desc" });
+        document.getElementById("close-modal").click();
+        clearFields();
+        refreshCallbacks();
+        filterOrder("All");
+        count++;
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Order inserted successfully!',
+            showConfirmButton: false,
+            timer: 2000,
+            showCloseButton: true
+        });
+    }
+});
+
+editBtn.addEventListener("click", function (e) {
+    document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
+    var editValues = orderList.get({
+        id: idField.value,
     });
+    Array.from(editValues).forEach(function (x) {
+        isid = new DOMParser().parseFromString(x._values.id, "text/html");
+        var selectedid = isid.body.firstElementChild.innerHTML;
+        if (selectedid == itemId) {
+            x.values({
+                id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
+                customer_name: customerNameField.value,
+                product_name: productNameField.value,
+                date: dateField.value.slice(0, 14) +'<small class="text-muted">' +dateField.value.slice(14, 22),
+                amount: amountField.value,
+                payment: paymentField.value,
+                status: isStatus(statusField.value),
+            });
+        }
+    });
+    document.getElementById("close-modal").click();
+    clearFields();
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Order updated Successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        showCloseButton: true
+    });
+});
 var example = new Choices(paymentField);
 var statusVal = new Choices(statusField);
 var productnameVal = new Choices(productNameField);
@@ -364,35 +350,35 @@ function isStatus(val) {
     switch (val) {
         case "Delivered":
             return (
-                '<span class="badge bg-success-subtle text-success text-uppercase">' +
+                '<span class="badge badge-soft-success text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Cancelled":
             return (
-                '<span class="badge bg-danger-subtle text-danger text-uppercase">' +
+                '<span class="badge badge-soft-danger text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Inprogress":
             return (
-                '<span class="badge bg-secondary-subtle text-secondary text-uppercase">' +
+                '<span class="badge badge-soft-secondary text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Pickups":
             return (
-                '<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>"
+                '<span class="badge badge-soft-info text-uppercase">' + val + "</span>"
             );
         case "Returns":
             return (
-                '<span class="badge bg-primary-subtle text-primary text-uppercase">' +
+                '<span class="badge badge-soft-primary text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Pending":
             return (
-                '<span class="badge bg-warning-subtle text-warning text-uppercase">' +
+                '<span class="badge badge-soft-warning text-uppercase">' +
                 val +
                 "</span>"
             );
@@ -401,106 +387,93 @@ function isStatus(val) {
 
 function ischeckboxcheck() {
     Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
-        x.addEventListener("change", function (e) {
-            if (x.checked == true) {
+        x.addEventListener("click", function (e) {
+            if (e.target.checked) {
                 e.target.closest("tr").classList.add("table-active");
             } else {
                 e.target.closest("tr").classList.remove("table-active");
-            }
-
-            var checkedCount = document.querySelectorAll('[name="checkAll"]:checked').length;
-            if (e.target.closest("tr").classList.contains("table-active")) {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-            } else {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
             }
         });
     });
 }
 
 function refreshCallbacks() {
-    if (removeBtns){
-        Array.from(removeBtns).forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.target.closest("tr").children[1].innerText;
-                itemId = e.target.closest("tr").children[1].innerText;
-                var itemValues = orderList.get({
-                    id: itemId,
-                });
-    
-                Array.from(itemValues).forEach(function (x) {
-                    deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
-    
-                    var isElem = deleteid.body.firstElementChild;
-                    var isdeleteid = deleteid.body.firstElementChild.innerHTML;
-    
-                    if (isdeleteid == itemId) {
-                        document.getElementById("delete-record").addEventListener("click", function () {
-                            orderList.remove("id", isElem.outerHTML);
-                            document.getElementById("deleteRecord-close").click();
-                        });
-                    }
-                });
+    Array.from(removeBtns).forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = orderList.get({
+                id: itemId,
+            });
+
+            Array.from(itemValues).forEach(function (x) {
+                deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+
+                var isElem = deleteid.body.firstElementChild;
+                var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+
+                if (isdeleteid == itemId) {
+                    document.getElementById("delete-record").addEventListener("click", function () {
+                        orderList.remove("id", isElem.outerHTML);
+                        document.getElementById("deleteOrder").click();
+                    });
+                }
             });
         });
-    }
-    
-    if (editBtns){
-        Array.from(editBtns).forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.target.closest("tr").children[1].innerText;
-                itemId = e.target.closest("tr").children[1].innerText;
-                var itemValues = orderList.get({
-                    id: itemId,
-                });
+    });
 
-                Array.from(itemValues).forEach(function (x) {
-                    isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var selectedid = isid.body.firstElementChild.innerHTML;
-                    if (selectedid == itemId) {
-                        editlist = true;
-                        idField.value = selectedid;
-                        customerNameField.value = x._values.customer_name;
-                        productNameField.value = x._values.product_name;
-                        dateField.value = x._values.date;
-                        amountField.value = x._values.amount;
+    Array.from(editBtns).forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = orderList.get({
+                id: itemId,
+            });
 
-                        if (example) example.destroy();
-                        example = new Choices(paymentField, {
-                            searchEnabled: false
-                        });
-                        var selected = x._values.payment;
-                        example.setChoiceByValue(selected);
+            Array.from(itemValues).forEach(function (x) {
+                isid = new DOMParser().parseFromString(x._values.id, "text/html");
+                var selectedid = isid.body.firstElementChild.innerHTML;
+                if (selectedid == itemId) {
+                    idField.value = selectedid;
+                    customerNameField.value = x._values.customer_name;
+                    productNameField.value = x._values.product_name;
+                    dateField.value = x._values.date;
+                    amountField.value = x._values.amount;
 
-                        if (productnameVal) productnameVal.destroy();
-                        productnameVal = new Choices(productNameField, {
-                            searchEnabled: false,
-                        });
-                        var selectedproduct = x._values.product_name;
-                        productnameVal.setChoiceByValue(selectedproduct);
+                    if (example) example.destroy();
+                    example = new Choices(paymentField, {
+                        searchEnabled: false
+                    });
+                    var selected = x._values.payment;
+                    example.setChoiceByValue(selected);
 
-                        if (statusVal) statusVal.destroy();
-                        statusVal = new Choices(statusField, {
-                            searchEnabled: false
-                        });
-                        val = new DOMParser().parseFromString(x._values.status, "text/html");
-                        var statusSelec = val.body.firstElementChild.innerHTML;
-                        statusVal.setChoiceByValue(statusSelec);
+                    if (productnameVal) productnameVal.destroy();
+                    productnameVal = new Choices(productNameField, {
+                        searchEnabled: false,
+                    });
+                    var selectedproduct = x._values.product_name;
+                    productnameVal.setChoiceByValue(selectedproduct);
 
-                        flatpickr("#date-field", {
-                            enableTime: true,
-                            dateFormat: "d M, Y, h:i K",
-                            defaultDate: x._values.date,
-                        });
-                    }
-                });
+                    if (statusVal) statusVal.destroy();
+                    statusVal = new Choices(statusField, {
+                        searchEnabled: false
+                    });
+                    val = new DOMParser().parseFromString(x._values.status, "text/html");
+                    var statusSelec = val.body.firstElementChild.innerHTML;
+                    statusVal.setChoiceByValue(statusSelec);
+
+                    flatpickr("#date-field", {
+                        enableTime: true,
+                        dateFormat: "d M, Y, h:i K",
+                        defaultDate: x._values.date,
+                    });
+                }
             });
         });
-    }
+    });
 }
 
 function clearFields() {
-    
     customerNameField.value = "";
     productNameField.value = "";
     dateField.value = "";
@@ -545,27 +518,22 @@ function deleteMultiple(){
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            customClass: {
-                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
-                cancelButton: 'btn btn-danger w-xs mt-2',
-            },
+            confirmButtonClass: 'btn btn-primary w-xs me-2 mt-2',
+            cancelButtonClass: 'btn btn-danger w-xs mt-2',
             confirmButtonText: "Yes, delete it!",
             buttonsStyling: false,
             showCloseButton: true
         }).then(function (result) {
             if (result.value) {
                 for (i = 0; i < ids_array.length; i++) {
-                    orderList.remove("id", `<a href="apps-ecommerce-order-details.html" class="fw-medium link-primary">` + ids_array[i] +`</a>`);
+                    orderList.remove("id", `<a href="/Ecommerce/OrderDetails" class="fw-medium link-primary">` + ids_array[i] +`</a>`);
                 }
-                document.getElementById("remove-actions").style.display = 'none';
                 document.getElementById("checkAll").checked = false;
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your data has been deleted.',
                     icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-info w-xs mt-2',
-                    },
+                    confirmButtonClass: 'btn btn-info w-xs mt-2',
                     buttonsStyling: false
                 });
             }
@@ -573,9 +541,7 @@ function deleteMultiple(){
     } else {
         Swal.fire({
             title: 'Please select at least one checkbox',
-            customClass: {
-                confirmButton: 'btn btn-info',
-            },
+            confirmButtonClass: 'btn btn-info',
             buttonsStyling: false,
             showCloseButton: true
         });

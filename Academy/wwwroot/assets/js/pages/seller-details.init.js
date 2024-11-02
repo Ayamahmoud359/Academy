@@ -10,30 +10,32 @@ File: seller-details init js
 var TableProductListAll = document.getElementById('table-product-list-all');
 if (TableProductListAll) {
     new gridjs.Grid({
-        columns: [
-            {
-				name: '#',
-				width: '40px',
-				sort: {
-					enabled: false
-				},
-				data: (function (row) {
-					return gridjs.html('<div class="form-check checkbox-product-list">\
-					<input class="form-check-input" type="checkbox" value="'+ row.id + '" id="checkbox-' + row.id + '">\
-					<label class="form-check-label" for="checkbox-'+ row.id + '"></label>\
-				  </div>');
-				})
-			},
+        columns: [{
+                id: 'productListAllCheckbox',
+                name: '#',
+                width: '40px',
+                sort: {
+                    enabled: false
+                },
+                plugin: {
+                    component: gridjs.plugins.selection.RowSelection,
+                    props: {
+                        id: (function (row) {
+                            return row.cell(6).data;
+                        })
+                    }
+                }
+            },
             {
                 name: 'Product',
                 width: '360px',
                 formatter: (function (cell) {
                     return gridjs.html('<div class="d-flex align-items-center">' +
                         '<div class="flex-shrink-0 me-3">' +
-                        '<div class="avatar-sm bg-light rounded p-1"><img src="~/assets/images/products/' + cell[0] + '" alt="" class="img-fluid d-block"></div>' +
+                        '<div class="avatar-sm bg-light rounded p-1"><img src="/assets/images/products/' + cell[0] + '" alt="" class="img-fluid d-block"></div>' +
                         '</div>' +
                         '<div class="flex-grow-1">' +
-                        '<h5 class="fs-14 mb-1"><a href="/ecommerce/productdetails" class="text-body">' + cell[1] + '</a></h5>' +
+                        '<h5 class="fs-14 mb-1"><a href="/Ecommerce/OrderDetails" class="text-dark">' + cell[1] + '</a></h5>' +
                         '<p class="text-muted mb-0">Category : <span class="fw-medium">' + cell[2] + '</span></p>' +
                         '</div>' +
                         '</div>');
@@ -78,10 +80,10 @@ if (TableProductListAll) {
                         '<i class="ri-more-fill"></i>' +
                         '</button>' +
                         '<ul class="dropdown-menu dropdown-menu-end">' +
-                        '<li><a class="dropdown-item" href="/ecommerce/productdetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
-                        '<li><a class="dropdown-item" href="/ecommerce/addproduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
+                        '<li><a class="dropdown-item" href="/Ecommerce/OrderDetails"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
+                        '<li><a class="dropdown-item" href="/Ecommerce/CreateProduct"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
                         '<li class="dropdown-divider"></li>' +
-                        '<li><a class="dropdown-item" href="#!"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
+                        '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeItemModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
                         '</ul>' +
                         '</div>');
                 })
@@ -140,20 +142,23 @@ if (TableProductListAll) {
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
             return colors.map(function (value) {
                 var newValue = value.replace(" ", "");
                 if (newValue.indexOf(",") === -1) {
-                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                    var color = getComputedStyle(document.documentElement).getPropertyValue(
+                        newValue
+                    );
                     if (color) return color;
-                    else return newValue;;
+                    else return newValue;
                 } else {
-                    var val = value.split(',');
+                    var val = value.split(",");
                     if (val.length == 2) {
-                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                        var rgbaColor = getComputedStyle(
+                            document.documentElement
+                        ).getPropertyValue(val[0]);
                         rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
                         return rgbaColor;
                     } else {
@@ -161,8 +166,6 @@ function getChartColorsArray(chartId) {
                     }
                 }
             });
-        } else {
-            console.warn('data-colors attributes not found on', chartId);
         }
     }
 }
@@ -317,7 +320,7 @@ if (counterValue) {
     (counter = document.querySelectorAll(".counter-value")),
     (speed = 250);
     counter &&
-        Array.from(counter).forEach(function (a) {
+    Array.from(counter).forEach(function (a) {
             !(function e() {
                 var t = +a.getAttribute("data-target"),
                     n = +a.innerText,

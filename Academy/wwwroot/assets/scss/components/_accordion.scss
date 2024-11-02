@@ -8,7 +8,7 @@
     }
 
     .accordion-body {
-        color: var(--#{$prefix}secondary-color);
+        color: $text-muted;
     }
 
     &.accordion-icon-none {
@@ -123,36 +123,56 @@
 }
 
 //accordion Color 
-@each $state in map-keys($theme-colors) { 
-    .accordion-#{$state} {
+
+@each $color,
+$value in $theme-colors {
+    .accordion-#{$color} {
         .accordion-item {
-            border-color: rgba(var(--#{$prefix}#{$state}-rgb), 0.6);
-    
+            border-color: rgba($value, 0.6);
+
             .accordion-button {
                 box-shadow: none;
-    
+
                 &:not(.collapsed) {
-                    color: var(--#{$prefix}#{$state});
-                    background-color: rgba(var(--#{$prefix}#{$state}-rgb), 0.1) !important;
+                    color: $value;
+                    background-color: rgba($value, 0.1) !important;
                 }
-    
+
                 &::after {
-                    color: var(--#{$prefix}#{$state});
+                    color: $value;
                 }
             }
         }
     }
 
-    .accordion-fill-#{$state} {
+    .accordion-fill-#{$color} {
         .accordion-item {
             .accordion-button {
                 box-shadow: none;
-    
+
                 &:not(.collapsed) {
                     color: $white;
-                    background-color: var(--#{$prefix}#{$state}) !important;
+                    background-color: $value !important;
                 }
             }
+        }
+    }
+}
+
+
+// theme dark
+
+[data-layout-mode="dark"]{
+    .accordion-button {
+        &:not(.collapsed) {
+            color: var(--#{$prefix}accordion-button-active-color);
+            &:after{
+                background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$white}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>"));
+            }
+        }
+
+        &:after{
+            background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$gray-500}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>"));
         }
     }
 }

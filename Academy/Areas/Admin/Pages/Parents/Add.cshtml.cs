@@ -1,6 +1,6 @@
+using Academy.Data;
 using Academy.DTO;
 using Academy.Models;
-using CRM.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

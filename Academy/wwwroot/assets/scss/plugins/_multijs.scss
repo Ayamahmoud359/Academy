@@ -21,7 +21,7 @@
     align-items: center;
     font-size: 16px;
     border-radius: 50%;
-    color: var(--#{$prefix}secondary-color);
+    color: $text-muted;
     background-color: var(--#{$prefix}light);
     z-index: 1;
   }
@@ -65,7 +65,7 @@
   .item{
     color: $input-color;
     &:hover{
-      background-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
+      background-color: rgba($primary, 0.1);
     }
   }
 

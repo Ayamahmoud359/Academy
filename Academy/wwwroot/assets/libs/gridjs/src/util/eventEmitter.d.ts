@@ -1,4 +1,4 @@
-type EventArgs<T> = [T] extends [(...args: infer U) => any] ? U : [T] extends [void] ? [] : [T];
+declare type EventArgs<T> = [T] extends [(...args: infer U) => any] ? U : [T] extends [void] ? [] : [T];
 export interface EventEmitter<EventTypes> {
     addListener<EventName extends keyof EventTypes>(event: EventName, listener: (...args: EventArgs<EventTypes[EventName]>) => void): EventEmitter<EventTypes>;
     on<EventName extends keyof EventTypes>(event: EventName, listener: (...args: EventArgs<EventTypes[EventName]>) => void): EventEmitter<EventTypes>;
@@ -8,8 +8,5 @@ export interface EventEmitter<EventTypes> {
 export declare class EventEmitter<EventTypes> {
     private callbacks;
     private init;
-    listeners(): {
-        [event: string]: ((...args: any[]) => void)[];
-    };
 }
 export {};

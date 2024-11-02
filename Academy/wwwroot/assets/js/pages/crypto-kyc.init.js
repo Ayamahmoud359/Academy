@@ -13,7 +13,7 @@ Array.from(document.querySelectorAll(".checkout-tab")).forEach(function (form) {
 
     // next tab
     if(form.querySelectorAll(".nexttab"))
-    form.querySelectorAll(".nexttab").forEach(function (nextButton) {
+    Array.from(form.querySelectorAll(".nexttab")).forEach(function (nextButton) {
         var tabEl = form.querySelectorAll('button[data-bs-toggle="pill"]');
         Array.from(tabEl).forEach(function (item) {
             item.addEventListener('show.bs.tab', function (event) {
@@ -47,7 +47,7 @@ Array.from(document.querySelectorAll(".checkout-tab")).forEach(function (form) {
         button.setAttribute("data-position", i);
         button.addEventListener("click", function () {
             (form.querySelectorAll(".custom-nav .done").length > 0) ?
-                Array.from(form.querySelectorAll(".custom-nav .done")).forEach(function (doneTab) {
+            Array.from(form.querySelectorAll(".custom-nav .done")).forEach(function (doneTab) {
                     doneTab.classList.remove('done');
                 })
                 : '';

@@ -60,7 +60,7 @@ function loadProductData(datas) {
                 </div>\
                 <div class="card-body">\
                     <p class="fw-medium mb-0 float-end"><i class="mdi mdi-heart text-danger align-middle"></i> '+ prodctData.totalLikes + ' </p>\
-                    <h5 class="mb-1"><a href="/nft/itemdetails">'+ prodctData.title + '</a></h5>\
+                    <h5 class="mb-1"><a href="/NFTMarketplace/ItemDetails">'+ prodctData.title + '</a></h5>\
                     <p class="text-muted mb-0">'+ prodctData.category + '</p>\
                 </div>\
                 <div class="card-footer border-top border-top-dashed">\

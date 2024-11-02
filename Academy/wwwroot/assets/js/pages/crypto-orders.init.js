@@ -20,10 +20,6 @@ var options = {
         "avg_price",
         "price",
         "status",
-        { name: 'time', attr: 'data-timestamp' },
-        { name: 'or_val', attr: 'data-orderval' },
-        { name: 'sort-avg_price', attr: 'data-av-price' },
-        { name: 'sort-price', attr: 'data-price' },
     ],
     page: perPage,
     pagination: true,
@@ -64,60 +60,12 @@ if (ContactList) {
         } else {
             document.getElementsByClassName("noresult")[0].style.display = "block";
         }
-    });
+    });;
 
     isCount = new DOMParser().parseFromString(
         contactList.items.slice(-1)[0]._values.id,
         "text/html"
     );
-}
-
-function filterData(){
-    var isstatus = document.getElementById("idStatus").value;
-    var isType = document.getElementById("idType").value;
-    var pickerVal = document.getElementById("range-datepicker").value;
-
-    var date1 = pickerVal.split(" to ")[0];
-    var date2 = pickerVal.split(" to ")[1];
-
-    contactList.filter(function (data) {
-        matchData = new DOMParser().parseFromString(data.values().status, "text/html");
-        var status = matchData.body.firstElementChild.innerHTML;
-        var statusFilter = false;
-        var dateFilter = false;
-        var typeFilter = false;
-
-        if (status == "all" || isstatus == "all") {
-            statusFilter = true;
-        } else {
-            statusFilter = status == isstatus;
-        }
-
-        if (data.values().type == "all" || isType == "all") {
-            typeFilter = true;
-        } else {
-            typeFilter = data.values().type == isType;
-        }
-
-        if (
-            new Date(data.values().order_date.slice(0, 12)) >= new Date(date1) &&
-            new Date(data.values().order_date.slice(0, 12)) <= new Date(date2)
-        ) {
-            dateFilter = true;
-        } else {
-            dateFilter = false;
-        }
-
-        if(statusFilter && typeFilter && dateFilter){
-            return statusFilter && typeFilter && dateFilter
-        }  else if (statusFilter && typeFilter && pickerVal == "") {
-            return statusFilter && typeFilter;
-        } else if (typeFilter && dateFilter && pickerVal == "") {
-            return typeFilter && dateFilter;
-        }
-    });
-
-    contactList.update();
 }
 
 var paginationNext = document.querySelector(".pagination-next");

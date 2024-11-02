@@ -22,7 +22,7 @@
     }
 
     .horizontal-logo {
-        padding-left: calc(#{$grid-gutter-width} * 0.5);
+        padding-left: calc(#{$grid-gutter-width} / 2);
 
         @media (max-width: 1024.98px) {
             padding-left: $grid-gutter-width;
@@ -30,9 +30,9 @@
     }
 
     .navbar-menu {
-        background: var(--#{$prefix}topnav-bg);
+        background: $topnav-bg;
         border-right-color: transparent;
-        padding: 0 calc(#{$grid-gutter-width} * 0.5);
+        padding: 0 calc(#{$grid-gutter-width} / 2);
         box-shadow: $horizontal-menu-box-shadow;
         margin-top: $header-height;
         position: fixed;
@@ -61,13 +61,13 @@
 
                     &:hover,
                     &.active {
-                        color: var(--#{$prefix}topnav-item-active-color);
+                        color: $topnav-item-color-active;
                     }
                 }
             }
 
             .nav-link {
-                color: var(--#{$prefix}topnav-item-color);
+                color: $topnav-item-color;
                 padding: $horizontal-menu-item-padding-y $horizontal-menu-item-padding-x;
 
                 i {
@@ -75,33 +75,33 @@
                 }
 
                 &.active {
-                    color: var(--#{$prefix}topnav-item-active-color);
+                    color: $topnav-item-color-active;
                     &:after {
-                        color: var(--#{$prefix}topnav-item-active-color);
-                    }   
+                        color: $topnav-item-color-active;
+                    }
                     .icon-dual {
-                        color: var(--#{$prefix}topnav-item-active-color);
-                        fill: rgba(var(--#{$prefix}primary-rgb), 0.10);
+                        color: $topnav-item-color-active;
+                        fill: rgba($primary, 0.10);
                     }
                 }
 
                 &[data-bs-toggle=collapse][aria-expanded=true] {
-                    color: var(--#{$prefix}topnav-item-active-color);
+                    color: $topnav-item-color-active;
 
                     .icon-dual {
-                        color: var(--#{$prefix}topnav-item-active-color);
-                        fill: rgba(var(--#{$prefix}primary-rgb), 0.10);
+                        color: $topnav-item-color-active;
+                        fill: rgba($primary, 0.10);
                     }
 
                     &:after {
-                        color: var(--#{$prefix}topnav-item-active-color);
+                        color: $topnav-item-color-active;
                     }
                 }
 
                 &:hover {
                     .icon-dual {
-                        color: var(--#{$prefix}topnav-item-active-color);
-                        fill: rgba(var(--#{$prefix}primary-rgb), 0.10);
+                        color: $topnav-item-color-active;
+                        fill: rgba($primary, 0.10);
                     }
                 }
             }
@@ -142,15 +142,15 @@
 
             &:hover {
                 >.nav-link {
-                    color: var(--#{$prefix}topnav-item-active-color);
+                    color: $topnav-item-color-active;
 
                     .icon-dual {
-                        color: var(--#{$prefix}topnav-item-active-color);
-                        fill: rgba(var(--#{$prefix}primary-rgb), 0.10);
+                        color: $topnav-item-color-active;
+                        fill: rgba($primary, 0.10);
                     }
 
                     &:after {
-                        color: var(--#{$prefix}topnav-item-active-color);
+                        color: $topnav-item-color-active;
                     }
                 }
 
@@ -163,7 +163,7 @@
             }
 
             &.active {
-                color: var(--#{$prefix}topnav-item-active-color);
+                color: $topnav-item-color-active;
             }
         }
     }
@@ -178,7 +178,7 @@
         animation-fill-mode: both;
         margin: 0;
         z-index: $zindex-dropdown;
-        background-color: var(--#{$prefix}topnav-bg);
+        background-color: var(--#{$prefix}choices-bg);
         background-clip: padding-box;
         border: $dropdown-border-width solid $dropdown-border-color;
         border-radius: $dropdown-border-radius;
@@ -256,6 +256,23 @@
 
             .mega-dropdown-menu {
                 width: 100%;
+            }
+        }
+    }
+}
+
+// theme dark
+[data-layout-mode="dark"] {
+    &[data-topbar="light"] {
+        .navbar-header {
+            .horizontal-logo {
+                .logo-dark {
+                    display: none;
+                }
+
+                .logo-light {
+                    display: block;
+                }
             }
         }
     }

@@ -8,7 +8,7 @@
 		"leads_score": "147",
 		"phone": "580-464-4694",
 		"location": "Los Angeles, USA",
-		"tags": ["admin"]
+		"tags": ["Partner"]
 	},
 	{
 		"id": "2",
@@ -30,7 +30,7 @@
 		"leads_score": "159",
 		"phone": "786-253-9927",
 		"location": "London, UK",
-		"tags": ["Lead", "admin"]
+		"tags": ["Lead", "Partner"]
 	},
 	{
 		"id": "4",
@@ -63,7 +63,7 @@
 		"leads_score": "85",
 		"phone": "414-453-5725",
 		"location": "Windhoek, Namibia",
-		"tags": ["Exiting", "Lead", "admin"]
+		"tags": ["Exiting", "Lead", "Partner"]
 	},
 	{
 		"id": "7",
@@ -74,7 +74,7 @@
 		"leads_score": "365",
 		"phone": "515-395-1069",
 		"location": "Berlin, Germany",
-		"tags": ["Lead", "admin"]
+		"tags": ["Lead", "Partner"]
 	},
 	{
 		"id": "8",
@@ -85,7 +85,7 @@
 		"leads_score": "236",
 		"phone": "231-480-8536",
 		"location": "Brasilia, Brazil",
-		"tags": ["admin"]
+		"tags": ["Partner"]
 	},
 	{
 		"id": "9",
@@ -107,7 +107,7 @@
 		"leads_score": "193",
 		"phone": "745-321-9874",
 		"location": "London, UK",
-		"tags": ["Lead", "admin"]
+		"tags": ["Lead", "Partner"]
 	}
 
 ]

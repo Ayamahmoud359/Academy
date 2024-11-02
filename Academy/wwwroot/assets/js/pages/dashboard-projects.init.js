@@ -10,8 +10,7 @@ File: Project Dashboard init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
             return colors.map(function (value) {
@@ -32,7 +31,7 @@ function getChartColorsArray(chartId) {
                 }
             });
         } else {
-            console.warn('data-colors attributes not found on', chartId);
+            console.warn('data-colors Attribute not found on:', chartId);
         }
     }
 }
@@ -248,11 +247,20 @@ if (donutchartProjectsStatusColors) {
 // chat
 var currentChatId = "users-chat";
 scrollToBottom(currentChatId);
-
-// Scroll to Bottom
+// // Scroll to Bottom
 function scrollToBottom(id) {
-    setTimeout(() => {
-        var scrollEl = new SimpleBar(document.getElementById('chat-conversation'));
-        scrollEl.getScrollElement().scrollTop = document.getElementById("users-conversation").scrollHeight;
+    setTimeout(function () {
+        var simpleBar = (document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper")) ?
+            document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper") : ''
+
+        var offsetHeight = document.getElementsByClassName("chat-conversation-list")[0] ?
+            document.getElementById(id).getElementsByClassName("chat-conversation-list")[0].scrollHeight - window.innerHeight + 600 : 0;
+
+        if (offsetHeight && simpleBar) {
+            simpleBar.scrollTo({
+                top: offsetHeight,
+                behavior: "smooth"
+            });
+        }
     }, 100);
 }

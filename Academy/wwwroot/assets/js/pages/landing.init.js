@@ -155,7 +155,7 @@ counter();
 /********************* scroll top js ************************/
 //
 
-var myButton = document.getElementById("back-to-top");
+var mybutton = document.getElementById("back-to-top");
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function () {
@@ -164,9 +164,9 @@ window.onscroll = function () {
 
 function scrollFunction() {
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        myButton.style.display = "block";
+        mybutton.style.display = "block";
     } else {
-        myButton.style.display = "none";
+        mybutton.style.display = "none";
     }
 }
 

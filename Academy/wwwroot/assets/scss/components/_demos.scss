@@ -2,6 +2,17 @@
 // _demos.scss
 // 
 
+// Buttons demo
+.button-items {
+    margin-left: -8px;
+    margin-bottom: -12px;
+
+    .btn {
+        margin-bottom: 12px;
+        margin-left: 8px;
+    }
+}
+
 // Modals
 .bs-example-modal {
     position: relative;
@@ -42,47 +53,60 @@
 
         &:hover {
             i, svg {
-                color: var(--#{$prefix}primary);
+                color: $primary;
                 transform: scale(1.5);
             }
         }
     }
 }
 
+// Grid
+
+.grid-structure {
+    .grid-container {
+        background-color: $gray-100;
+        margin-top: 10px;
+        font-size: .8rem;
+        font-weight: $font-weight-medium;
+        padding: 10px 20px;
+    }
+}
+
 // customizer switch
+
 .img-switch{
     .card-radio{
         .form-check-input {
             display: none;
     
             &:checked+.form-check-label {
-                &::before{
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                    background-color: rgba(var(--#{$prefix}primary-rgb), 0.5);
-                }
-                &::after{
-                    content: '\eb80';
-                    font-family: "remixicon";
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translateY(-50%) translateX(-50%);
-                    font-size: 18px;
-                    color: $white;
-                }
+            &::before{
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba($primary, 0.5);
             }
+            &::after{
+                content: '\eb80';
+                font-family: "remixicon";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translateY(-50%) translateX(-50%);
+                font-size: 18px;
+                color: $white;
+            }
+        }
         }
     }
 }
 
 [data-bs-target="#collapseBgGradient"]{
     &.active{
-        border-color: var(--#{$prefix}primary-rgb) !important;
+        border-color: $primary !important;
         &::before{
             content: "\eb80";
             font-family: remixicon;
@@ -90,7 +114,28 @@
             top: 2px;
             right: 6px;
             font-size: 16px;
-            color: var(--#{$prefix}primary-rgb);
+            color: $primary;
+        }
+    }
+}
+
+[data-layout-mode="dark"]{
+    .colorscheme-cardradio{
+        .form-check-label{
+            background-color: var(--#{$prefix}dark);
+        }
+        .bg-light{
+            background-color: rgba(var(--#{$prefix}light-rgb), 0.1)!important;
+        }
+
+        .bg-soft-light {
+            background-color: rgba(var(--#{$prefix}dark-rgb),.1)!important;
+        }
+
+        .dark{
+            .bg-dark{
+                background-color: var(--#{$prefix}card-bg-custom)!important;
+            }
         }
     }
 }

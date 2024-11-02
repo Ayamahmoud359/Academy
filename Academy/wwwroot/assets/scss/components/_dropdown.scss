@@ -74,9 +74,9 @@
         content: "";
         position: absolute;
         background-color: rgba($white,0.12);
-        top: calc(#{$btn-border-width} * -1);
-        bottom: calc(#{$btn-border-width} * -1);
-        right: calc(#{$btn-border-width} * -1);
+        top: -$btn-border-width;
+        bottom: -$btn-border-width;
+        right: -$btn-border-width;
         left: 0;
         border-radius: 0 $btn-border-radius $btn-border-radius 0;
     }
@@ -102,11 +102,11 @@
 
 [dir="ltr"] {
     .dropdown-menu-start {
-        --#{$prefix}position: end;
+        --bs-position: end;
     }
 
     .dropdown-menu-end {
-        --#{$prefix}position: start;
+        --bs-position: start;
     }
 }
 // Custom Dropdown with Tabs
@@ -114,9 +114,6 @@
     .nav-tabs-custom{
         border: 0;
         .nav-link  {
-            &::after {
-                display: none;
-            }
             color: rgba($white, 0.6);
             &.active {
                 background-color: var(--#{$prefix}dropdown-bg);
@@ -132,7 +129,7 @@
 $value in $theme-colors {
     .dropdownmenu-#{$color} {
       .dropdown-item{
-        &:is(:focus, :hover, .active){
+        &:focus, &:hover, &.active{
           background-color: rgba(($value), 0.07);
           color: $value;
         }

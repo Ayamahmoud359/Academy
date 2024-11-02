@@ -9,11 +9,10 @@ File: Heatmap Chart init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
-            return colors.map(function (value) {
+            return colors.map(function(value) {
                 var newValue = value.replace(" ", "");
                 if (newValue.indexOf(",") === -1) {
                     var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
@@ -30,8 +29,6 @@ function getChartColorsArray(chartId) {
                     }
                 }
             });
-        } else {
-            console.warn('data-colors attributes not found on', chartId);
         }
     }
 }
@@ -114,16 +111,13 @@ if (chartHeatMapBasicColors) {
         dataLabels: {
             enabled: false
         },
-        colors: [chartHeatMapBasicColors[0]],
+        colors: chartHeatMapBasicColors,
         title: {
             text: 'HeatMap Chart (Single color)',
             style: {
                 fontWeight: 500,
             },
         },
-        stroke: {
-            colors: [chartHeatMapBasicColors[1]]
-        }
     };
 
     var chart = new ApexCharts(document.querySelector("#basic_heatmap"), options);
@@ -276,7 +270,7 @@ if (chartHeatMapMultipleColors) {
         dataLabels: {
             enabled: false
         },
-        colors: [chartHeatMapMultipleColors[0], chartHeatMapMultipleColors[1], chartHeatMapMultipleColors[2], chartHeatMapMultipleColors[3], chartHeatMapMultipleColors[4], chartHeatMapMultipleColors[5], chartHeatMapMultipleColors[6], chartHeatMapMultipleColors[7]],
+        colors: chartHeatMapMultipleColors,
         xaxis: {
             type: 'category',
             categories: ['10:00', '10:30', '11:00', '11:30', '12:00', '12:30', '01:00', '01:30']
@@ -291,9 +285,6 @@ if (chartHeatMapMultipleColors) {
             padding: {
                 right: 20
             }
-        },
-        stroke: {
-            colors: [chartHeatMapMultipleColors[8]]
         }
     };
     var chart = new ApexCharts(document.querySelector("#multiple_heatmap"), options);

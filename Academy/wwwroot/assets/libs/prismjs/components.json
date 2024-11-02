@@ -9,7 +9,7 @@
 	"themes": {
 		"meta": {
 			"path": "themes/{id}.css",
-			"link": "/?theme={id}",
+			"link": "index.html?theme={id}",
 			"exclusive": true
 		},
 		"prism": {

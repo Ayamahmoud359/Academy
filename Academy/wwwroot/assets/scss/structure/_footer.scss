@@ -7,10 +7,10 @@
     padding: 20px calc(#{$grid-gutter-width} * 0.5);
     position: absolute;
     right: 0;
-    color: var(--#{$prefix}footer-color);
-    left: var(--#{$prefix}vertical-menu-width);
+    color: $footer-color;
+    left: $vertical-menu-width;
     height: $footer-height;
-    background-color: var(--#{$prefix}footer-bg);
+    background-color: $footer-bg;
 
     @media (max-width: 991.98px) {
         left: 0;
@@ -19,9 +19,10 @@
 
 [data-layout="vertical"] {
 
-    &:is([data-sidebar-size="sm"], [data-sidebar-size="sm-hover"]) {
+    &[data-sidebar-size="sm"],
+    &[data-sidebar-size="sm-hover"] {
         .footer {
-            left: var(--#{$prefix}vertical-menu-width-sm);
+            left: $vertical-menu-width-sm;
 
             @media (max-width: 767.98px) {
                 left: 0;
@@ -30,7 +31,7 @@
     }
     &[data-sidebar-size="md"] {
         .footer {
-            left: var(--#{$prefix}vertical-menu-width-md);
+            left: $vertical-menu-width-md;
 
             @media (max-width: 991.98px) {
                 left: 0;

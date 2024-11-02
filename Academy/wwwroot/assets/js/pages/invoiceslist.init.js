@@ -12,7 +12,7 @@ function getTime(params) {
     params = new Date(params);
     if (params.getHours() != null) {
         var hour = params.getHours();
-        var minute = (params.getMinutes()) ? params.getMinutes() : 0;
+        var minute = (params.getMinutes()) ? params.getMinutes() : 00;
         return hour + ":" + minute;
     }
 }
@@ -1509,7 +1509,7 @@ Array.from(Invoices).forEach(function (raw) {
             var first_letter = avtar_title[0].slice(0, 1);
             letters = first_letter
         }
-        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-success-subtle text-success rounded-circle fs-13">` + letters + `</div></div>`;
+        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-soft-success text-success rounded-circle fs-13">` + letters + `</div></div>`;
     }
 
     var tableRawData = `<tr>
@@ -1528,7 +1528,7 @@ Array.from(Invoices).forEach(function (raw) {
                 <td class="country">USA</td>
                 <td class="date">` + str_dt(raw.date) + ` <small class="text-muted">` + tConvert(raw.date) + `</small></td>
                 <td class="invoice_amount">$` + (raw.invoice_amount) + `</td>
-                <td class="status"><span class="badge bg-` + badge + `-subtle text-` + badge + ` text-uppercase">` + raw.status + `</span>
+                <td class="status"><span class="badge badge-soft-` + badge + ` text-uppercase">` + raw.status + `</span>
                 </td>
                 <td>
                     <div class="dropdown">
@@ -1579,20 +1579,17 @@ flatpickr("#date-field", {
 
 var checkAll = document.getElementById("checkAll");
 if (checkAll) {
-  checkAll.onclick = function () {
-    var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
-    var checkedCount = document.querySelectorAll('.form-check-all input[type="checkbox"]:checked').length;
-    for (var i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].checked = this.checked;
-      if (checkboxes[i].checked) {
-          checkboxes[i].closest("tr").classList.add("table-active");
-      } else {
-          checkboxes[i].closest("tr").classList.remove("table-active");
-      }
-    }
-
-    (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'none' : document.getElementById("remove-actions").style.display = 'block';
-  };
+    checkAll.onclick = function () {
+        var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+            if (checkboxes[i].checked) {
+                checkboxes[i].closest("tr").classList.add("table-active");
+            } else {
+                checkboxes[i].closest("tr").classList.remove("table-active");
+            }
+        }
+    };
 }
 
 var perPage = 8;
@@ -1753,19 +1750,12 @@ function SearchData() {
 }
 
 function ischeckboxcheck() {
-    Array.from(document.getElementsByName("chk_child")).forEach(function (x) {
-        x.addEventListener("change", function (e) {
-            if (x.checked == true) {
+    Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
+        x.addEventListener("click", function (e) {
+            if (e.target.checked) {
                 e.target.closest("tr").classList.add("table-active");
             } else {
                 e.target.closest("tr").classList.remove("table-active");
-            }
-  
-            var checkedCount = document.querySelectorAll('[name="chk_child"]:checked').length;
-            if (e.target.closest("tr").classList.contains("table-active")) {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-            } else {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
             }
         });
     });
@@ -1788,7 +1778,7 @@ function refreshCallbacks() {
                 if (isdeleteid == itemId) {
                     document.getElementById("delete-record").addEventListener("click", function () {
                         invoiceList.remove("id", isElem.outerHTML);
-                        document.getElementById("deleteRecord-close").click();
+                        document.getElementById("deleteOrder").click();
                     });
                 }
             });
@@ -1797,6 +1787,7 @@ function refreshCallbacks() {
 }
 
 document.querySelector("#invoiceList").addEventListener("click", function () {
+    refreshCallbacks();
     ischeckboxcheck();
 });
 
@@ -1824,7 +1815,7 @@ function ViewInvoice(data) {
     localStorage.setItem("invoices-list", JSON.stringify(Invoices));
     localStorage.setItem("option", "view-invoice");
     localStorage.setItem("invoice_no", invoice_no);
-    window.location.assign("apps-invoices-details.html")
+    window.location.assign("/Invoices/Details")
 }
 
 function EditInvoice(data) {
@@ -1832,7 +1823,7 @@ function EditInvoice(data) {
     localStorage.setItem("invoices-list", JSON.stringify(Invoices));
     localStorage.setItem("option", "edit-invoice");
     localStorage.setItem("invoice_no", invoice_no);
-    window.location.assign("apps-invoices-create.html")
+    window.location.assign("/Invoices/CreateInvoice")
 }
 
 // Delete Multiple Records
@@ -1851,10 +1842,8 @@ function deleteMultiple() {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            customClass: {
-                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
-                cancelButton: 'btn btn-danger w-xs mt-2',
-            },
+            confirmButtonClass: 'btn btn-primary w-xs me-2 mt-2',
+            cancelButtonClass: 'btn btn-danger w-xs mt-2',
             confirmButtonText: "Yes, delete it!",
             buttonsStyling: false,
             showCloseButton: true
@@ -1863,15 +1852,12 @@ function deleteMultiple() {
                 for (i = 0; i < ids_array.length; i++) {
                     invoiceList.remove("id", `<a href="javascript:void(0);" onclick="ViewInvoice(this);" data-id="` + ids_array[i].slice(3) + `" class="fw-medium link-primary">${ids_array[i]}</a>`);
                 }
-                document.getElementById("remove-actions").style.display = 'none';
                 document.getElementById("checkAll").checked = false;
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your data has been deleted.',
                     icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-info w-xs mt-2',
-                    },
+                    confirmButtonClass: 'btn btn-info w-xs mt-2',
                     buttonsStyling: false
                 });
             }
@@ -1879,9 +1865,7 @@ function deleteMultiple() {
     } else {
         Swal.fire({
             title: 'Please select at least one checkbox',
-            customClass: {
-                confirmButton: 'btn btn-info',
-            },
+            confirmButtonClass: 'btn btn-info',
             buttonsStyling: false,
             showCloseButton: true
         });

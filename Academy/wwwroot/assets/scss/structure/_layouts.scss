@@ -4,11 +4,11 @@
 
 [data-layout-width="boxed"] {
     body {
-        background-color: var(--#{$prefix}boxed-body-bg);
+        background-color: $boxed-body-bg;
     }
 
     #layout-wrapper {
-        max-width: var(--#{$prefix}boxed-layout-width);
+        max-width: $boxed-layout-width;
         margin: 0 auto;
         box-shadow: $box-shadow;
         background-color: var(--#{$prefix}body-bg);
@@ -22,7 +22,7 @@
 
     #page-topbar,
     .footer {
-        max-width: var(--#{$prefix}boxed-layout-width);
+        max-width: $boxed-layout-width;
         margin: 0 auto;
         left: 0 !important;
     }
@@ -46,10 +46,10 @@
         #page-topbar,
         .footer {
             left: 0 !important;
-            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width-sm));
+            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width-sm});
 
             @media (min-width: 768px) {
-                left: var(--#{$prefix}vertical-menu-width-sm) !important;
+                left: $vertical-menu-width-sm !important;
             }
         }
     }
@@ -59,10 +59,10 @@
 
         #page-topbar,
         .footer {
-            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width));
+            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width});
 
             @media (min-width: 768px) {
-                left: var(--#{$prefix}vertical-menu-width) !important;
+                left: $vertical-menu-width !important;
             }
         }
     }
@@ -71,10 +71,10 @@
 
         #page-topbar,
         .footer {
-            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width-md));
+            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width-md});
 
             @media (min-width: 768px) {
-                left: var(--#{$prefix}vertical-menu-width-md) !important;
+                left: $vertical-menu-width-md !important;
             }
         }
     }
@@ -123,11 +123,11 @@
 
     .container-fluid,
     .navbar-header {
-        max-width: var(--#{$prefix}boxed-layout-width);
+        max-width: $boxed-layout-width;
     }
 
     .navbar-header {
-        padding: 0 calc(#{$grid-gutter-width} * 0.5) 0 0;
+        padding: 0 calc(#{$grid-gutter-width} / 2) 0 0;
     }
 
     &[data-sidebar-size="sm-hover"],
@@ -158,105 +158,6 @@
             #page-topbar,
             .topnav {
                 position: absolute;
-            }
-        }
-    }
-}
-
-//Semibox Sidebar Action 
-
-[data-layout="semibox"][data-sidebar-visibility="hidden"] {
-
-    @media (min-width: 768px) {
-        .navbar-menu {
-            display: none;
-        }
-
-        .horizontal-logo {
-            display: inline-block;
-            width: auto;
-        }
-
-        .footer {
-            left: 0;
-        }
-
-        #page-topbar {
-            left: 0;
-        }
-
-        .main-content {
-            margin-left: 0px;
-        }
-
-        &[data-sidebar-size="sm"],
-        &[data-sidebar-size="sm-hover"] {
-            .navbar-brand-box {
-                position: static;
-                padding: 0 1.3rem
-            }
-
-            .logo {
-                span.logo-lg {
-                    display: inline-block;
-                }
-
-                span.logo-sm {
-                    display: none;
-                }
-            }
-        }
-    }
-
-
-    &:is([data-sidebar="dark"], [data-sidebar="gradient"], [data-sidebar="gradient-2"], [data-sidebar="gradient-3"], [data-sidebar="gradient-4"]) {
-        .logo-dark {
-            display: none;
-        }
-
-        .logo-light {
-            display: inline-block;
-        }
-    }
-
-    @media (min-width: 1440px) {
-        .navbar-menu {
-            display: none;
-        }
-
-        .horizontal-logo {
-            display: inline-block;
-            width: auto;
-        }
-
-        .footer {
-            left: calc(var(--#{$prefix}semibox-width) + #{$grid-gutter-width});
-        }
-
-        #page-topbar {
-            left: calc(var(--#{$prefix}semibox-width) + #{$grid-gutter-width});
-        }
-
-        .main-content {
-            margin-left: 0px;
-        }
-
-
-        &[data-sidebar-size="sm"],
-        &[data-sidebar-size="sm-hover"] {
-            .navbar-brand-box {
-                position: static;
-                padding: 0 1.3rem
-            }
-
-            .logo {
-                span.logo-lg {
-                    display: inline-block;
-                }
-
-                span.logo-sm {
-                    display: none;
-                }
             }
         }
     }

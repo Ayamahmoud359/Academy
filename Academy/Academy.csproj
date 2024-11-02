@@ -8,6 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Pages\Shared\Partials\_customizer.cshtml" />
+    <None Include="Pages\Shared\Partials\_footer.cshtml" />
+    <None Include="Pages\Shared\Partials\_head_css.cshtml" />
+    <None Include="Pages\Shared\Partials\_Layout.cshtml" />
+    <None Include="Pages\Shared\Partials\_menu.cshtml" />
+    <None Include="Pages\Shared\Partials\_page_title.cshtml" />
+    <None Include="Pages\Shared\Partials\_sidebar.cshtml" />
+    <None Include="Pages\Shared\Partials\_title_meta.cshtml" />
+    <None Include="Pages\Shared\Partials\_topbar.cshtml" />
+    <None Include="Pages\Shared\Partials\_ValidationScriptsPartial.cshtml" />
+    <None Include="Pages\Shared\Partials\_vendor_scripts.cshtml" />
+    <None Include="Pages\Shared\_AuthLayout.cshtml" />
+    <None Include="Pages\Shared\_Layout.cshtml" />
+    <None Include="Pages\Shared\_LoginPartial.cshtml" />
+    <None Include="Pages\Shared\_SiteLayout.cshtml" />
+    <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DevExtreme.AspNet.Data" Version="2.8.6" />
     <PackageReference Include="DevExtreme.AspNet.Core" Version="22.1.6" />
     <PackageReference Include="DevExpress.AspNetCore.Core" Version="22.1.6" />

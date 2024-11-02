@@ -9,20 +9,23 @@ File: nft Dashboard init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
             return colors.map(function (value) {
                 var newValue = value.replace(" ", "");
                 if (newValue.indexOf(",") === -1) {
-                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                    var color = getComputedStyle(document.documentElement).getPropertyValue(
+                        newValue
+                    );
                     if (color) return color;
-                    else return newValue;;
+                    else return newValue;
                 } else {
-                    var val = value.split(',');
+                    var val = value.split(",");
                     if (val.length == 2) {
-                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                        var rgbaColor = getComputedStyle(
+                            document.documentElement
+                        ).getPropertyValue(val[0]);
                         rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
                         return rgbaColor;
                     } else {
@@ -31,7 +34,7 @@ function getChartColorsArray(chartId) {
                 }
             });
         } else {
-            console.warn('data-colors attributes not found on', chartId);
+            console.warn('data-colors atributes not found on', chartId);
         }
     }
 }
@@ -619,29 +622,26 @@ if (linechartBasicColors) {
 }
 
 
-var worldemapmarkers = "";
-function loadCharts() {
-    //creators-by-locations world map with markers
-    var vectorMapWorldMarkersColors = getChartColorsArray("creators-by-locations");
-    if (vectorMapWorldMarkersColors) {
-        document.getElementById("creators-by-locations").innerHTML = "";
-        worldemapmarkers = "";
-        worldemapmarkers = new jsVectorMap({
-            map: "world_merc",
-            selector: "#creators-by-locations",
-            zoomOnScroll: false,
-            zoomButtons: false,
-            selectedMarkers: [0, 5],
-            regionStyle: {
-                initial: {
-                    stroke: "#9599ad",
-                    strokeWidth: 0.25,
-                    fill: vectorMapWorldMarkersColors[0],
-                    fillOpacity: 1,
-                },
+
+//creators-by-locations world map with markers
+var vectorMapWorldMarkersColors = getChartColorsArray("creators-by-locations");
+if (vectorMapWorldMarkersColors) {
+    var worldemapmarkers = new jsVectorMap({
+        map: "world_merc",
+        selector: "#creators-by-locations",
+        zoomOnScroll: false,
+        zoomButtons: false,
+        selectedMarkers: [0, 5],
+        regionStyle: {
+            initial: {
+                stroke: "#9599ad",
+                strokeWidth: 0.25,
+                fill: vectorMapWorldMarkersColors[0],
+                fillOpacity: 1,
             },
-            markersSelectable: true,
-            markers: [{
+        },
+        markersSelectable: true,
+        markers: [{
                 name: "United States",
                 coords: [37.0902, 95.7129],
                 style: {
@@ -676,31 +676,22 @@ function loadCharts() {
                     image: "/assets/images/flags/germany.svg",
                 }
             },
-            ],
-            markerStyle: {
-                initial: {
+        ],
+        markerStyle: {
+            initial: {
                 
-                    fill: vectorMapWorldMarkersColors[1],
-                },
-                selected: {
-                    fill: vectorMapWorldMarkersColors[2],
+                fill: vectorMapWorldMarkersColors[1],
+            },
+            selected: {
+                fill: vectorMapWorldMarkersColors[2],
+            },
+        },
+        labels: {
+            markers: {
+                render: function (marker) {
+                    return marker.name;
                 },
             },
-            labels: {
-                markers: {
-                    render: function (marker) {
-                        return marker.name;
-                    },
-                },
-            },
-        });
-    }
+        },
+    });
 }
-
-window.onresize = function () {
-    setTimeout(() => {
-        loadCharts();
-    }, 0);
-};
-
-loadCharts();

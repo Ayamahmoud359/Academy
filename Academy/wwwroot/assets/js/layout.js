@@ -1,7 +1,7 @@
 /*
 Template Name: Velzon - Admin & Dashboard Template
 Author: Themesbrand
-Version: 4.1.0
+Version: 1.5.0
 Website: https://Themesbrand.com/
 Contact: Themesbrand@gmail.com
 File: Layout Js File
@@ -28,18 +28,13 @@ File: Layout Js File
             var isLayoutAttributes = {};
             isLayoutAttributes['data-layout'] = sessionStorage.getItem('data-layout');
             isLayoutAttributes['data-sidebar-size'] = sessionStorage.getItem('data-sidebar-size');
-            isLayoutAttributes['data-bs-theme'] = sessionStorage.getItem('data-bs-theme');
+            isLayoutAttributes['data-layout-mode'] = sessionStorage.getItem('data-layout-mode');
             isLayoutAttributes['data-layout-width'] = sessionStorage.getItem('data-layout-width');
             isLayoutAttributes['data-sidebar'] = sessionStorage.getItem('data-sidebar');
-            isLayoutAttributes['data-sidebar-image'] = sessionStorage.getItem('data-sidebar-image');
             isLayoutAttributes['data-layout-direction'] = sessionStorage.getItem('data-layout-direction');
             isLayoutAttributes['data-layout-position'] = sessionStorage.getItem('data-layout-position');
             isLayoutAttributes['data-layout-style'] = sessionStorage.getItem('data-layout-style');
             isLayoutAttributes['data-topbar'] = sessionStorage.getItem('data-topbar');
-            isLayoutAttributes['data-preloader'] = sessionStorage.getItem('data-preloader');
-            isLayoutAttributes['data-body-image'] = sessionStorage.getItem('data-body-image');
-            isLayoutAttributes['data-theme'] = sessionStorage.getItem('data-theme');
-            isLayoutAttributes['data-theme-colors'] = sessionStorage.getItem('data-theme-colors');
 
             Object.keys(isLayoutAttributes).forEach(function (x) {
                 if (isLayoutAttributes[x] && isLayoutAttributes[x]) {

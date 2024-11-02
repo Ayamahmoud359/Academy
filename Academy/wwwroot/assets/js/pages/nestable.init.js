@@ -11,7 +11,7 @@ var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'
 
 // Loop through each nested sortable element
 if (nestedSortables)
-    Array.from(nestedSortables).forEach(function (nestedSort){
+Array.from(nestedSortables).forEach(function (nestedSort){
         new Sortable(nestedSort, {
             group: 'nested',
             animation: 150,

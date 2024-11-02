@@ -1,6 +1,10 @@
 import { h } from 'preact';
-export declare function MessageRow(props: {
+import { BaseComponent, BaseProps } from '../base';
+export interface MessageRowProps extends BaseProps {
     message: string;
     colSpan?: number;
     className?: string;
-}): h.JSX.Element;
+}
+export declare class MessageRow extends BaseComponent<MessageRowProps> {
+    render(): h.JSX.Element;
+}
