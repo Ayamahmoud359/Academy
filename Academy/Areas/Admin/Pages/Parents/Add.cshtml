@@ -45,7 +45,7 @@
                             <span asp-validation-for="@Model.ParentVM.ParentAddress" class="text-danger"></span>
                         </div>
                         <div class="mb-3">
-                            <label class="visually-hidden" for="inlineFormSelectPref">Branch</label>
+                            <label class= "form-label" asp-for="@Model.ParentVM.BranchId">Branch</label>
                             <select asp-for="@Model.ParentVM.BranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
 

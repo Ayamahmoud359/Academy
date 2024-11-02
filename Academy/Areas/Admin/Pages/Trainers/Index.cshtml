@@ -44,7 +44,7 @@
                             <span asp-validation-for="@Model.Trainer.TrainerAddress" class="text-danger"></span>   
                         </div>
                         <div class="mb-3">
-                            <label class="visually-hidden" for="inlineFormSelectPref">Branch</label>
+                            <label class="form-label" asp-for="@Model.Trainer.BranchId">Branch</label>
                             <select asp-for="@Model.Trainer.BranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
                                
@@ -54,7 +54,7 @@
                         </div><!--end col-->
 
                         <div class="mb-3">
-                            <label class="visually-hidden" for="inlineFormSelectPref">Department</label>
+                            <label class="form-label" asp-for="@Model.Trainer.DepartmentId">Department</label>
                             <select asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
 
