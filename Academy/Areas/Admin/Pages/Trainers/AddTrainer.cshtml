@@ -1,5 +1,5 @@
 ﻿@page
-@model Academy.Areas.Admin.Pages.Trainers.IndexModel
+@model Academy.Areas.Admin.Pages.AddTrainer.IndexModel
 
 @{
     ViewBag.Title = "Add Trainer";
@@ -55,12 +55,13 @@
 
                         <div class="mb-3">
                             <label class="form-label" asp-for="@Model.Trainer.DepartmentId">Department</label>
-                            <select asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
+                            <select onclick="GetDepartmentCategories(@Model.Trainer.DepartmentId)" asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
 
                             </select>
                             <span asp-validation-for="@Model.Trainer.DepartmentId" class="text-danger"></span>
                         </div><!--end col-->
+
                         <div class="mb-3">
                            
                             <label class="form-label" asp-for="@Model.Trainer.Password">Password</label>
@@ -97,8 +98,7 @@
 </div><!--end row-->
 
 
-
-
+<script src="~/pages/AddTrainer.js"></script>
 
     <!-- prismjs plugin -->
     <script src="~/assets/libs/prismjs/prism.js"></script>

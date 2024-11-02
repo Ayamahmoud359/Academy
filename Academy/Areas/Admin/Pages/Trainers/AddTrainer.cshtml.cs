@@ -10,7 +10,7 @@ using System.Text.Encodings.Web;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Academy.Areas.Admin.Pages.Trainers
+namespace Academy.Areas.Admin.Pages.AddTrainer
 {
     public class IndexModel : PageModel
     {

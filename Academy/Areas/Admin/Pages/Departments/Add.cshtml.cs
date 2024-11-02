@@ -28,7 +28,9 @@ namespace Academy.Areas.Admin.Pages.Departments
            
                 IsActive = true,
                 DepartmentNameAR=Dept.DepartmentNameAR,
+                DepartmentNameEN=Dept.DepartmentNameAR,
                 DepartmentDescriptionAR=Dept.DepartmentDescriptionAR,
+                DepartmentDescriptionEN=Dept.DepartmentDescriptionAR,
                 BranchId=Dept.BranchId
 
             };
