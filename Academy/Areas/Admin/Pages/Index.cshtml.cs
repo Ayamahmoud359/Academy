@@ -1,12 +1,10 @@
-using Academy.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Academy.Areas.Admin.Pages.Branch
+namespace Academy.Areas.Admin.Pages
 {
     public class IndexModel : PageModel
     {
-        public BranchVM BranchVM { get; set; }
         public void OnGet()
         {
         }

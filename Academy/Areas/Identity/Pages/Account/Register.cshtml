@@ -1,46 +1,57 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewBag.Title = "Register Trainer";
-    ViewBag.pTitle = "Register Trainer";
+    ViewBag.Title = "Register ";
+    ViewBag.pTitle = "Register ";
     ViewBag.pageTitle = "Register";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+  //  Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <div class="row">
     <div class="col-xxl-12">
         <div class="card">
             <div class="card-header align-items-center d-flex">
-                <h4 class="card-title mb-0 flex-grow-1">Vertical Form</h4>
+                <h4 class="card-title mb-0 flex-grow-1">Register</h4>
                
             </div><!-- end card header -->
             <div class="card-body">
                 <div class="live-preview">
-                    <form action="javascript:void(0);">
+                    <form method="post">
+
                         <div class="mb-3">
-                            <label for="employeeName" class="form-label">Employee Name</label>
-                            <input type="text" class="form-control" id="employeeName" placeholder="Enter emploree name">
+                            <label asp-for="@Model.Input.Email" class="form-label">Email</label>
+                            <input asp-for="@Model.Input.Email" class="form-control" />
+                            <span asp-validation-for="@Model.Input.Email" class="text-danger"></span>
                         </div>
+                        
                         <div class="mb-3">
-                            <label for="employeeUrl" class="form-label">Employee Department URL</label>
-                            <input type="url" class="form-control" id="employeeUrl" placeholder="Enter emploree url">
+
+                            <label class="form-label" asp-for="@Model.Input.Password">Password</label>
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <input type="password" asp-for="@Model.Input.Password" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+
+                            </div>
+                            <span asp-validation-for="@Model.Input.Password" class="text-danger"></span>
+
                         </div>
+
                         <div class="mb-3">
-                            <label for="StartleaveDate" class="form-label">Start Leave Date</label>
-                            <input type="date" class="form-control" data-provider="flatpickr" id="StartleaveDate">
-                        </div>
-                        <div class="mb-3">
-                            <label for="EndleaveDate" class="form-label">End Leave Date</label>
-                            <input type="date" class="form-control" data-provider="flatpickr" id="EndleaveDate">
-                        </div>
-                        <div class="mb-3">
-                            <label for="VertimeassageInput" class="form-label">Message</label>
-                            <textarea class="form-control" id="VertimeassageInput" rows="3" placeholder="Enter your message"></textarea>
+
+                            <label class="form-label" asp-for="@Model.Input.ConfirmPassword">Confirm Password</label>
+                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                <input type="password" asp-for="@Model.Input.ConfirmPassword" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
+                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+
+                            </div>
+                            <span asp-validation-for="@Model.Input.ConfirmPassword" class="text-danger"></span>
+
                         </div>
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Add Leave</button>
+                            <button type="submit" class="btn btn-primary">Add User</button>
                         </div>
                     </form>
+
                 </div>
                 <div class="d-none code-view">
 <pre class="language-markup" style="height: 375px;">

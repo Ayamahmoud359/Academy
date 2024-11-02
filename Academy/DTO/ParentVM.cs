@@ -1,10 +1,8 @@
-﻿using Academy.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Academy.DTO
 {
-    public class TrainerVM
+    public class ParentVM
     {
         [Required]
         [EmailAddress]
@@ -22,15 +20,13 @@ namespace Academy.DTO
         public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "Trainer Name is required")]
-        public string TrainerName { get; set; }
-        public string TrainerPhone { get; set; }
+        public string ParentName { get; set; }
+        public string ParentPhone { get; set; }
         [Required(ErrorMessage = "Trainer Address is required")]
-        public string TrainerAddress { get; set; }
+        public string ParentAddress { get; set; }
 
         [Required(ErrorMessage = "Branch is required")]
         public int BranchId { get; set; }
-        ///Department Id
-        [Required(ErrorMessage = "Department is required")]
-        public int DepartmentId { get; set; }
+   
     }
 }
