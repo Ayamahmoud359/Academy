@@ -1,4 +1,5 @@
 ﻿function GetDepartmentCategories(departmentId) {
     console.log("GetDepartmentCategories");
-console.log(departmentId);
+    console.log(departmentId);
+
 }

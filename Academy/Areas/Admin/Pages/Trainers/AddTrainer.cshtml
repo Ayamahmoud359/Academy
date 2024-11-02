@@ -55,7 +55,16 @@
 
                         <div class="mb-3">
                             <label class="form-label" asp-for="@Model.Trainer.DepartmentId">Department</label>
-                            <select onclick="GetDepartmentCategories(@Model.Trainer.DepartmentId)" asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
+                            <select onchange="GetDepartmentCategories(this.value)" asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
+                                <option selected disabled>Choose...</option>
+
+                            </select>
+                            <span asp-validation-for="@Model.Trainer.DepartmentId" class="text-danger"></span>
+                        </div><!--end col-->
+
+                        <div class="mb-3">
+                            <label class="form-label" asp-for="@Model.Trainer.DepartmentId">Department</label>
+                            <select onchange="GetDepartmentCategories(this.value)" asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
 
                             </select>
