@@ -45,7 +45,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" asp-for="@Model.Trainer.BranchId">Branch</label>
-                            <select asp-for="@Model.Trainer.BranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
+                            <select asp-for=" @Model.Trainer.BranchId" asp-items="@(new SelectList(Model.Branches, "BranchId", "BranchNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
                                 <option selected disabled>Choose...</option>
                                
                             </select>
