@@ -7,7 +7,7 @@ table.dataTable th.dataTables_empty {
     text-align: center;
     padding: 50px;
     font-weight: $font-weight-semibold;
-    --vz-table-accent-bg: var(--#{$prefix}secondary-bg);
+    --vz-table-accent-bg: var(--#{$prefix}card-bg-custom);
 }
 
 table.dataTable>thead .sorting:before,
@@ -54,8 +54,8 @@ table {
                         >td {
                             &.dtr-control {
                                 &::before {
-                                    background-color: var(--#{$prefix}primary);
-                                    border-color: var(--#{$prefix}secondary-bg);
+                                    background-color: $primary;
+                                    border-color: var(--#{$prefix}card-bg-custom);
                                 }
                             }
                         }
@@ -65,7 +65,7 @@ table {
                                 >th {
                                     &.dtr-control {
                                         &::before {
-                                            background-color: var(--#{$prefix}danger);
+                                            background-color: $danger;
                                         }
                                     }
                                 }
@@ -74,7 +74,7 @@ table {
                             >td {
                                 &.dtr-control {
                                     &::before {
-                                        background-color: var(--#{$prefix}danger);
+                                        background-color: $danger;
                                     }
                                 }
                             }
@@ -137,7 +137,7 @@ div{
         div {
             &.dtr-modal-display {
                 background-color: $modal-content-bg;
-                border-color: var(--#{$prefix}border-color);
+                border-color: $border-color;
                 box-shadow: none;
                 height: 70%;
             }
@@ -163,8 +163,8 @@ div{
                 width: 30px;
                 height: 30px;
                 line-height: 30px;
-                background-color: var(--#{$prefix}secondary-bg);
-                border-color: var(--#{$prefix}border-color);
+                background-color: var(--#{$prefix}card-bg-custom);
+                border-color: $border-color;
                 &:hover {
                     background-color: var(--#{$prefix}light);
                 }
@@ -174,41 +174,15 @@ div{
 }
 
 
+
+
 .dt-buttons {
-    :is(button.dt-button, div.dt-button, a.dt-button, input.dt-button) {
-        border-color: var(--#{$prefix}border-color);
+    button.dt-button,
+    div.dt-button,
+    a.dt-button,
+    input.dt-button {
+        border-color: $border-color;
         background: var(--#{$prefix}light);
-        color: var(--#{$prefix}body-color);
+        color: var(--#{$prefix}gray-800);
     }
-}
-
-:is(button, div, a, input):is(.dt-button:hover:not(.disabled)) {
-    border-color: var(--#{$prefix}border-color);
-    background: var(--#{$prefix}light);
-    color: var(--#{$prefix}body-color);
-}
-
-:is(button, div, a, input):is(.dt-button:active:not(.disabled)),
-:is(button, div, a, input):is(.dt-button.active:not(.disabled)) {
-    border-color: var(--#{$prefix}border-color);
-    background: var(--#{$prefix}light);
-    color: var(--#{$prefix}body-color);
-    box-shadow: none;
-}
-
-:is(button, div, a, input):is(.dt-button:focus:not(.disabled)){
-    border-color: var(--#{$prefix}border-color);
-    background: var(--#{$prefix}light);
-    color: var(--#{$prefix}body-color);
-    text-shadow: none;
-    box-shadow: none;
-}
-
-:is(button, div, a, input):is(.dt-button:active:not(.disabled):hover:not(.disabled)),
-:is(button, div, a, input):is(.dt-button.active:not(.disabled):hover:not(.disabled)) {
-    border-color: var(--#{$prefix}border-color);
-    background: var(--#{$prefix}light);
-    color: var(--#{$prefix}body-color);
-    text-shadow: none;
-    box-shadow: none;
 }

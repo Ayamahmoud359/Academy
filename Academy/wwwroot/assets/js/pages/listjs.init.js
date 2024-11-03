@@ -25,7 +25,6 @@ if (checkAll) {
 }
 
 var perPage = 8;
-var editlist = false;
 
 //Table
 var options = {
@@ -46,7 +45,6 @@ var options = {
         })
     ]
 };
-
 // Init list
 if (document.getElementById("customerList"))
     var customerList = new List("customerList", options).on("updated", function (list) {
@@ -162,11 +160,13 @@ if (document.getElementById("showModal")) {
         if (e.relatedTarget.classList.contains("edit-item-btn")) {
             document.getElementById("exampleModalLabel").innerHTML = "Edit Customer";
             document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-            document.getElementById("add-btn").innerHTML = "Update";
+            document.getElementById("add-btn").style.display = "none";
+            document.getElementById("edit-btn").style.display = "block";
         } else if (e.relatedTarget.classList.contains("add-btn")) {
             document.getElementById("exampleModalLabel").innerHTML = "Add Customer";
             document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-            document.getElementById("add-btn").innerHTML = "Add Customer";
+            document.getElementById("edit-btn").style.display = "none";
+            document.getElementById("add-btn").style.display = "block";
         } else {
             document.getElementById("exampleModalLabel").innerHTML = "List Customer";
             document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
@@ -179,6 +179,7 @@ if (document.getElementById("showModal")) {
     });
 }
 document.querySelector("#customerList").addEventListener("click", function () {
+    refreshCallbacks();
     ischeckboxcheck();
 });
 
@@ -188,93 +189,83 @@ var tr = table.getElementsByTagName("tr");
 var trlist = table.querySelectorAll(".list tr");
 
 var count = 11;
-
-var forms = document.querySelectorAll('.tablelist-form')
-Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-            if (
-                customerNameField.value !== "" &&
-                emailField.value !== "" &&
-                dateField.value !== "" &&
-                phoneField.value !== "" && !editlist
-            ) {
-                customerList.add({
-                    id: '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ' + count + "</a>",
+if (addBtn)
+    addBtn.addEventListener("click", function (e) {
+        if (
+            customerNameField.value !== "" &&
+            emailField.value !== "" &&
+            dateField.value !== "" &&
+            phoneField.value !== ""
+        ) {
+            customerList.add({
+                id: '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ'+count+"</a>",
+                customer_name: customerNameField.value,
+                email: emailField.value,
+                date: dateField.value,
+                phone: phoneField.value,
+                status: isStatus(statusField.value),
+            });
+            customerList.sort('id', { order: "desc" });
+            document.getElementById("close-modal").click();
+            clearFields();
+            refreshCallbacks();
+            filterContact("All");
+            count++;
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Customer inserted successfully!',
+              showConfirmButton: false,
+              timer: 2000,
+              showCloseButton: true
+            });
+        }
+    });
+if (editBtn)
+    editBtn.addEventListener("click", function (e) {
+        document.getElementById("exampleModalLabel").innerHTML = "Edit Customer";
+        var editValues = customerList.get({
+            id: idField.value,
+        });
+        Array.from(editValues).forEach(function (x) {
+            isid = new DOMParser().parseFromString(x._values.id, "text/html");
+            var selectedid = isid.body.firstElementChild.innerHTML;
+            if (selectedid == itemId) {
+                x.values({
+                    id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
                     customer_name: customerNameField.value,
                     email: emailField.value,
                     date: dateField.value,
                     phone: phoneField.value,
                     status: isStatus(statusField.value),
                 });
-                customerList.sort('id', { order: "desc" });
-                document.getElementById("close-modal").click();
-                refreshCallbacks();
-                clearFields();
-                filterContact("All");
-                count++;
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Customer inserted successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
-            } else if (
-                customerNameField.value !== "" &&
-                emailField.value !== "" &&
-                dateField.value !== "" &&
-                phoneField.value !== "" && editlist
-            ){
-                var editValues = customerList.get({
-                    id: idField.value,
-                });
-                Array.from(editValues).forEach(function (x) {
-                    isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var selectedid = isid.body.firstElementChild.innerHTML;
-                    if (selectedid == itemId) {
-                        x.values({
-                            id: '<a href="javascript:void(0);" class="fw-medium link-primary">' + idField.value + "</a>",
-                            customer_name: customerNameField.value,
-                            email: emailField.value,
-                            date: dateField.value,
-                            phone: phoneField.value,
-                            status: isStatus(statusField.value),
-                        });
-                    }
-                });
-                document.getElementById("close-modal").click();
-                clearFields();
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Customer updated Successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
             }
-        }
-    }, false)
-})
+        });
+        document.getElementById("close-modal").click();
+        clearFields();
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Customer updated Successfully!',
+            showConfirmButton: false,
+            timer: 2000,
+            showCloseButton: true
+        });
+    });
 
 var statusVal = new Choices(statusField);
+
 function isStatus(val) {
     switch (val) {
         case "Active":
             return (
-                '<span class="badge bg-success-subtle text-success text-uppercase">' +
+                '<span class="badge badge-soft-success text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Block":
             return (
-                '<span class="badge bg-danger-subtle text-danger text-uppercase">' +
+                '<span class="badge badge-soft-danger text-uppercase">' +
                 val +
                 "</span>"
             );
@@ -296,29 +287,28 @@ function ischeckboxcheck() {
 function refreshCallbacks() {
     if (removeBtns)
     Array.from(removeBtns).forEach(function (btn) {
-        btn.addEventListener("click", function (e) {
-            e.target.closest("tr").children[1].innerText;
-            itemId = e.target.closest("tr").children[1].innerText;
-            var itemValues = customerList.get({
-                id: itemId,
-            });
+            btn.addEventListener("click", function (e) {
+                e.target.closest("tr").children[1].innerText;
+                itemId = e.target.closest("tr").children[1].innerText;
+                var itemValues = customerList.get({
+                    id: itemId,
+                });
 
-            Array.from(itemValues).forEach(function (x) {
-                deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
-                var isElem = deleteid.body.firstElementChild;
-                var isdeleteid = deleteid.body.firstElementChild.innerHTML;
-                if (isdeleteid == itemId) {
-                    document.getElementById("delete-record").addEventListener("click", function () {
-                        customerList.remove("id", isElem.outerHTML);
-                        document.getElementById("deleteRecordModal").click();
-                    });
-                }
+                Array.from(itemValues).forEach(function (x) {
+                    deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+                    var isElem = deleteid.body.firstElementChild;
+                    var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+                    if (isdeleteid == itemId) {
+                        document.getElementById("delete-record").addEventListener("click", function () {
+                            customerList.remove("id", isElem.outerHTML);
+                            document.getElementById("deleteRecordModal").click();
+                        });
+                    }
+                });
             });
         });
-    });
-
-    if (editBtns)
-        Array.from(editBtns).forEach(function (btn) {
+    if (editBtn)
+    Array.from(editBtns).forEach(function (btn) {
             btn.addEventListener("click", function (e) {
                 e.target.closest("tr").children[1].innerText;
                 itemId = e.target.closest("tr").children[1].innerText;
@@ -330,7 +320,6 @@ function refreshCallbacks() {
                     isid = new DOMParser().parseFromString(x._values.id, "text/html");
                     var selectedid = isid.body.firstElementChild.innerHTML;
                     if (selectedid == itemId) {
-                        editlist = true;
                         idField.value = selectedid;
                         customerNameField.value = x._values.customer_name;
                         emailField.value = x._values.email;
@@ -382,32 +371,24 @@ function deleteMultiple() {
     }
   } else {
     Swal.fire({
-        title: 'Please select at least one checkbox',
-        customClass: {
-            confirmButton: 'btn btn-info',
-        },
+      title: 'Please select at least one checkbox',
+      confirmButtonClass: 'btn btn-info',
       buttonsStyling: false,
       showCloseButton: true
     });
   }
 }
 
-
-
-document.querySelectorAll(".listjs-table").forEach(function(item){
-    item.querySelector(".pagination-next").addEventListener("click", function () {
-        (item.querySelector(".pagination.listjs-pagination")) ? (item.querySelector(".pagination.listjs-pagination").querySelector(".active")) ?
-         item.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click(): '': '';
+if (document.querySelector(".pagination-next"))
+    document.querySelector(".pagination-next").addEventListener("click", function () {
+        (document.querySelector(".pagination.listjs-pagination")) ? (document.querySelector(".pagination.listjs-pagination").querySelector(".active")) ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active").nextElementSibling.children[0].click(): '': '';
     });
-});
-
-document.querySelectorAll(".listjs-table").forEach(function(item){
-    item.querySelector(".pagination-prev").addEventListener("click", function () {
-        (item.querySelector(".pagination.listjs-pagination")) ? (item.querySelector(".pagination.listjs-pagination").querySelector(".active")) ?
-         item.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click(): '': '';
+if (document.querySelector(".pagination-prev"))
+    document.querySelector(".pagination-prev").addEventListener("click", function () {
+        (document.querySelector(".pagination.listjs-pagination")) ? (document.querySelector(".pagination.listjs-pagination").querySelector(".active")) ?
+        document.querySelector(".pagination.listjs-pagination").querySelector(".active").previousSibling.children[0].click(): '': '';
     });
-});
-
 
 // data- attribute example
 var attroptions = {

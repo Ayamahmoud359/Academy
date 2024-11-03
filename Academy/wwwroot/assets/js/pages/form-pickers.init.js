@@ -11,7 +11,7 @@ File: Form pickers Js File
 // classic color picker
 var classicPickrDemo = document.querySelectorAll(".classic-colorpicker");
 if (classicPickrDemo)
-    Array.from(classicPickrDemo).forEach(function () {
+Array.from(classicPickrDemo).forEach(function () {
         Pickr.create({
             el: ".classic-colorpicker",
             theme: "classic", // or 'monolith', or 'nano'
@@ -55,7 +55,7 @@ if (classicPickrDemo)
 // monolith color picker
 var monolithColorPickr = document.querySelectorAll(".monolith-colorpicker");
 if (monolithColorPickr)
-    Array.from(monolithColorPickr).forEach(function () {
+Array.from(monolithColorPickr).forEach(function () {
         Pickr.create({
             el: ".monolith-colorpicker",
             theme: "monolith",
@@ -92,7 +92,7 @@ if (monolithColorPickr)
 // nano color picker
 var nanoColorPickr = document.querySelectorAll(".nano-colorpicker");
 if (nanoColorPickr)
-    Array.from(nanoColorPickr).forEach(function () {
+Array.from(nanoColorPickr).forEach(function () {
         Pickr.create({
             el: ".nano-colorpicker",
             theme: "nano",
@@ -129,7 +129,7 @@ if (nanoColorPickr)
 // demo color picker
 var demoColorPickr = document.querySelectorAll(".colorpicker-demo");
 if (demoColorPickr)
-    Array.from(demoColorPickr).forEach(function () {
+Array.from(demoColorPickr).forEach(function () {
         Pickr.create({
             el: ".colorpicker-demo",
             theme: "monolith",
@@ -149,7 +149,7 @@ if (demoColorPickr)
 // color picker opacity & hue
 var opacityHueColorPickr = document.querySelectorAll(".colorpicker-opacity-hue");
 if (opacityHueColorPickr)
-    Array.from(opacityHueColorPickr).forEach(function () {
+Array.from(opacityHueColorPickr).forEach(function () {
         Pickr.create({
             el: ".colorpicker-opacity-hue",
             theme: "monolith",
@@ -171,11 +171,11 @@ if (opacityHueColorPickr)
     });
 
 // color picker swatches
-var swatcherColorPickr = document.querySelectorAll(".colorpicker-switch");
+var swatcherColorPickr = document.querySelectorAll(".colorpicker-swatches");
 if (swatcherColorPickr)
-    Array.from(swatcherColorPickr).forEach(function () {
+Array.from(swatcherColorPickr).forEach(function () {
         Pickr.create({
-            el: ".colorpicker-switch",
+            el: ".colorpicker-swatches",
             theme: "monolith",
             default: "#3577f1",
             swatches: [
@@ -205,7 +205,7 @@ if (swatcherColorPickr)
 // color picker input
 var inputColorPickr = document.querySelectorAll(".colorpicker-input");
 if (inputColorPickr)
-    Array.from(inputColorPickr).forEach(function () {
+Array.from(inputColorPickr).forEach(function () {
         Pickr.create({
             el: ".colorpicker-input",
             theme: "monolith",
@@ -238,7 +238,7 @@ if (inputColorPickr)
 // color picker Format
 var formatColorPickr = document.querySelectorAll(".colorpicker-format");
 if (formatColorPickr)
-    Array.from(formatColorPickr).forEach(function () {
+Array.from(formatColorPickr).forEach(function () {
         Pickr.create({
             el: ".colorpicker-format",
             theme: "monolith",

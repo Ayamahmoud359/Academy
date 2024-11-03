@@ -8,14 +8,16 @@ File: Invoice create init Js File
 
 var paymentSign = "$";
 Array.from(document.getElementsByClassName("product-line-price")).forEach(function (item) {
-	item.value = paymentSign +"0.00"
+	item.value = paymentSign + "0.00"
 });
 function otherPayment() {
 	var paymentType = document.getElementById("choices-payment-currency").value;
 	paymentSign = paymentType;
 
 
-	Array.from(document.getElementsByClassName("product-line-price")).forEach(function (item) {
+	Array.from(document
+		.getElementsByClassName("product-line-price"))
+		.forEach(function (item) {
 			isUpdate = item.value.slice(1);
 			item.value = paymentSign + isUpdate;
 		});
@@ -299,14 +301,14 @@ var invoices = JSON.parse(invoices_list);
 if (localStorage.getItem("invoice_no") === null && localStorage.getItem("option") === null) {
 	viewobj = '';
 	var value = "#VL" + Math.floor(11111111 + Math.random() * 99999999);
-    document.getElementById("invoicenoInput").value = value;
+	document.getElementById("invoicenoInput").value = value;
 } else {
-    viewobj = invoices.find(o => o.invoice_no === invoice_no);
+	viewobj = invoices.find(o => o.invoice_no === invoice_no);
 }
 
 // Invoice Data Load On Form
 if ((viewobj != '') && (options == "edit-invoice")) {
-	
+
 	document.getElementById("registrationNumber").value = viewobj.company_details.legal_registration_no;
 	document.getElementById("companyEmail").value = viewobj.company_details.email;
 	document.getElementById('companyWebsite').value = viewobj.company_details.website;
@@ -319,12 +321,12 @@ if ((viewobj != '') && (options == "edit-invoice")) {
 	document.getElementById("companyaddpostalcode").value = viewobj.company_details.zip_code;
 
 	var preview = document.querySelectorAll(".user-profile-image");
-    if (viewobj.img !== ''){
-        preview.src = viewobj.img;
-    }
+	if (viewobj.img !== '') {
+		preview.src = viewobj.img;
+	}
 
 	document.getElementById("invoicenoInput").value = "#VAL" + viewobj.invoice_no;
-	document.getElementById("invoicenoInput").setAttribute('readonly',true);
+	document.getElementById("invoicenoInput").setAttribute('readonly', true);
 	document.getElementById("date-field").value = viewobj.date;
 	document.getElementById("choices-payment-status").value = viewobj.status;
 	document.getElementById("totalamountInput").value = "$" + viewobj.order_summary.total_amount;
@@ -353,8 +355,8 @@ if ((viewobj != '') && (options == "edit-invoice")) {
 	do {
 		counter++;
 		if (paroducts_list.length > 1) {
-            document.getElementById("add-item").click();
-        }
+			document.getElementById("add-item").click();
+		}
 	} while (paroducts_list.length - 1 >= counter);
 
 	var counter_1 = 1;
@@ -404,24 +406,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		var i_no = (document.getElementById("invoicenoInput").value).slice(4);
 		var email = document.getElementById("companyEmail").value;
 		var date = document.getElementById("date-field").value;
-        var invoice_amount = (document.getElementById("totalamountInput").value).slice(1);
-        var status = document.getElementById("choices-payment-status").value;
-        var billing_address_full_name = document.getElementById("billingName").value;
-        var billing_address_address = document.getElementById("billingAddress").value;
-        var billing_address_phone = (document.getElementById("billingPhoneno").value).replace(/[^0-9]/g, "");
-        var billing_address_tax = document.getElementById("billingTaxno").value;
-        var shipping_address_full_name = document.getElementById("shippingName").value;
-        var shipping_address_address = document.getElementById("shippingAddress").value;
-        var shipping_address_phone = (document.getElementById("shippingPhoneno").value).replace(/[^0-9]/g, "");
-        var shipping_address_tax = document.getElementById("shippingTaxno").value;
-        var payment_details_payment_method = document.getElementById("choices-payment-type").value;
-        var payment_details_card_holder_name = document.getElementById("cardholderName").value;
-        var payment_details_card_number = (document.getElementById("cardNumber").value).replace(/[^0-9]/g, "");
-        var payment_details_total_amount = (document.getElementById("amountTotalPay").value).slice(1);
-        var company_details_legal_registration_no = (document.getElementById("registrationNumber").value).replace(/[^0-9]/g, "");
-        var company_details_email = document.getElementById("companyEmail").value;
-        var company_details_website = document.getElementById('companyWebsite').value;
-        var company_details_contact_no = (document.getElementById("compnayContactno").value).replace(/[^0-9]/g, "");
+		var invoice_amount = (document.getElementById("totalamountInput").value).slice(1);
+		var status = document.getElementById("choices-payment-status").value;
+		var billing_address_full_name = document.getElementById("billingName").value;
+		var billing_address_address = document.getElementById("billingAddress").value;
+		var billing_address_phone = (document.getElementById("billingPhoneno").value).replace(/[^0-9]/g, "");
+		var billing_address_tax = document.getElementById("billingTaxno").value;
+		var shipping_address_full_name = document.getElementById("shippingName").value;
+		var shipping_address_address = document.getElementById("shippingAddress").value;
+		var shipping_address_phone = (document.getElementById("shippingPhoneno").value).replace(/[^0-9]/g, "");
+		var shipping_address_tax = document.getElementById("shippingTaxno").value;
+		var payment_details_payment_method = document.getElementById("choices-payment-type").value;
+		var payment_details_card_holder_name = document.getElementById("cardholderName").value;
+		var payment_details_card_number = (document.getElementById("cardNumber").value).replace(/[^0-9]/g, "");
+		var payment_details_total_amount = (document.getElementById("amountTotalPay").value).slice(1);
+		var company_details_legal_registration_no = (document.getElementById("registrationNumber").value).replace(/[^0-9]/g, "");
+		var company_details_email = document.getElementById("companyEmail").value;
+		var company_details_website = document.getElementById('companyWebsite').value;
+		var company_details_contact_no = (document.getElementById("compnayContactno").value).replace(/[^0-9]/g, "");
 		var company_details_address = document.getElementById("companyAddress").value;
 		var company_details_zip_code = document.getElementById("companyaddpostalcode").value;
 		var order_summary_sub_total = (document.getElementById("cart-subtotal").value).slice(1);
@@ -436,12 +438,12 @@ document.addEventListener("DOMContentLoaded", function () {
 		var count = 1;
 		var new_product_obj = [];
 		Array.from(products).forEach(element => {
-			var product_name = element.querySelector("#productName-"+count).value;
-			var product_details = element.querySelector("#productDetails-"+count).value;
-			var product_rate = parseInt(element.querySelector("#productRate-"+count).value);
-			var product_qty = parseInt(element.querySelector("#product-qty-"+count).value);
-			var product_price = (element.querySelector("#productPrice-"+count).value).split("$");;
-			
+			var product_name = element.querySelector("#productName-" + count).value;
+			var product_details = element.querySelector("#productDetails-" + count).value;
+			var product_rate = parseInt(element.querySelector("#productRate-" + count).value);
+			var product_qty = parseInt(element.querySelector("#product-qty-" + count).value);
+			var product_price = (element.querySelector("#productPrice-" + count).value).split("$");;
+
 			var product_obj = {
 				product_name: product_name,
 				product_details: product_details,
@@ -452,7 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			new_product_obj.push(product_obj);
 			count++;
 		});
-		
+
 		if (formEvent.checkValidity() === false) {
 			formEvent.classList.add("was-validated");
 		} else {
@@ -541,7 +543,7 @@ document.addEventListener("DOMContentLoaded", function () {
 						address: company_details_address,
 						zip_code: company_details_zip_code
 					},
-					order_summary:{
+					order_summary: {
 						sub_total: order_summary_sub_total,
 						estimated_tex: order_summary_estimated_tex,
 						discount: order_summary_discount,
@@ -553,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				};
 				localStorage.setItem("new_data_object", JSON.stringify(new_data_object));
 			}
-			window.location.href = "apps-invoices-list.html";
+			window.location.href = "/Invoices/ListView";
 		}
 	});
 });

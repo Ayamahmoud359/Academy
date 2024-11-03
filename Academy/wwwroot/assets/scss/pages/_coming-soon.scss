@@ -25,12 +25,12 @@
         font-weight: $font-weight-medium;
         display: block;
         margin-bottom: 8px;
-        color: rgba(var(--#{$prefix}body-color-rgb), 0.5);
+        color: rgba(var(--#{$prefix}dark-rgb), 0.5);
         text-transform: uppercase;
     }
 
     .count-num{
-        background-color: var(--#{$prefix}secondary-bg);
+        background-color: var(--#{$prefix}card-bg-custom);
         padding: 16px 8px;
         position: relative;
         border-radius: $card-border-radius;
@@ -48,7 +48,7 @@
             right: -16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--#{$prefix}body-color);
+            color: var(--#{$prefix}dark);
         }
     }
 }
@@ -67,7 +67,7 @@
     font-weight: $font-weight-semibold;
     text-transform: uppercase;
     color: $white;
-    text-shadow: 3px 4px var(--#{$prefix}success);
+    text-shadow: 3px 4px $success;
 }
 
 .countdown-input-group{

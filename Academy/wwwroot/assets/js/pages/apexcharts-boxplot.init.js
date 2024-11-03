@@ -9,30 +9,25 @@ File: Boxplot Chart init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
-        if (colors) {
-            colors = JSON.parse(colors);
-            return colors.map(function (value) {
-                var newValue = value.replace(" ", "");
-                if (newValue.indexOf(",") === -1) {
-                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
-                    if (color) return color;
-                    else return newValue;;
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
+        colors = JSON.parse(colors);
+        return colors.map(function (value) {
+            var newValue = value.replace(" ", "");
+            if (newValue.indexOf(",") === -1) {
+                var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                if (color) return color;
+                else return newValue;;
+            } else {
+                var val = value.split(',');
+                if (val.length == 2) {
+                    var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                    rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                    return rgbaColor;
                 } else {
-                    var val = value.split(',');
-                    if (val.length == 2) {
-                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
-                        rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
-                        return rgbaColor;
-                    } else {
-                        return newValue;
-                    }
+                    return newValue;
                 }
-            });
-        } else {
-            console.warn('data-colors attributes not found on', chartId);
-        }
+            }
+        });
     }
 }
 
@@ -70,34 +65,31 @@ var options = {
                 x: 'Jan 2021',
                 y: [54, 59, 66, 71, 88]
             }
-            ]
-        }],
-        chart: {
-            type: 'boxPlot',
-            height: 350,
-            toolbar: {
-                show: false
+        ]
+    }],
+    chart: {
+        type: 'boxPlot',
+        height: 350,
+        toolbar: {
+            show: false
+        }
+    },
+    title: {
+        text: 'Basic BoxPlot Chart',
+        align: 'left',
+        style: {
+            fontWeight: 500,
+        },
+    },
+    plotOptions: {
+        boxPlot: {
+            colors: {
+                upper: chartBoxBasicColors[0],
+                lower: chartBoxBasicColors[1]
             }
-        },
-        title: {
-            text: 'Basic BoxPlot Chart',
-            align: 'left',
-            style: {
-                fontWeight: 500,
-            },
-        },
-        plotOptions: {
-            boxPlot: {
-                colors: {
-                    upper: chartBoxBasicColors[0],
-                    lower: chartBoxBasicColors[1]
-                }
-            }
-        },
-        stroke: {
-            colors: [chartBoxBasicColors[2]]
-        },
-    };
+        }
+    }
+};
 
 var chart = new ApexCharts(document.querySelector("#basic_box"), options);
 chart.render();
@@ -161,50 +153,48 @@ var options = {
                 }
             ]
         }
-        ],
-        chart: {
-            type: 'boxPlot',
-            height: 350,
-            toolbar: {
-                show: false
-            }
-        },
-        colors: [chartBoxPlotColors[0], chartBoxPlotColors[1]],
-        title: {
-            text: 'BoxPlot - Scatter Chart',
-            align: 'left',
-            style: {
-                fontWeight: 500,
-            },
-        },
-        xaxis: {
-            type: 'datetime',
-            tooltip: {
-                formatter: function (val) {
-                    return new Date(val).getFullYear()
-                }
-            }
-        },
-        plotOptions: {
-            boxPlot: {
-                colors: {
-                    upper: chartBoxPlotColors[2],
-                    lower: chartBoxPlotColors[3]
-                }
-            }
-        },
-        stroke: {
-            colors: [chartBoxPlotColors[4]]
-        },
-        tooltip: {
-            shared: false,
-            intersect: true
+    ],
+    chart: {
+        type: 'boxPlot',
+        height: 350,
+        toolbar: {
+            show: false
         }
-    };
+    },
+    colors: [chartBoxPlotColors[0], chartBoxPlotColors[1]],
+    title: {
+        text: 'BoxPlot - Scatter Chart',
+        align: 'left',
+        style: {
+            fontWeight: 500,
+        },
+    },
+    xaxis: {
+        type: 'datetime',
+        tooltip: {
+            formatter: function (val) {
+                return new Date(val).getFullYear()
+            }
+        }
+    },
+    plotOptions: {
+        boxPlot: {
+            colors: {
+                upper: chartBoxPlotColors[2],
+                lower: chartBoxPlotColors[3]
+            }
+        }
+    },
+    tooltip: {
+        shared: false,
+        intersect: true
+    }
+};
 
-    var chart = new ApexCharts(document.querySelector("#box_plot"), options);
-    chart.render();
+var chart = new ApexCharts(document.querySelector("#box_plot"), options);
+chart.render();
 }
+
 
 // box_plot_hori
 var chartBoxPlotHoriColors = getChartColorsArray("box_plot_hori");

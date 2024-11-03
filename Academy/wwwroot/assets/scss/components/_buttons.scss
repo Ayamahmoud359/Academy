@@ -5,37 +5,44 @@
 button,
 a {
     outline: none !important;
+    position: relative;
 }
 
 .btn {
     box-shadow: $element-shadow;
+    &:hover, &.active, &:focus, &:active, &.show {
+        border-color: transparent;
+    }
 }
 
-:is(.btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active) {
-    border-color: transparent;
+// Rounded Buttons
+.btn-rounded {
+    border-radius: 30px;
 }
+
 
 .btn-icon {
-    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: calc(#{$btn-padding-y * 2} + #{$btn-line-height}em + #{$border-width * 2});
-    width: calc(#{$btn-padding-y * 2} + #{$btn-line-height}em + #{$border-width * 2});
+    height: calc(#{$btn-padding-y * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
+    width: calc(#{$btn-padding-y * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
     padding: 0;
 
-    :is(i, svg, img) {
+    i,
+    svg,
+    img {
         vertical-align: middle;
     }
 
     &.btn-sm {
-        height: calc(#{$btn-padding-y-sm * 2} + #{$btn-line-height}em + #{$border-width * 2});
-        width: calc(#{$btn-padding-y-sm * 2} + #{$btn-line-height}em + #{$border-width * 2});
+        height: calc(#{$btn-padding-y-sm * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
+        width: calc(#{$btn-padding-y-sm * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
     }
 
     &.btn-lg {
-        height: calc(#{$btn-padding-y-lg * 2} + #{$btn-line-height}em + #{$border-width * 2});
-        width: calc(#{$btn-padding-y-lg * 2} + #{$btn-line-height}em + #{$border-width * 2});
+        height: calc(#{$btn-padding-y-lg * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
+        width: calc(#{$btn-padding-y-lg * 2} + #{$btn-line-height}em + #{$btn-border-width * 2});
     }
 }
 
@@ -43,56 +50,53 @@ a {
 // Soft Buttons
 // 
 
-@each $state in map-keys($theme-colors) {
+@mixin button-variant-soft($bg) {
+    color: $bg;
+    background-color: rgba($bg, 0.1);
+    border-color: transparent;
 
-    .btn-#{$state} {
-        --#{$prefix}btn-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-border-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$state}-text-emphasis);
-        --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$state}-text-emphasis);
-        --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}#{$state}-rgb);
-        --#{$prefix}btn-active-bg: var(--#{$prefix}#{$state}-text-emphasis);
-        --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$state}-text-emphasis);
-        --#{$prefix}btn-disabled-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-disabled-border-color: var(--#{$prefix}#{$state});
+    &:hover,
+    &:focus,
+    &:active {
+        color: $white;
+        background-color: $bg;
+        border-color: transparent;
     }
+}
 
-    .btn-outline-#{$state} {
-        --#{$prefix}btn-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-bg: transparent;
-        --#{$prefix}btn-border-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-hover-border-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}#{$state}-rgb);
-        --#{$prefix}btn-active-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-active-border-color: var(--#{$prefix}#{$state});
+@each $color,
+$value in $theme-colors {
+    .btn-soft-#{$color} {
+        @include button-variant-soft($value);
     }
+}
 
-    // soft Buttons
-    .btn-soft-#{$state} {
-        --#{$prefix}btn-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-bg: var(--#{$prefix}#{$state}-bg-subtle);
-        --#{$prefix}btn-border-color: transparent;
-        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-hover-border-color: transparent;
-        --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}#{$state}-rgb);
-        --#{$prefix}btn-active-bg: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-active-border-color: transparent;
-    }
+//
+// Ghost Buttons
+// 
 
-    // Ghost Buttons
-    .btn-ghost-#{$state} {
-        --#{$prefix}btn-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-bg: transparent;
-        --#{$prefix}btn-border-color: transparent;
-        --#{$prefix}btn-hover-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-hover-bg: var(--#{$prefix}#{$state}-bg-subtle);
-        --#{$prefix}btn-hover-border-color: transparent;
-        --#{$prefix}btn-focus-shadow-rgb: var(--#{$prefix}#{$state}-rgb);
-        --#{$prefix}btn-active-color: var(--#{$prefix}#{$state});
-        --#{$prefix}btn-active-bg: var(--#{$prefix}#{$state}-bg-subtle);
-        --#{$prefix}btn-active-border-color: transparent;
+@mixin button-variant-ghost($bg) {
+    color: $bg;
+    border-color: transparent;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: $bg;
+        background-color: rgba($bg, 0.1);
+        border-color: transparent;
     }
+}
+
+@each $color,
+$value in $theme-colors {
+    .btn-ghost-#{$color} {
+        @include button-variant-ghost($value);
+    }
+}
+
+.btn-ghost-secondary {
+    color: var(--#{$prefix}gray-700);
 }
 
 //button with icon
@@ -103,9 +107,9 @@ a {
     .label-icon {
         position: absolute;
         width: 35.5px;
-        left: calc(#{$btn-border-width} * -1);
-        top: calc(#{$btn-border-width} * -1);
-        bottom: calc(#{$btn-border-width} * -1);
+        left: -$btn-border-width;
+        top: -$btn-border-width;
+        bottom: -$btn-border-width;
         background-color: rgba($white, 0.1);
         font-size: 16px;
         display: flex;
@@ -115,7 +119,7 @@ a {
 
     &.btn-light {
         .label-icon {
-            background-color: rgba(var(--#{$prefix}dark-rgb), 0.05);
+            background-color: rgba($dark, 0.05);
         }
     }
 
@@ -124,7 +128,7 @@ a {
         padding-right: 44px;
 
         .label-icon {
-            right: calc(#{$btn-border-width} * -1);
+            right: -$btn-border-width;
             left: auto;
         }
     }
@@ -170,17 +174,25 @@ a {
     }
 }
 
-@each $state in map-keys($theme-colors) {
-    .btn-#{$state} {
-        &.btn-animation {
-            background-color: var(--#{$prefix}#{$state});
-            border-color: var(--#{$prefix}#{$state}) !important;
 
-            &:is(:hover, :focus, :active, :focus-visible) {
-                color: var(--#{$prefix}#{$state});
-                background-color: rgba(var(--#{$prefix}#{$state}-rgb), 0.1);
-            }
+@mixin button-variant($bg) {
+    &.btn-animation {
+        background-color: $bg;
+        border-color: $bg;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $bg;
+            background-color: rgba($bg, 0.1);
         }
+    }
+}
+
+@each $color,
+$value in $theme-colors {
+    .btn-#{$color} {
+        @include button-variant($value);
     }
 }
 
@@ -202,8 +214,115 @@ a {
     .btn-light.active,
     .btn-light.dropdown-toggle.show,
     .btn-light:active {
-        background-color: rgba(var(--#{$prefix}info-rgb), 0.2);
-        color: var(--#{$prefix}info);
+        background-color: rgba($info, 0.2);
+        color: $info;
+    }
+}
+
+// theme dark
+[data-layout-mode="dark"] {
+
+    .btn-check:focus+.btn-light,
+    .btn-check:focus+.btn-outline-light,
+    .btn-check:focus+.btn-soft-light,
+    .btn-soft-light:focus {
+        color: var(--#{$prefix}dark);
+        background-color: rgba(var(--#{$prefix}light-rgb), 0.75);
+        border-color: rgba(var(--#{$prefix}light-rgb), 0.75);
+    }
+
+    .btn-check:active+.btn-light,
+    .btn-check:active+.btn-outline-light,
+    .btn-check:active+.btn-soft-light,
+    .btn-check:checked+.btn-light,
+    .btn-check:checked+.btn-outline-light,
+    .btn-check:checked+.btn-soft-light,
+    .btn-light.active,
+    .btn-light:active,
+    .btn-outline-light.active,
+    .btn-outline-light:active,
+    .btn-soft-light.active,
+    .btn-soft-light:active,
+    .show>.btn-light.dropdown-toggle,
+    .show>.btn-outline-light.dropdown-toggle,
+    .show>.btn-soft-light.dropdown-toggle {
+        color: var(--#{$prefix}dark);
+        background-color: rgba(var(--#{$prefix}light-rgb), 0.75);
+        border-color: rgba(var(--#{$prefix}light-rgb), 0.75);
+    }
+
+    .btn-check:focus+.btn-dark,
+    .btn-check:focus+.btn-outline-dark,
+    .btn-check:focus+.btn-soft-dark,
+    .btn-soft-dark:focus {
+        color: var(--#{$prefix}light);
+        background-color: rgba(var(--#{$prefix}dark-rgb), 0.75);
+        border-color: rgba(var(--#{$prefix}dark-rgb), 0.75);
+    }
+
+    .btn-check:active+.btn-dark,
+    .btn-check:active+.btn-outline-dark,
+    .btn-check:active+.btn-soft-dark,
+    .btn-check:checked+.btn-dark,
+    .btn-check:checked+.btn-outline-dark,
+    .btn-check:checked+.btn-soft-dark,
+    .btn-dark.active,
+    .btn-dark:active,
+    .btn-outline-dark.active,
+    .btn-outline-dark:active,
+    .btn-soft-dark.active,
+    .btn-soft-dark:active,
+    .show>.btn-dark.dropdown-toggle,
+    .show>.btn-outline-dark.dropdown-toggle,
+    .show>.btn-soft-dark.dropdown-toggle {
+        color: var(--#{$prefix}light);
+        background-color: rgba(var(--#{$prefix}dark-rgb), 0.75);
+        border-color: rgba(var(--#{$prefix}dark-rgb), 0.75);
+    }
+
+    // soft
+
+    .btn-soft-light {
+        color: var(--#{$prefix}dark);
+        background-color: rgba(var(--#{$prefix}light-rgb), 0.1);
+
+        &:hover {
+            color: var(--#{$prefix}dark);
+            background-color: var(--#{$prefix}light);
+        }
+    }
+
+    .btn-soft-dark {
+        color: var(--#{$prefix}dark);
+        background-color: rgba(var(--#{$prefix}dark-rgb), 0.1);
+
+        &:hover {
+            color: var(--#{$prefix}light);
+            background-color: var(--#{$prefix}dark);
+        }
+    }
+
+    // ghost
+    .btn-ghost-light {
+        color: var(--#{$prefix}dark);
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: var(--#{$prefix}dark);
+            background-color: rgba(var(--#{$prefix}light-rgb), 0.5);
+        }
+    }
+
+    .btn-ghost-dark {
+        color: var(--#{$prefix}dark);
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: var(--#{$prefix}dark);
+            background-color: rgba(var(--#{$prefix}dark-rgb), 0.1);
+        }
     }
 }
 
@@ -220,15 +339,12 @@ a {
 @each $color,
 $value in $theme-colors {
 
-    :is(.btn-#{$color}, .btn-outline-#{$color}, .btn-soft-#{$color}) {
+    .btn-#{$color},
+    .btn-outline-#{$color},
+    .btn-soft-#{$color} {
         &.btn-border {
-            border-bottom: 2px solid color-mix(in srgb, var(--#{$prefix}#{$color}), #2e2929 20%);
+            border-bottom: 2px solid darken($value, 8%);
         }
-    }
-
-    :is(.btn-soft-#{$color}, .btn-outline-#{$color}) {
-        --#{$prefix}btn-active-color: #{color-contrast($value)};
-        --#{$prefix}btn-hover-color: #{color-contrast($value)};
     }
 }
 

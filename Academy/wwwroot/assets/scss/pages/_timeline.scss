@@ -37,10 +37,10 @@
         top: 30px;
         right: -30px;
         padding: 9px 0;
-        background: var(--#{$prefix}secondary-bg);
-        border: 1px solid var(--#{$prefix}border-color);
+        background: var(--#{$prefix}card-bg-custom);
+        border: 1px solid $border-color;
         border-radius: 50px;
-        color: var(--#{$prefix}success);
+        color: $success;
         z-index: 1;
     }
 
@@ -56,9 +56,9 @@
 
     .content {
         padding: 20px;
-        background: var(--#{$prefix}secondary-bg);
+        background: var(--#{$prefix}card-bg-custom);
         position: relative;
-        border: 1px solid var(--#{$prefix}border-color);
+        border: 1px solid $border-color;
         border-radius: $border-radius;
         box-shadow: $box-shadow-sm;
     }
@@ -94,14 +94,14 @@
 @media (max-width: 991.98px) {
     .timeline {
         &::after {
-            left: 24px;
+            left: 112px;
             bottom: 180px;
         }
     }
 
     .timeline-item {
         width: 100%;
-        padding-left: 48px;
+        padding-left: 165px;
         padding-right: 0px;
 
         &.right,  &.left {
@@ -110,22 +110,20 @@
             .icon {
                 width: 45px;
                 height: 45px;
-                top: 0;
+                top: 37.5px;
                 font-size: 18px;
-                left: 0;
+                left: 90px;
             }
 
             &::before {
                 left: 110px;
-                border-color: transparent transparent transparent var(--#{$prefix}border-color);
+                border-color: transparent transparent transparent $border-color;
             }
 
             .date {
                 right: auto;
-                left: 48px;
+                left: 0px;
                 width: 79px;
-                top: 8px;
-                text-align: left;
             }
         }
     }
@@ -188,7 +186,7 @@
             top: 26px;
             left: 45px;
             align-items: left;
-            background: var(--#{$prefix}success);
+            background: $success;
             border: 3px solid $timeline-color;
             border-radius: 50px;
             z-index: 1;
@@ -200,13 +198,10 @@
         display: inline-block;
         margin: 23px 62px;
         padding: 20px;
-        border: 1px solid var(--#{$prefix}border-color);
+        border: 1px solid $border-color;
         border-radius: 6px;
-        background: var(--#{$prefix}secondary-bg);
+        background: var(--#{$prefix}card-bg-custom);
         max-width: 695px;
-        @media (max-width: 991.98px){
-            margin-right: 0;
-        }
 
         &::after {
             content: '';
@@ -217,7 +212,7 @@
             border-style: solid;
             top: 26px;
             right: 100%;
-            border-color: transparent var(--#{$prefix}secondary-bg) transparent transparent;
+            border-color: transparent var(--#{$prefix}card-bg-custom) transparent transparent;
             border-width: 10px;
         }
 
@@ -230,7 +225,7 @@
             border-style: solid;
             right: 100%;
             top: 24px;
-            border-color: transparent var(--#{$prefix}border-color) transparent transparent;
+            border-color: transparent $border-color transparent transparent;
             border-width: 12px;
         }
 
@@ -243,7 +238,7 @@
     .timeline-launch {
         position: relative;
         display: inline-block;
-        border: 1px solid var(--#{$prefix}border-color);
+        border: 1px solid $border-color;
         border-radius: 6px;
         background: $white;
         width: 100%;
@@ -260,14 +255,14 @@
                 left: 30px;
                 margin-left: 0px;
                 top: -20px;
-                border-color: transparent transparent var(--#{$prefix}border-color) transparent;
+                border-color: transparent transparent $border-color transparent;
             }
 
             &::before {
                 left: 30px;
                 margin-left: 0px;
                 top: -19px;
-                border-color: transparent transparent var(--#{$prefix}secondary-bg) transparent;
+                border-color: transparent transparent var(--#{$prefix}card-bg-custom) transparent;
                 border-width: 10px;
                 z-index: 1;
             }
@@ -304,7 +299,7 @@
                 left: 0px;
                 right: 0px;
                 margin: 0px auto;
-                background: var(--#{$prefix}primary);
+                background: $primary;
                 width: 13px;
                 height: 13px;
                 top: -59px;
@@ -371,14 +366,14 @@
         width: 40px;
         line-height: 40px;
         border-radius: 50%;
-        background-color: var(--#{$prefix}primary);
+        background-color: lighten($primary, 2.5%);
 
         &::after {
             font-size: 24px;
             color: $white;
         }
         &.swiper-button-disabled {
-            background-color: rgba(var(--#{$prefix}primary-rgb), 0.5);
+            background-color: rgba($primary, 0.5);
             opacity: 1;
             cursor: auto;
             backdrop-filter: blur(25px);
@@ -419,8 +414,8 @@
         }
 
         .acitivity-avatar {
-            background-color: var(--#{$prefix}secondary-bg);
-            border: 3px solid var(--#{$prefix}secondary-bg);
+            background-color: var(--#{$prefix}card-bg-custom);
+            border: 3px solid var(--#{$prefix}card-bg-custom);
             height: 32px;
             width: 32px;
         }
@@ -428,7 +423,7 @@
         &:before {
             content: "";
             position: absolute;
-            border-left: 1px dashed var(--#{$prefix}border-color);
+            border-left: 1px dashed $border-color;
             left: 16px;
             height: 100%;
             top: 5px;

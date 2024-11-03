@@ -1,7 +1,7 @@
 /*
 Template Name: Velzon - Admin & Dashboard Template
 Author: Themesbrand
-Version: 4.1.0
+Version: 2.0.0
 Website: https://Themesbrand.com/
 Contact: Themesbrand@gmail.com
 File: Main Js File
@@ -19,16 +19,16 @@ File: Main Js File
 	var language = localStorage.getItem("language");
 
 	function initLanguage() {
-		// Set new language
-		(language === null) ? setLanguage(default_lang) : setLanguage(language);
-		var languages = document.getElementsByClassName("language");
-		languages && Array.from(languages).forEach(function (dropdown) {
-			dropdown.addEventListener("click", function (event) {
-				setLanguage(dropdown.getAttribute("data-lang"));
-			});
-		});
+        // Set new language
+        (language === null) ? setLanguage(default_lang) : setLanguage(language);
+        var languages = document.getElementsByClassName("language");
+        languages && Array.from(languages).forEach(function (dropdown) {
+            dropdown.addEventListener("click", function (event) {
+                setLanguage(dropdown.getAttribute("data-lang"));
+            });
+        });
 	}
-
+	
 	function setLanguage(lang) {
 		if (document.getElementById("header-lang-img")) {
 			if (lang == "en") {
@@ -45,8 +45,6 @@ File: Main Js File
 				document.getElementById("header-lang-img").src = "/assets/images/flags/china.svg";
 			} else if (lang == "fr") {
 				document.getElementById("header-lang-img").src = "/assets/images/flags/french.svg";
-			} else if (lang == "ar") {
-				document.getElementById("header-lang-img").src = "/assets/images/flags/ae.svg";
 			}
 			localStorage.setItem("language", lang);
 			language = localStorage.getItem("language");
@@ -127,7 +125,7 @@ File: Main Js File
 					duration: toastData.duration,
 					close: toastData.close == "close" ? true : false,
 					style: toastData.style == "style" ? {
-						background: "linear-gradient(to right, var(--vz-success), var(--vz-primary))"
+						background: "linear-gradient(to right, #0AB39C, #405189)"
 					} : "",
 				}).showToast();
 			});
@@ -190,16 +188,15 @@ File: Main Js File
 			if (item.getAttribute("data-provider") == "flatpickr") {
 				var dateData = {};
 				var isFlatpickerVal = item.attributes;
-				dateData.disableMobile = "true";
 				if (isFlatpickerVal["data-date-format"])
 					dateData.dateFormat = isFlatpickerVal["data-date-format"].value.toString();
 				if (isFlatpickerVal["data-enable-time"]) {
 					(dateData.enableTime = true),
-						(dateData.dateFormat = isFlatpickerVal["data-date-format"].value.toString() + " H:i");
+					(dateData.dateFormat = isFlatpickerVal["data-date-format"].value.toString() + " H:i");
 				}
 				if (isFlatpickerVal["data-altFormat"]) {
 					(dateData.altInput = true),
-						(dateData.altFormat = isFlatpickerVal["data-altFormat"].value.toString());
+					(dateData.altFormat = isFlatpickerVal["data-altFormat"].value.toString());
 				}
 				if (isFlatpickerVal["data-minDate"]) {
 					dateData.minDate = isFlatpickerVal["data-minDate"].value.toString();
@@ -223,7 +220,7 @@ File: Main Js File
 				}
 				if (isFlatpickerVal["data-inline-date"]) {
 					(dateData.inline = true),
-						(dateData.defaultDate = isFlatpickerVal["data-deafult-date"].value.toString());
+					(dateData.defaultDate = isFlatpickerVal["data-deafult-date"].value.toString());
 					dateData.dateFormat = isFlatpickerVal["data-date-format"].value.toString();
 				}
 				if (isFlatpickerVal["data-disable-date"]) {
@@ -242,37 +239,37 @@ File: Main Js File
 				var isTimepickerVal = item.attributes;
 				if (isTimepickerVal["data-time-basic"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.dateFormat = "H:i");
+					(timeData.noCalendar = true),
+					(timeData.dateFormat = "H:i");
 				}
 				if (isTimepickerVal["data-time-hrs"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.dateFormat = "H:i"),
-						(timeData.time_24hr = true);
+					(timeData.noCalendar = true),
+					(timeData.dateFormat = "H:i"),
+					(timeData.time_24hr = true);
 				}
 				if (isTimepickerVal["data-min-time"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.dateFormat = "H:i"),
-						(timeData.minTime = isTimepickerVal["data-min-time"].value.toString());
+					(timeData.noCalendar = true),
+					(timeData.dateFormat = "H:i"),
+					(timeData.minTime = isTimepickerVal["data-min-time"].value.toString());
 				}
 				if (isTimepickerVal["data-max-time"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.dateFormat = "H:i"),
-						(timeData.minTime = isTimepickerVal["data-max-time"].value.toString());
+					(timeData.noCalendar = true),
+					(timeData.dateFormat = "H:i"),
+					(timeData.minTime = isTimepickerVal["data-max-time"].value.toString());
 				}
 				if (isTimepickerVal["data-default-time"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.dateFormat = "H:i"),
-						(timeData.defaultDate = isTimepickerVal["data-default-time"].value.toString());
+					(timeData.noCalendar = true),
+					(timeData.dateFormat = "H:i"),
+					(timeData.defaultDate = isTimepickerVal["data-default-time"].value.toString());
 				}
 				if (isTimepickerVal["data-time-inline"]) {
 					(timeData.enableTime = true),
-						(timeData.noCalendar = true),
-						(timeData.defaultDate = isTimepickerVal["data-time-inline"].value.toString());
+					(timeData.noCalendar = true),
+					(timeData.defaultDate = isTimepickerVal["data-time-inline"].value.toString());
 					timeData.inline = true;
 				}
 				flatpickr(item, timeData);
@@ -368,11 +365,10 @@ File: Main Js File
 		var defaultValues = JSON.parse(isValues);
 
 		if (defaultValues && (isTwoColumn == "twocolumn" || defaultValues["data-layout"] == "twocolumn")) {
-			if (document.querySelector(".navbar-menu")) {
-				document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
-			}
+			document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
+
 			var ul = document.createElement("ul");
-			ul.innerHTML = '<a href="#" class="logo"><img src="~/assets/images/logo-sm.png" alt="" height="22"></a>';
+			ul.innerHTML = '<a href="#" class="logo"><img src="/assets/images/logo-sm.png" alt="" height="22"></a>';
 			Array.from(document.getElementById("navbar-nav").querySelectorAll(".menu-link")).forEach(function (item) {
 				ul.className = "twocolumn-iconview";
 				var li = document.createElement("li");
@@ -390,8 +386,8 @@ File: Main Js File
 				a.classList.contains("nav-link") ? a.classList.replace("nav-link", "nav-icon") : "";
 				a.classList.remove("collapsed", "menu-link");
 			});
-			var currentPath = location.pathname == "/" ? "/" : location.pathname.substring(1);
-			currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+			var currentPath = location.pathname == "/" ? "/" : "/" + location.pathname.substring(1);
+			//currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
 			if (currentPath) {
 				// navbar-nav
 				var a = document.getElementById("navbar-nav").querySelector('[href="' + currentPath + '"]');
@@ -406,11 +402,11 @@ File: Main Js File
 							parentCollapseDiv.parentElement.closest(".collapse").classList.add("show");
 							if (parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling)
 								parentCollapseDiv.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
-							if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
-								parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").classList.add("show");
-								if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling) {
-									parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
-								}
+								if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
+									parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").classList.add("show");
+									if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling){
+										parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
+									}
 							}
 						}
 					}
@@ -421,8 +417,8 @@ File: Main Js File
 
 			// show submenu on sidebar menu click
 			Array.from(document.querySelector("#two-column-menu ul").querySelectorAll("li a")).forEach(function (element) {
-				var currentPath = location.pathname == "/" ? "/" : location.pathname.substring(1);
-				currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+				var currentPath = location.pathname == "/" ? "/" : "/" + location.pathname.substring(1);
+				//currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
 				element.addEventListener("click", function (e) {
 					if (!(currentPath == "/" + element.getAttribute("href") && !element.getAttribute("data-bs-toggle")))
 						document.body.classList.contains("twocolumn-panel") ? document.body.classList.remove("twocolumn-panel") : "";
@@ -448,9 +444,9 @@ File: Main Js File
 				if (currentPath == "/" + element.getAttribute("href") && !element.getAttribute("data-bs-toggle")) {
 					element.classList.add("active");
 					document.getElementById("navbar-nav").classList.add("twocolumn-nav-hide");
-					if (document.querySelector(".hamburger-icon")) {
-						document.querySelector(".hamburger-icon").classList.add("open");
-					}
+					if(document.querySelector(".hamburger-icon")){
+					document.querySelector(".hamburger-icon").classList.add("open");
+				}
 				}
 			});
 
@@ -473,66 +469,66 @@ File: Main Js File
 		var searchOptions = document.getElementById("search-close-options");
 		var dropdown = document.getElementById("search-dropdown");
 		var searchInput = document.getElementById("search-options");
-		if (searchInput) {
-			searchInput.addEventListener("focus", function () {
-				var inputLength = searchInput.value.length;
-				if (inputLength > 0) {
-					dropdown.classList.add("show");
-					searchOptions.classList.remove("d-none");
-				} else {
-					dropdown.classList.remove("show");
-					searchOptions.classList.add("d-none");
-				}
-			});
-
-			searchInput.addEventListener("keyup", function (event) {
-				var inputLength = searchInput.value.length;
-				if (inputLength > 0) {
-					dropdown.classList.add("show");
-					searchOptions.classList.remove("d-none");
-
-					var inputVal = searchInput.value.toLowerCase();
-
-					var notifyItem = document.getElementsByClassName("notify-item");
-
-					Array.from(notifyItem).forEach(function (element) {
-						var notifiTxt = ''
-						if (element.querySelector("h6")) {
-							var spantext = element.getElementsByTagName("span")[0].innerText.toLowerCase()
-							var name = element.querySelector("h6").innerText.toLowerCase()
-							if (name.includes(inputVal)) {
-								notifiTxt = name
-							} else {
-								notifiTxt = spantext
-							}
-						} else if (element.getElementsByTagName("span")) {
-							notifiTxt = element.getElementsByTagName("span")[0].innerText.toLowerCase()
-						}
-
-						if (notifiTxt)
-							element.style.display = notifiTxt.includes(inputVal) ? "block" : "none";
-
-					});
-				} else {
-					dropdown.classList.remove("show");
-					searchOptions.classList.add("d-none");
-				}
-			});
-
-			searchOptions.addEventListener("click", function () {
-				searchInput.value = "";
+		if(searchInput){
+		searchInput.addEventListener("focus", function () {
+			var inputLength = searchInput.value.length;
+			if (inputLength > 0) {
+				dropdown.classList.add("show");
+				searchOptions.classList.remove("d-none");
+			} else {
 				dropdown.classList.remove("show");
 				searchOptions.classList.add("d-none");
-			});
+			}
+		});
 
-			document.body.addEventListener("click", function (e) {
-				if (e.target.getAttribute("id") !== "search-options") {
-					dropdown.classList.remove("show");
-					searchOptions.classList.add("d-none");
-				}
-			});
-		}
+		searchInput.addEventListener("keyup", function (event) {
+			var inputLength = searchInput.value.length;
+			if (inputLength > 0) {
+				dropdown.classList.add("show");
+				searchOptions.classList.remove("d-none");
+
+				var inputVal = searchInput.value.toLowerCase();
+				
+				var notifyItem = document.getElementsByClassName("notify-item");
+				
+				Array.from(notifyItem).forEach(function (element) {
+					var notifiTxt = ''
+					if(element.querySelector("h6")){
+						var spantext = element.getElementsByTagName("span")[0].innerText.toLowerCase()
+						var name = element.querySelector("h6").innerText.toLowerCase()
+						if(name.includes(inputVal)){
+							notifiTxt = name
+						}else{
+							notifiTxt = spantext
+						}
+					}else if(element.getElementsByTagName("span")){
+						notifiTxt = element.getElementsByTagName("span")[0].innerText.toLowerCase()
+					}
+
+					if (notifiTxt)
+						element.style.display = notifiTxt.includes(inputVal) ? "block" : "none";
+						
+				});
+			} else {
+				dropdown.classList.remove("show");
+				searchOptions.classList.add("d-none");
+			}
+		});
+
+		searchOptions.addEventListener("click", function () {
+			searchInput.value = "";
+			dropdown.classList.remove("show");
+			searchOptions.classList.add("d-none");
+		});
+
+		document.body.addEventListener("click", function (e) {
+			if (e.target.getAttribute("id") !== "search-options") {
+				dropdown.classList.remove("show");
+				searchOptions.classList.add("d-none");
+			}
+		});
 	}
+}
 	//  search menu dropdown on topbar
 	function isCustomDropdownResponsive() {
 		//Search bar
@@ -605,11 +601,10 @@ File: Main Js File
 		/**
 		 * Vertical layout menu scroll add
 		 */
-		if (document.documentElement.getAttribute("data-layout") == "vertical" || document.documentElement.getAttribute("data-layout") == "semibox") {
+		if (document.documentElement.getAttribute("data-layout") == "vertical") {
 			document.getElementById("two-column-menu").innerHTML = "";
-			if (document.querySelector(".navbar-menu")) {
-				document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
-			}
+			document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
+
 			document.getElementById("scrollbar").setAttribute("data-simplebar", "");
 			document.getElementById("navbar-nav").setAttribute("data-simplebar", "");
 			document.getElementById("scrollbar").classList.add("h-100");
@@ -663,12 +658,9 @@ File: Main Js File
 			if (sessionStorage.getItem("data-layout") == "vertical") {
 				document.documentElement.setAttribute("data-sidebar-size", "sm");
 			}
-			if (sessionStorage.getItem("data-layout") == "semibox") {
-				document.documentElement.setAttribute("data-sidebar-size", "sm");
-			}
-			if (document.querySelector(".hamburger-icon")) {
-				document.querySelector(".hamburger-icon").classList.add("open");
-			}
+			if(document.querySelector(".hamburger-icon")){
+			document.querySelector(".hamburger-icon").classList.add("open");
+		}
 		} else if (windowSize >= 1025) {
 			document.body.classList.remove("twocolumn-panel");
 			if (sessionStorage.getItem("data-layout") == "twocolumn") {
@@ -686,11 +678,8 @@ File: Main Js File
 					sessionStorage.getItem("data-sidebar-size")
 				);
 			}
-			if (sessionStorage.getItem("data-layout") == "semibox") {
-				document.documentElement.setAttribute("data-sidebar-size", sessionStorage.getItem("data-sidebar-size"));
-			}
-			if (document.querySelector(".hamburger-icon")) {
-				document.querySelector(".hamburger-icon").classList.remove("open");
+			if(document.querySelector(".hamburger-icon")){
+			document.querySelector(".hamburger-icon").classList.remove("open");
 			}
 		} else if (windowSize <= 767) {
 			document.body.classList.remove("vertical-sidebar-enable");
@@ -703,9 +692,9 @@ File: Main Js File
 			if (sessionStorage.getItem("data-layout") != "horizontal") {
 				document.documentElement.setAttribute("data-sidebar-size", "lg");
 			}
-			if (document.querySelector(".hamburger-icon")) {
-				document.querySelector(".hamburger-icon").classList.add("open");
-			}
+			if(document.querySelector(".hamburger-icon")){
+			document.querySelector(".hamburger-icon").classList.add("open");
+		}
 		}
 
 		var isElement = document.querySelectorAll("#navbar-nav > li.nav-item");
@@ -766,7 +755,7 @@ File: Main Js File
 
 		//For collapse vertical menu
 		if (document.documentElement.getAttribute("data-layout") === "vertical") {
-			if (windowSize <= 1025 && windowSize > 767) {
+			if (windowSize < 1025 && windowSize > 767) {
 				document.body.classList.remove("vertical-sidebar-enable");
 				document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
 					document.documentElement.setAttribute("data-sidebar-size", "") :
@@ -776,24 +765,6 @@ File: Main Js File
 				document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
 					document.documentElement.setAttribute("data-sidebar-size", "sm") :
 					document.documentElement.setAttribute("data-sidebar-size", "lg");
-			} else if (windowSize <= 767) {
-				document.body.classList.add("vertical-sidebar-enable");
-				document.documentElement.setAttribute("data-sidebar-size", "lg");
-			}
-		}
-
-		// semibox menu
-		if (document.documentElement.getAttribute("data-layout") === "semibox") {
-			if (windowSize > 767) {
-				// (document.querySelector(".hamburger-icon").classList.contains("open")) ? document.documentElement.setAttribute('data-sidebar-visibility', "show"): '';
-				if (document.documentElement.getAttribute('data-sidebar-visibility') == "show") {
-					document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
-						document.documentElement.setAttribute("data-sidebar-size", "sm") :
-						document.documentElement.setAttribute("data-sidebar-size", "lg");
-				} else {
-					document.getElementById("sidebar-visibility-show").click();
-					document.documentElement.setAttribute("data-sidebar-size", document.documentElement.getAttribute("data-sidebar-size"));
-				}
 			} else if (windowSize <= 767) {
 				document.body.classList.add("vertical-sidebar-enable");
 				document.documentElement.setAttribute("data-sidebar-size", "lg");
@@ -849,9 +820,9 @@ File: Main Js File
 			isLoadBodyElement();
 			addEventListenerOnSmHoverMenu();
 		});
-		if (document.getElementById("topnav-hamburger-icon")) {
-			document.getElementById("topnav-hamburger-icon").addEventListener("click", toggleHamburgerMenu);
-		}
+		if(document.getElementById("topnav-hamburger-icon")){
+		document.getElementById("topnav-hamburger-icon").addEventListener("click", toggleHamburgerMenu);
+	}	
 		var isValues = sessionStorage.getItem("defaultAttribute");
 		var defaultValues = JSON.parse(isValues);
 		var windowSize = document.documentElement.clientWidth;
@@ -868,19 +839,18 @@ File: Main Js File
 	// page topbar class added
 	function windowScroll() {
 		var pageTopbar = document.getElementById("page-topbar");
-		if (pageTopbar) {
-			document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
-		}
-	}
+		if(pageTopbar){
+		document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add("topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
+	}}
 
 	// Two-column menu activation
 	function initTwoColumnActiveMenu() {
 		feather.replace();
 		// two column sidebar active js
-		var currentPath = location.pathname == "/" ? "/" : location.pathname.substring(1);
-		currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+		var currentPath = location.pathname == "/" ? "/" : "/" + location.pathname.substring(1);
+		//currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
 		if (currentPath) {
-			if (document.body.className == "twocolumn-panel") {
+			if(document.body.className == "twocolumn-panel"){
 				document.getElementById("two-column-menu").querySelector('[href="' + currentPath + '"]').classList.add("active");
 			}
 			// navbar-nav
@@ -892,12 +862,12 @@ File: Main Js File
 					parentCollapseDiv.classList.add("show");
 					parentCollapseDiv.parentElement.children[0].classList.add("active");
 					parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show");
-					if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
+					if(parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")){
 						var menuIdSub = parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown").getAttribute("id");
 						parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.add("twocolumn-item-show");
 						parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").parentElement.classList.remove("twocolumn-item-show");
 						if (document.getElementById("two-column-menu").querySelector('[href="#' + menuIdSub + '"]'))
-							document.getElementById("two-column-menu").querySelector('[href="#' + menuIdSub + '"]').classList.add("active");
+						document.getElementById("two-column-menu").querySelector('[href="#' + menuIdSub + '"]').classList.add("active");
 					}
 					var menuId = parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown").getAttribute("id");
 					if (document.getElementById("two-column-menu").querySelector('[href="#' + menuId + '"]'))
@@ -916,8 +886,8 @@ File: Main Js File
 
 	// two-column sidebar active js
 	function initActiveMenu() {
-		var currentPath = location.pathname == "/" ? "/" : location.pathname.substring(1);
-		currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
+		var currentPath = location.pathname == "/" ? "/" : "/" + location.pathname.substring(1);
+		//currentPath = currentPath.substring(currentPath.lastIndexOf("/") + 1);
 		if (currentPath) {
 			// navbar-nav
 			var a = document.getElementById("navbar-nav").querySelector('[href="' + currentPath + '"]');
@@ -936,9 +906,9 @@ File: Main Js File
 						if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse.menu-dropdown")) {
 							parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").classList.add("show");
 							if (parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling) {
-
+								console.log("parentCollapseDiv",parentCollapseDiv)
 								parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active");
-								if ((document.documentElement.getAttribute("data-layout") == "horizontal") && parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse")) {
+								if((document.documentElement.getAttribute("data-layout") == "horizontal") && parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse")){
 									parentCollapseDiv.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.closest(".collapse").previousElementSibling.classList.add("active")
 								}
 							}
@@ -984,22 +954,22 @@ File: Main Js File
 						e.innerHTML = dropdownItemCart;
 					});
 					updateCartPrice();
-					if (document.getElementById("empty-cart")) {
-						document.getElementById("empty-cart").style.display = dropdownItemCart == 0 ? "block" : "none";
-					}
-					if (document.getElementById("checkout-elem")) {
-						document.getElementById("checkout-elem").style.display = dropdownItemCart == 0 ? "none" : "block";
-					}
+					if(document.getElementById("empty-cart")){
+					document.getElementById("empty-cart").style.display = dropdownItemCart == 0 ? "block" : "none";
+				}
+				if(document.getElementById("checkout-elem")){
+					document.getElementById("checkout-elem").style.display = dropdownItemCart == 0 ? "none" : "block";
+				}
 				});
 			});
 			Array.from(document.getElementsByClassName("cartitem-badge")).forEach(function (e) {
 				e.innerHTML = dropdownItemCart;
 			});
-			if (document.getElementById("empty-cart")) {
-				document.getElementById("empty-cart").style.display = "none";
+			if(document.getElementById("empty-cart")){
+			document.getElementById("empty-cart").style.display = "none";
 			}
-			if (document.getElementById("checkout-elem")) {
-				document.getElementById("checkout-elem").style.display = "block";
+			if(document.getElementById("checkout-elem")){
+			document.getElementById("checkout-elem").style.display = "block";
 			}
 			function updateCartPrice() {
 				var currencySign = "$";
@@ -1007,79 +977,20 @@ File: Main Js File
 				Array.from(document.getElementsByClassName("cart-item-price")).forEach(function (e) {
 					subtotal += parseFloat(e.innerHTML);
 				});
-				if (document.getElementById("cart-item-total")) {
-					document.getElementById("cart-item-total").innerHTML = currencySign + subtotal.toFixed(2);
-				}
+				if(document.getElementById("cart-item-total")){
+				document.getElementById("cart-item-total").innerHTML = currencySign + subtotal.toFixed(2);
+			}
 			}
 			updateCartPrice();
 		}
 
 		// notification messages
 		if (document.getElementsByClassName("notification-check")) {
-			function emptyNotification() {
-				Array.from(document.querySelectorAll("#notificationItemsTabContent .tab-pane")).forEach(function (elem) {
-					if (elem.querySelectorAll(".notification-item").length > 0) {
-						if (elem.querySelector(".view-all")) {
-							elem.querySelector(".view-all").style.display = "block";
-						}
-					} else {
-						if (elem.querySelector(".view-all")) {
-							elem.querySelector(".view-all").style.display = "none";
-						}
-						var emptyNotificationElem = elem.querySelector(".empty-notification-elem")
-						if (!emptyNotificationElem) {
-							elem.innerHTML += '<div class="empty-notification-elem">\
-							<div class="w-25 w-sm-50 pt-3 mx-auto">\
-								<img src="../assets/images/svg/bell.svg" class="img-fluid" alt="user-pic">\
-							</div>\
-							<div class="text-center pb-5 mt-2">\
-								<h6 class="fs-18 fw-semibold lh-base">Hey! You have no any notifications </h6>\
-							</div>\
-						</div>'
-						}
-					}
-				});
-			}
-			emptyNotification();
-
-
 			Array.from(document.querySelectorAll(".notification-check input")).forEach(function (element) {
-				element.addEventListener("change", function (el) {
+				element.addEventListener("click", function (el) {
 					el.target.closest(".notification-item").classList.toggle("active");
-
-					var checkedCount = document.querySelectorAll('.notification-check input:checked').length;
-
-					if (el.target.closest(".notification-item").classList.contains("active")) {
-						(checkedCount > 0) ? document.getElementById("notification-actions").style.display = 'block' : document.getElementById("notification-actions").style.display = 'none';
-					} else {
-						(checkedCount > 0) ? document.getElementById("notification-actions").style.display = 'block' : document.getElementById("notification-actions").style.display = 'none';
-					}
-					document.getElementById("select-content").innerHTML = checkedCount
-				});
-
-				var notificationDropdown = document.getElementById('notificationDropdown')
-				notificationDropdown.addEventListener('hide.bs.dropdown', function (event) {
-					element.checked = false;
-					document.querySelectorAll('.notification-item').forEach(function (item) {
-						item.classList.remove("active");
-					})
-					document.getElementById('notification-actions').style.display = '';
 				});
 			});
-
-			var removeItem = document.getElementById('removeNotificationModal');
-			removeItem.addEventListener('show.bs.modal', function (event) {
-				document.getElementById("delete-notification").addEventListener("click", function () {
-					Array.from(document.querySelectorAll(".notification-item")).forEach(function (element) {
-						if (element.classList.contains("active")) {
-							element.remove();
-						}
-					});
-					emptyNotification();
-
-					document.getElementById("NotificationModalbtn-close").click();
-				})
-			})
 		}
 	}
 
@@ -1135,9 +1046,8 @@ File: Main Js File
 
 	function updateHorizontalMenus() {
 		document.getElementById("two-column-menu").innerHTML = "";
-		if (document.querySelector(".navbar-menu")) {
-			document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
-		}
+		document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
+
 		document.getElementById("scrollbar").removeAttribute("data-simplebar");
 		document.getElementById("navbar-nav").removeAttribute("data-simplebar");
 		document.getElementById("scrollbar").classList.remove("h-100");
@@ -1160,10 +1070,10 @@ File: Main Js File
 			if (index + 1 === menuData.length) {
 				if (splitItem.insertAdjacentHTML) {
 					splitItem.insertAdjacentHTML(
-						"afterend",
-						'<li class="nav-item">\
+					"afterend",
+					'<li class="nav-item">\
 						<a class="nav-link" href="#sidebarMore" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMore">\
-							<i class="ri-briefcase-2-line"></i> <span data-key="t-more">' + extraMenuName + '</span>\
+							<i class="ri-briefcase-2-line"></i> ' + extraMenuName + '\
 						</a>\
 						<div class="collapse menu-dropdown" id="sidebarMore"><ul class="nav nav-sm flex-column">' + newMenus + "</ul></div>\
 					</li>");
@@ -1175,9 +1085,7 @@ File: Main Js File
 	function hideShowLayoutOptions(dataLayout) {
 		if (dataLayout == "vertical") {
 			document.getElementById("two-column-menu").innerHTML = "";
-			if (document.querySelector(".navbar-menu")) {
-				document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
-			}
+			document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
 			if (document.getElementById("theme-settings-offcanvas")) {
 				document.getElementById("sidebar-size").style.display = "block";
 				document.getElementById("sidebar-view").style.display = "block";
@@ -1187,7 +1095,6 @@ File: Main Js File
 				}
 				document.getElementById("layout-position").style.display = "block";
 				document.getElementById("layout-width").style.display = "block";
-				document.getElementById("sidebar-visibility").style.display = "none";
 			}
 			initLeftMenuCollapse();
 			initActiveMenu();
@@ -1204,7 +1111,6 @@ File: Main Js File
 				}
 				document.getElementById("layout-position").style.display = "block";
 				document.getElementById("layout-width").style.display = "block";
-				document.getElementById("sidebar-visibility").style.display = "none";
 			}
 			initActiveMenu();
 		} else if (dataLayout == "twocolumn") {
@@ -1219,28 +1125,7 @@ File: Main Js File
 				}
 				document.getElementById("layout-position").style.display = "none";
 				document.getElementById("layout-width").style.display = "none";
-				document.getElementById("sidebar-visibility").style.display = "none";
 			}
-		} else if (dataLayout == "semibox") {
-			document.getElementById("two-column-menu").innerHTML = "";
-			if (document.querySelector(".navbar-menu")) {
-				document.querySelector(".navbar-menu").innerHTML = navbarMenuHTML;
-			}
-			if (document.getElementById("theme-settings-offcanvas")) {
-				document.getElementById("sidebar-size").style.display = "block";
-				document.getElementById("sidebar-view").style.display = "none";
-				document.getElementById("sidebar-color").style.display = "block";
-				if (document.getElementById("sidebar-img")) {
-					document.getElementById("sidebar-img").style.display = "block";
-				}
-				document.getElementById("layout-position").style.display = "block";
-				document.getElementById("layout-width").style.display = "none";
-				document.getElementById("sidebar-visibility").style.display = "block";
-			}
-			initLeftMenuCollapse();
-			initActiveMenu();
-			addEventListenerOnSmHoverMenu();
-			initMenuItemScroll();
 		}
 	}
 
@@ -1260,75 +1145,6 @@ File: Main Js File
 	function layoutSwitch(isLayoutAttributes) {
 		switch (isLayoutAttributes) {
 			case isLayoutAttributes:
-				switch (isLayoutAttributes["data-theme"]) {
-					case "default":
-						getElementUsingTagname("data-theme", "default");
-						sessionStorage.setItem("data-theme", "default");
-						document.documentElement.setAttribute("data-theme", "default");
-						break;
-					case "minimal":
-						getElementUsingTagname("data-theme", "minimal");
-						sessionStorage.setItem("data-theme", "minimal");
-						document.documentElement.setAttribute("data-theme", "minimal");
-						break;
-					case "saas":
-						getElementUsingTagname("data-theme", "saas");
-						sessionStorage.setItem("data-theme", "saas");
-						document.documentElement.setAttribute("data-theme", "saas");
-						break;
-					case "corporate":
-						getElementUsingTagname("data-theme", "corporate");
-						sessionStorage.setItem("data-theme", "corporate");
-						document.documentElement.setAttribute("data-theme", "corporate");
-						break;
-					case "galaxy":
-						getElementUsingTagname("data-theme", "galaxy");
-						sessionStorage.setItem("data-theme", "galaxy");
-						document.documentElement.setAttribute("data-theme", "galaxy");
-						document.getElementById("body-img").style.display = "block";
-						break;
-					case "material":
-						getElementUsingTagname("data-theme", "material");
-						sessionStorage.setItem("data-theme", "material");
-						document.documentElement.setAttribute("data-theme", "material");
-						break;
-					case "creative":
-						getElementUsingTagname("data-theme", "creative");
-						sessionStorage.setItem("data-theme", "creative");
-						document.documentElement.setAttribute("data-theme", "creative");
-						break;
-					case "minimal":
-						getElementUsingTagname("data-theme", "minimal");
-						sessionStorage.setItem("data-theme", "minimal");
-						document.documentElement.setAttribute("data-theme", "minimal");
-						break;
-					case "modern":
-						getElementUsingTagname("data-theme", "modern");
-						sessionStorage.setItem("data-theme", "modern");
-						document.documentElement.setAttribute("data-theme", "modern");
-						break;
-					case "interactive":
-						getElementUsingTagname("data-theme", "interactive");
-						sessionStorage.setItem("data-theme", "interactive");
-						document.documentElement.setAttribute("data-theme", "interactive");
-						break;
-					case "classic":
-						getElementUsingTagname("data-theme", "classic");
-						sessionStorage.setItem("data-theme", "classic");
-						document.documentElement.setAttribute("data-theme", "classic");
-						break;
-					case "vintage":
-						getElementUsingTagname("data-theme", "vintage");
-						sessionStorage.setItem("data-theme", "vintage");
-						document.documentElement.setAttribute("data-theme", "vintage");
-						break;
-					default:
-						getElementUsingTagname("data-theme", "default");
-						sessionStorage.setItem("data-theme", "default");
-						document.documentElement.setAttribute("data-theme", "default");
-						break;
-				}
-
 				switch (isLayoutAttributes["data-layout"]) {
 					case "vertical":
 						getElementUsingTagname("data-layout", "vertical");
@@ -1349,12 +1165,6 @@ File: Main Js File
 						document.documentElement.setAttribute("data-layout", "twocolumn");
 						hideShowLayoutOptions("twocolumn");
 						break;
-					case "semibox":
-						getElementUsingTagname("data-layout", "semibox");
-						sessionStorage.setItem("data-layout", "semibox");
-						document.documentElement.setAttribute("data-layout", "semibox");
-						hideShowLayoutOptions("semibox");
-						break;
 					default:
 						if (sessionStorage.getItem("data-layout") == "vertical" && sessionStorage.getItem("data-layout")) {
 							getElementUsingTagname("data-layout", "vertical");
@@ -1372,24 +1182,19 @@ File: Main Js File
 							sessionStorage.setItem("data-layout", "twocolumn");
 							document.documentElement.setAttribute("data-layout", "twocolumn");
 							hideShowLayoutOptions("twocolumn");
-						} else if (sessionStorage.getItem("data-layout") == "semibox") {
-							getElementUsingTagname("data-layout", "semibox");
-							sessionStorage.setItem("data-layout", "semibox");
-							document.documentElement.setAttribute("data-layout", "semibox");
-							hideShowLayoutOptions("semibox");
 						}
 						break;
 				}
 				switch (isLayoutAttributes["data-topbar"]) {
 					case "light":
-						getElementUsingTagname("data-topbar", "light");
-						sessionStorage.setItem("data-topbar", "light");
-						document.documentElement.setAttribute("data-topbar", "light");
+							getElementUsingTagname("data-topbar", "light");
+							sessionStorage.setItem("data-topbar", "light");
+							document.documentElement.setAttribute("data-topbar", "light");
 						break;
 					case "dark":
-						getElementUsingTagname("data-topbar", "dark");
-						sessionStorage.setItem("data-topbar", "dark");
-						document.documentElement.setAttribute("data-topbar", "dark");
+							getElementUsingTagname("data-topbar", "dark");
+							sessionStorage.setItem("data-topbar", "dark");
+							document.documentElement.setAttribute("data-topbar", "dark");
 						break;
 					default:
 						if (sessionStorage.getItem("data-topbar") == "dark") {
@@ -1404,29 +1209,16 @@ File: Main Js File
 						break;
 				}
 
-				switch (isLayoutAttributes["data-sidebar-visibility"]) {
-					case "hidden":
-						getElementUsingTagname("data-sidebar-visibility", "hidden");
-						sessionStorage.setItem("data-sidebar-visibility", "hidden");
-						document.documentElement.setAttribute("data-sidebar-visibility", "hidden");
-						break;
-					default:
-						getElementUsingTagname("data-sidebar-visibility", "show");
-						sessionStorage.setItem("data-sidebar-visibility", "show");
-						document.documentElement.setAttribute("data-sidebar-visibility", "show");
-						break;
-				}
-
 				switch (isLayoutAttributes["data-layout-style"]) {
 					case "default":
-						getElementUsingTagname("data-layout-style", "default");
-						sessionStorage.setItem("data-layout-style", "default");
-						document.documentElement.setAttribute("data-layout-style", "default");
+							getElementUsingTagname("data-layout-style", "default");
+							sessionStorage.setItem("data-layout-style", "default");
+							document.documentElement.setAttribute("data-layout-style", "default");
 						break;
 					case "detached":
-						getElementUsingTagname("data-layout-style", "detached");
-						sessionStorage.setItem("data-layout-style", "detached");
-						document.documentElement.setAttribute("data-layout-style", "detached");
+							getElementUsingTagname("data-layout-style", "detached");
+							sessionStorage.setItem("data-layout-style", "detached");
+							document.documentElement.setAttribute("data-layout-style", "detached");
 						break;
 					default:
 						if (sessionStorage.getItem("data-layout-style") == "detached") {
@@ -1443,27 +1235,27 @@ File: Main Js File
 
 				switch (isLayoutAttributes["data-sidebar-size"]) {
 					case "lg":
-						getElementUsingTagname("data-sidebar-size", "lg");
-						document.documentElement.setAttribute("data-sidebar-size", "lg");
-						sessionStorage.setItem("data-sidebar-size", "lg");
+							getElementUsingTagname("data-sidebar-size", "lg");
+							document.documentElement.setAttribute("data-sidebar-size", "lg");
+							sessionStorage.setItem("data-sidebar-size", "lg");
 						break;
 
 					case "sm":
-						getElementUsingTagname("data-sidebar-size", "sm");
-						document.documentElement.setAttribute("data-sidebar-size", "sm");
-						sessionStorage.setItem("data-sidebar-size", "sm");
+							getElementUsingTagname("data-sidebar-size", "sm");
+							document.documentElement.setAttribute("data-sidebar-size", "sm");
+							sessionStorage.setItem("data-sidebar-size", "sm");
 						break;
 
 					case "md":
-						getElementUsingTagname("data-sidebar-size", "md");
-						document.documentElement.setAttribute("data-sidebar-size", "md");
-						sessionStorage.setItem("data-sidebar-size", "md");
+							getElementUsingTagname("data-sidebar-size", "md");
+							document.documentElement.setAttribute("data-sidebar-size", "md");
+							sessionStorage.setItem("data-sidebar-size", "md");
 						break;
 
 					case "sm-hover":
-						getElementUsingTagname("data-sidebar-size", "sm-hover");
-						document.documentElement.setAttribute("data-sidebar-size", "sm-hover");
-						sessionStorage.setItem("data-sidebar-size", "sm-hover");
+							getElementUsingTagname("data-sidebar-size", "sm-hover");
+							document.documentElement.setAttribute("data-sidebar-size", "sm-hover");
+							sessionStorage.setItem("data-sidebar-size", "sm-hover");
 						break;
 
 					default:
@@ -1487,40 +1279,40 @@ File: Main Js File
 						break;
 				}
 
-				switch (isLayoutAttributes["data-bs-theme"]) {
+				switch (isLayoutAttributes["data-layout-mode"]) {
 					case "light":
-						getElementUsingTagname("data-bs-theme", "light");
-						document.documentElement.setAttribute("data-bs-theme", "light");
-						sessionStorage.setItem("data-bs-theme", "light");
+							getElementUsingTagname("data-layout-mode", "light");
+							document.documentElement.setAttribute("data-layout-mode", "light");
+							sessionStorage.setItem("data-layout-mode", "light");
 						break;
 					case "dark":
-						getElementUsingTagname("data-bs-theme", "dark");
-						document.documentElement.setAttribute("data-bs-theme", "dark");
-						sessionStorage.setItem("data-bs-theme", "dark");
+							getElementUsingTagname("data-layout-mode", "dark");
+							document.documentElement.setAttribute("data-layout-mode", "dark");
+							sessionStorage.setItem("data-layout-mode", "dark");
 						break;
 					default:
-						if (sessionStorage.getItem("data-bs-theme") && sessionStorage.getItem("data-bs-theme") == "dark") {
-							sessionStorage.setItem("data-bs-theme", "dark");
-							document.documentElement.setAttribute("data-bs-theme", "dark");
-							getElementUsingTagname("data-bs-theme", "dark");
+						if (sessionStorage.getItem("data-layout-mode") && sessionStorage.getItem("data-layout-mode") == "dark") {
+							sessionStorage.setItem("data-layout-mode", "dark");
+							document.documentElement.setAttribute("data-layout-mode", "dark");
+							getElementUsingTagname("data-layout-mode", "dark");
 						} else {
-							sessionStorage.setItem("data-bs-theme", "light");
-							document.documentElement.setAttribute("data-bs-theme", "light");
-							getElementUsingTagname("data-bs-theme", "light");
+							sessionStorage.setItem("data-layout-mode", "light");
+							document.documentElement.setAttribute("data-layout-mode", "light");
+							getElementUsingTagname("data-layout-mode", "light");
 						}
 						break;
 				}
 
 				switch (isLayoutAttributes["data-layout-width"]) {
 					case "fluid":
-						getElementUsingTagname("data-layout-width", "fluid");
-						document.documentElement.setAttribute("data-layout-width", "fluid");
-						sessionStorage.setItem("data-layout-width", "fluid");
+							getElementUsingTagname("data-layout-width", "fluid");
+							document.documentElement.setAttribute("data-layout-width", "fluid");
+							sessionStorage.setItem("data-layout-width", "fluid");
 						break;
 					case "boxed":
-						getElementUsingTagname("data-layout-width", "boxed");
-						document.documentElement.setAttribute("data-layout-width", "boxed");
-						sessionStorage.setItem("data-layout-width", "boxed");
+							getElementUsingTagname("data-layout-width", "boxed");
+							document.documentElement.setAttribute("data-layout-width", "boxed");
+							sessionStorage.setItem("data-layout-width", "boxed");
 						break;
 					default:
 						if (sessionStorage.getItem("data-layout-width") == "boxed") {
@@ -1537,125 +1329,125 @@ File: Main Js File
 
 				switch (isLayoutAttributes["data-sidebar"]) {
 					case "light":
-						getElementUsingTagname("data-sidebar", "light");
-						sessionStorage.setItem("data-sidebar", "light");
-						document.documentElement.setAttribute("data-sidebar", "light");
+							getElementUsingTagname("data-sidebar", "light");
+							sessionStorage.setItem("data-sidebar", "light");
+							document.documentElement.setAttribute("data-sidebar", "light");
 						break;
 					case "dark":
-						getElementUsingTagname("data-sidebar", "dark");
-						sessionStorage.setItem("data-sidebar", "dark");
-						document.documentElement.setAttribute("data-sidebar", "dark");
+							getElementUsingTagname("data-sidebar", "dark");
+							sessionStorage.setItem("data-sidebar", "dark");
+							document.documentElement.setAttribute("data-sidebar", "dark");
 						break;
 					case "gradient":
-						getElementUsingTagname("data-sidebar", "gradient");
-						sessionStorage.setItem("data-sidebar", "gradient");
-						document.documentElement.setAttribute("data-sidebar", "gradient");
+							getElementUsingTagname("data-sidebar", "gradient");
+							sessionStorage.setItem("data-sidebar", "gradient");
+							document.documentElement.setAttribute("data-sidebar", "gradient");
 						break;
 					case "gradient-2":
-						getElementUsingTagname("data-sidebar", "gradient-2");
-						sessionStorage.setItem("data-sidebar", "gradient-2");
-						document.documentElement.setAttribute("data-sidebar", "gradient-2");
+							getElementUsingTagname("data-sidebar", "gradient-2");
+							sessionStorage.setItem("data-sidebar", "gradient-2");
+							document.documentElement.setAttribute("data-sidebar", "gradient-2");
 						break;
 					case "gradient-3":
-						getElementUsingTagname("data-sidebar", "gradient-3");
-						sessionStorage.setItem("data-sidebar", "gradient-3");
-						document.documentElement.setAttribute("data-sidebar", "gradient-3");
+							getElementUsingTagname("data-sidebar", "gradient-3");
+							sessionStorage.setItem("data-sidebar", "gradient-3");
+							document.documentElement.setAttribute("data-sidebar", "gradient-3");
 						break;
 					case "gradient-4":
-						getElementUsingTagname("data-sidebar", "gradient-4");
-						sessionStorage.setItem("data-sidebar", "gradient-4");
-						document.documentElement.setAttribute("data-sidebar", "gradient-4");
+							getElementUsingTagname("data-sidebar", "gradient-4");
+							sessionStorage.setItem("data-sidebar", "gradient-4");
+							document.documentElement.setAttribute("data-sidebar", "gradient-4");
 						break;
 					default:
-						if (sessionStorage.getItem("data-sidebar") && sessionStorage.getItem("data-sidebar") == "light") {
-							sessionStorage.setItem("data-sidebar", "light");
-							getElementUsingTagname("data-sidebar", "light");
-							document.documentElement.setAttribute("data-sidebar", "light");
-						} else if (sessionStorage.getItem("data-sidebar") == "dark") {
-							sessionStorage.setItem("data-sidebar", "dark");
-							getElementUsingTagname("data-sidebar", "dark");
-							document.documentElement.setAttribute("data-sidebar", "dark");
-						} else if (sessionStorage.getItem("data-sidebar") == "gradient") {
-							sessionStorage.setItem("data-sidebar", "gradient");
-							getElementUsingTagname("data-sidebar", "gradient");
-							document.documentElement.setAttribute("data-sidebar", "gradient");
-						} else if (sessionStorage.getItem("data-sidebar") == "gradient-2") {
-							sessionStorage.setItem("data-sidebar", "gradient-2");
-							getElementUsingTagname("data-sidebar", "gradient-2");
-							document.documentElement.setAttribute("data-sidebar", "gradient-2");
-						} else if (sessionStorage.getItem("data-sidebar") == "gradient-3") {
-							sessionStorage.setItem("data-sidebar", "gradient-3");
-							getElementUsingTagname("data-sidebar", "gradient-3");
-							document.documentElement.setAttribute("data-sidebar", "gradient-3");
-						} else if (sessionStorage.getItem("data-sidebar") == "gradient-4") {
-							sessionStorage.setItem("data-sidebar", "gradient-4");
-							getElementUsingTagname("data-sidebar", "gradient-4");
-							document.documentElement.setAttribute("data-sidebar", "gradient-4");
-						}
+							if (sessionStorage.getItem("data-sidebar") && sessionStorage.getItem("data-sidebar") == "light") {
+								sessionStorage.setItem("data-sidebar", "light");
+								getElementUsingTagname("data-sidebar", "light");
+								document.documentElement.setAttribute("data-sidebar", "light");
+							} else if (sessionStorage.getItem("data-sidebar") == "dark"){
+								sessionStorage.setItem("data-sidebar", "dark");
+								getElementUsingTagname("data-sidebar", "dark");
+								document.documentElement.setAttribute("data-sidebar", "dark");
+							} else if (sessionStorage.getItem("data-sidebar") == "gradient"){
+								sessionStorage.setItem("data-sidebar", "gradient");
+								getElementUsingTagname("data-sidebar", "gradient");
+								document.documentElement.setAttribute("data-sidebar", "gradient");
+							} else if (sessionStorage.getItem("data-sidebar") == "gradient-2"){
+								sessionStorage.setItem("data-sidebar", "gradient-2");
+								getElementUsingTagname("data-sidebar", "gradient-2");
+								document.documentElement.setAttribute("data-sidebar", "gradient-2");
+							} else if (sessionStorage.getItem("data-sidebar") == "gradient-3"){
+								sessionStorage.setItem("data-sidebar", "gradient-3");
+								getElementUsingTagname("data-sidebar", "gradient-3");
+								document.documentElement.setAttribute("data-sidebar", "gradient-3");
+							} else if (sessionStorage.getItem("data-sidebar") == "gradient-4") {
+								sessionStorage.setItem("data-sidebar", "gradient-4");
+								getElementUsingTagname("data-sidebar", "gradient-4");
+								document.documentElement.setAttribute("data-sidebar", "gradient-4");
+							}
 						break;
 				}
 
 				switch (isLayoutAttributes["data-sidebar-image"]) {
 					case "none":
-						getElementUsingTagname("data-sidebar-image", "none");
-						sessionStorage.setItem("data-sidebar-image", "none");
-						document.documentElement.setAttribute("data-sidebar-image", "none");
+							getElementUsingTagname("data-sidebar-image", "none");
+							sessionStorage.setItem("data-sidebar-image", "none");
+							document.documentElement.setAttribute("data-sidebar-image", "none");
 						break;
 					case "img-1":
-						getElementUsingTagname("data-sidebar-image", "img-1");
-						sessionStorage.setItem("data-sidebar-image", "img-1");
-						document.documentElement.setAttribute("data-sidebar-image", "img-1");
+							getElementUsingTagname("data-sidebar-image", "img-1");
+							sessionStorage.setItem("data-sidebar-image", "img-1");
+							document.documentElement.setAttribute("data-sidebar-image", "img-1");
 						break;
 					case "img-2":
-						getElementUsingTagname("data-sidebar-image", "img-2");
-						sessionStorage.setItem("data-sidebar-image", "img-2");
-						document.documentElement.setAttribute("data-sidebar-image", "img-2");
+							getElementUsingTagname("data-sidebar-image", "img-2");
+							sessionStorage.setItem("data-sidebar-image", "img-2");
+							document.documentElement.setAttribute("data-sidebar-image", "img-2");
 						break;
 					case "img-3":
-						getElementUsingTagname("data-sidebar-image", "img-3");
-						sessionStorage.setItem("data-sidebar-image", "img-3");
-						document.documentElement.setAttribute("data-sidebar-image", "img-3");
+							getElementUsingTagname("data-sidebar-image", "img-3");
+							sessionStorage.setItem("data-sidebar-image", "img-3");
+							document.documentElement.setAttribute("data-sidebar-image", "img-3");
 						break;
 					case "img-4":
-						getElementUsingTagname("data-sidebar-image", "img-4");
-						sessionStorage.setItem("data-sidebar-image", "img-4");
+							getElementUsingTagname("data-sidebar-image", "img-4");
+							sessionStorage.setItem("data-sidebar-image", "img-4");
 						document.documentElement.setAttribute("data-sidebar-image", "img-4");
 						break;
 					default:
-						if (sessionStorage.getItem("data-sidebar-image") && sessionStorage.getItem("data-sidebar-image") == "none") {
-							sessionStorage.setItem("data-sidebar-image", "none");
-							getElementUsingTagname("data-sidebar-image", "none");
-							document.documentElement.setAttribute("data-sidebar-image", "none");
-						} else if (sessionStorage.getItem("data-sidebar-image") == "img-1") {
-							sessionStorage.setItem("data-sidebar-image", "img-1");
-							getElementUsingTagname("data-sidebar-image", "img-1");
-							document.documentElement.setAttribute("data-sidebar-image", "img-2");
-						} else if (sessionStorage.getItem("data-sidebar-image") == "img-2") {
-							sessionStorage.setItem("data-sidebar-image", "img-2");
-							getElementUsingTagname("data-sidebar-image", "img-2");
-							document.documentElement.setAttribute("data-sidebar-image", "img-2");
-						} else if (sessionStorage.getItem("data-sidebar-image") == "img-3") {
-							sessionStorage.setItem("data-sidebar-image", "img-3");
-							getElementUsingTagname("data-sidebar-image", "img-3");
-							document.documentElement.setAttribute("data-sidebar-image", "img-3");
-						} else if (sessionStorage.getItem("data-sidebar-image") == "img-4") {
-							sessionStorage.setItem("data-sidebar-image", "img-4");
-							getElementUsingTagname("data-sidebar-image", "img-4");
-							document.documentElement.setAttribute("data-sidebar-image", "img-4");
-						}
+							if (sessionStorage.getItem("data-sidebar-image") && sessionStorage.getItem("data-sidebar-image") == "none") {
+								sessionStorage.setItem("data-sidebar-image", "none");
+								getElementUsingTagname("data-sidebar-image", "none");
+								document.documentElement.setAttribute("data-sidebar-image", "none");
+							}else if (sessionStorage.getItem("data-sidebar-image") == "img-1"){
+								sessionStorage.setItem("data-sidebar-image", "img-1");
+								getElementUsingTagname("data-sidebar-image", "img-1");
+								document.documentElement.setAttribute("data-sidebar-image", "img-2");
+							}else if (sessionStorage.getItem("data-sidebar-image") == "img-2"){
+								sessionStorage.setItem("data-sidebar-image", "img-2");
+								getElementUsingTagname("data-sidebar-image", "img-2");
+								document.documentElement.setAttribute("data-sidebar-image", "img-2");
+							}else if (sessionStorage.getItem("data-sidebar-image") == "img-3"){
+								sessionStorage.setItem("data-sidebar-image", "img-3");
+								getElementUsingTagname("data-sidebar-image", "img-3");
+								document.documentElement.setAttribute("data-sidebar-image", "img-3");
+							} else if (sessionStorage.getItem("data-sidebar-image") == "img-4") {
+								sessionStorage.setItem("data-sidebar-image", "img-4");
+								getElementUsingTagname("data-sidebar-image", "img-4");
+								document.documentElement.setAttribute("data-sidebar-image", "img-4");
+							}
 						break;
 				}
 
 				switch (isLayoutAttributes["data-layout-position"]) {
 					case "fixed":
-						getElementUsingTagname("data-layout-position", "fixed");
-						sessionStorage.setItem("data-layout-position", "fixed");
-						document.documentElement.setAttribute("data-layout-position", "fixed");
+							getElementUsingTagname("data-layout-position", "fixed");
+							sessionStorage.setItem("data-layout-position", "fixed");
+							document.documentElement.setAttribute("data-layout-position", "fixed");
 						break;
 					case "scrollable":
-						getElementUsingTagname("data-layout-position", "scrollable");
-						sessionStorage.setItem("data-layout-position", "scrollable");
-						document.documentElement.setAttribute("data-layout-position", "scrollable");
+							getElementUsingTagname("data-layout-position", "scrollable");
+							sessionStorage.setItem("data-layout-position", "scrollable");
+							document.documentElement.setAttribute("data-layout-position", "scrollable");
 						break;
 					default:
 						if (sessionStorage.getItem("data-layout-position") && sessionStorage.getItem("data-layout-position") == "scrollable") {
@@ -1672,30 +1464,30 @@ File: Main Js File
 
 				switch (isLayoutAttributes["data-preloader"]) {
 					case "disable":
-						getElementUsingTagname("data-preloader", "disable");
-						sessionStorage.setItem("data-preloader", "disable");
-						document.documentElement.setAttribute("data-preloader", "disable");
-
+							getElementUsingTagname("data-preloader", "disable");
+							sessionStorage.setItem("data-preloader", "disable");
+							document.documentElement.setAttribute("data-preloader", "disable");
+						
 						break;
 					case "enable":
-						getElementUsingTagname("data-preloader", "enable");
-						sessionStorage.setItem("data-preloader", "enable");
-						document.documentElement.setAttribute("data-preloader", "enable");
-						var preloader = document.getElementById("preloader");
-						if (preloader) {
-							window.addEventListener("load", function () {
-								preloader.style.opacity = "0";
-								preloader.style.visibility = "hidden";
-							});
-						}
-						break;
+							getElementUsingTagname("data-preloader", "enable");
+							sessionStorage.setItem("data-preloader", "enable");
+							document.documentElement.setAttribute("data-preloader", "enable");
+							var preloader = document.getElementById("preloader");
+							if (preloader) {
+								window.addEventListener("load", function () {
+									preloader.style.opacity = "0";
+									preloader.style.visibility = "hidden";
+								});
+							}
+							break;
 					default:
 						if (sessionStorage.getItem("data-preloader") && sessionStorage.getItem("data-preloader") == "disable") {
 							getElementUsingTagname("data-preloader", "disable");
 							sessionStorage.setItem("data-preloader", "disable");
 							document.documentElement.setAttribute("data-preloader", "disable");
-
-						} else if (sessionStorage.getItem("data-preloader") == "enable") {
+			
+						}else if (sessionStorage.getItem("data-preloader") == "enable") {
 							getElementUsingTagname("data-preloader", "enable");
 							sessionStorage.setItem("data-preloader", "enable");
 							document.documentElement.setAttribute("data-preloader", "enable");
@@ -1712,58 +1504,31 @@ File: Main Js File
 						break;
 				}
 
-				switch (isLayoutAttributes["data-theme-colors"]) {
-					case "default":
-						getElementUsingTagname("data-theme-colors", "default");
-						sessionStorage.setItem("data-theme-colors", "default");
-						document.documentElement.setAttribute("data-theme-colors", "default");
-						break;
-					case "green":
-						getElementUsingTagname("data-theme-colors", "green");
-						sessionStorage.setItem("data-theme-colors", "green");
-						document.documentElement.setAttribute("data-theme-colors", "green");
-						break;
-					case "purple":
-						getElementUsingTagname("data-theme-colors", "purple");
-						sessionStorage.setItem("data-theme-colors", "purple");
-						document.documentElement.setAttribute("data-theme-colors", "purple");
-						break;
-					case "blue":
-						getElementUsingTagname("data-theme-colors", "blue");
-						sessionStorage.setItem("data-theme-colors", "blue");
-						document.documentElement.setAttribute("data-theme-colors", "blue");
-						break;
-					default:
-						getElementUsingTagname("data-theme-colors", "default");
-						sessionStorage.setItem("data-theme-colors", "default");
-						document.documentElement.setAttribute("data-theme-colors", "default");
-						break;
-				}
-
 				switch (isLayoutAttributes["data-body-image"]) {
 					case "img-1":
-						getElementUsingTagname("data-body-image", "img-1");
-						sessionStorage.setItem("data-body-image", "img-1");
-						document.documentElement.setAttribute("data-body-image", "img-1");
-						if (document.getElementById("theme-settings-offcanvas")) {
-							document.documentElement.removeAttribute("data-sidebar-image");
-						}
+							getElementUsingTagname("data-body-image", "img-1");
+							sessionStorage.setItem("data-sidebabodyr-image", "img-1");
+							document.documentElement.setAttribute("data-body-image", "img-1");
+							if (document.getElementById("theme-settings-offcanvas")) {
+								document.documentElement.removeAttribute("data-sidebar-image");
+							}
 						break;
 					case "img-2":
-						getElementUsingTagname("data-body-image", "img-2");
-						sessionStorage.setItem("data-body-image", "img-2");
-						document.documentElement.setAttribute("data-body-image", "img-2");
+							getElementUsingTagname("data-body-image", "img-2");
+							sessionStorage.setItem("data-body-image", "img-2");
+							document.documentElement.setAttribute("data-body-image", "img-2");
 						break;
 					case "img-3":
-						getElementUsingTagname("data-body-image", "img-3");
-						sessionStorage.setItem("data-body-image", "img-3");
-						document.documentElement.setAttribute("data-body-image", "img-3");
+							getElementUsingTagname("data-body-image", "img-3");
+							sessionStorage.setItem("data-body-image", "img-3");
+							document.documentElement.setAttribute("data-body-image", "img-3");
 						break;
 					case "none":
-						getElementUsingTagname("data-body-image", "none");
-						sessionStorage.setItem("data-body-image", "none");
-						document.documentElement.setAttribute("data-body-image", "none");
+							getElementUsingTagname("data-body-image", "none");
+							sessionStorage.setItem("data-body-image", "none");
+							document.documentElement.setAttribute("data-body-image", "none");
 						break;
+						
 					default:
 						if (sessionStorage.getItem("data-body-image") && sessionStorage.getItem("data-body-image") == "img-1") {
 							sessionStorage.setItem("data-body-image", "img-1");
@@ -1771,28 +1536,26 @@ File: Main Js File
 							document.documentElement.setAttribute("data-body-image", "img-1");
 
 							if (document.getElementById("theme-settings-offcanvas")) {
-								if (document.getElementById("sidebar-img")) {
-									document.getElementById("sidebar-img").style.display = "none";
-									document.documentElement.removeAttribute("data-sidebar-image");
-								}
+								document.getElementById("sidebar-img").style.display = "none";
+								document.documentElement.removeAttribute("data-sidebar-image");
 							}
-						} else if (sessionStorage.getItem("data-body-image") == "img-2") {
+						}else if (sessionStorage.getItem("data-body-image") == "img-2"){
 							sessionStorage.setItem("data-body-image", "img-2");
 							getElementUsingTagname("data-body-image", "img-2");
 							document.documentElement.setAttribute("data-body-image", "img-2");
-						} else if (sessionStorage.getItem("data-body-image") == "img-3") {
+						}else if (sessionStorage.getItem("data-body-image") == "img-3"){
 							sessionStorage.setItem("data-body-image", "img-3");
 							getElementUsingTagname("data-body-image", "img-3");
 							document.documentElement.setAttribute("data-body-image", "img-3");
-						} else {
+						} else if (sessionStorage.getItem("data-body-image") == "none") {
 							sessionStorage.setItem("data-body-image", "none");
 							getElementUsingTagname("data-body-image", "none");
 							document.documentElement.setAttribute("data-body-image", "none");
 						}
-						break;
+					break;
 				}
-			default:
-				break;
+				default:
+					break;
 		}
 	}
 
@@ -1817,7 +1580,6 @@ File: Main Js File
 	}
 
 	// add change event listener on right layout setting
-	var resizeEvent = new Event('resize');
 	function getElementUsingTagname(ele, val) {
 		Array.from(document.querySelectorAll("input[name=" + ele + "]")).forEach(function (x) {
 			val == x.value ? (x.checked = true) : (x.checked = false);
@@ -1825,7 +1587,6 @@ File: Main Js File
 			x.addEventListener("change", function () {
 				document.documentElement.setAttribute(ele, x.value);
 				sessionStorage.setItem(ele, x.value);
-				initLanguage();
 
 				if (ele == "data-layout-width" && x.value == "boxed") {
 					document.documentElement.setAttribute("data-sidebar-size", "sm-hover");
@@ -1843,7 +1604,7 @@ File: Main Js File
 						isCollapseMenu();
 						feather.replace();
 					} else if (x.value == "horizontal") {
-						if (document.getElementById("sidebarimg-none")) {
+						if (document.getElementById("sidebarimg-none")){
 							document.getElementById("sidebarimg-none").click();
 						}
 						hideShowLayoutOptions("horizontal");
@@ -1856,71 +1617,22 @@ File: Main Js File
 						initTwoColumnActiveMenu();
 						isCollapseMenu();
 						feather.replace();
-					} else if (x.value == "semibox") {
-						hideShowLayoutOptions("semibox");
-						document.documentElement.setAttribute("data-layout-width", "fluid");
-						document.getElementById("layout-width-fluid").click();
-						document.documentElement.setAttribute("data-layout-style", "default");
-						document.getElementById("sidebar-view-default").click();
-						isCollapseMenu();
-						feather.replace();
 					}
 				}
 
-				var sidebarSections = "block";
-				if (document.documentElement.getAttribute("data-layout") == "semibox") {
-					if (document.documentElement.getAttribute("data-sidebar-visibility") == "hidden") {
-						document.documentElement.removeAttribute("data-sidebar");
-						document.documentElement.removeAttribute("data-sidebar-image");
-						document.documentElement.removeAttribute("data-sidebar-size");
-						sidebarSections = "none";
-					} else {
-						document.documentElement.setAttribute("data-sidebar", sessionStorage.getItem("data-sidebar"));
-						document.documentElement.setAttribute("data-sidebar-image", sessionStorage.getItem("data-sidebar-image"));
-						document.documentElement.setAttribute("data-sidebar-size", sessionStorage.getItem("data-sidebar-size"));
-					}
-				}
-				document.getElementById("sidebar-size").style.display = sidebarSections;
-				document.getElementById("sidebar-color").style.display = sidebarSections;
-				if (document.getElementById("sidebar-img")) {
-					document.getElementById("sidebar-img").style.display = sidebarSections;
-				}
-
-				if (ele == "data-preloader" && x.value == "enable") {
+				if(ele == "data-preloader" && x.value == "enable"){
 					document.documentElement.setAttribute("data-preloader", "enable");
 					var preloader = document.getElementById("preloader");
-					if (preloader) {
-						setTimeout(function () {
+						if (preloader) {
+							setTimeout(function(){
 							preloader.style.opacity = "0";
 							preloader.style.visibility = "hidden";
 						}, 1000);
 					}
 					document.getElementById("customizerclose-btn").click();
-				} else if (ele == "data-preloader" && x.value == "disable") {
+				}else if(ele == "data-preloader" && x.value == "disable"){
 					document.documentElement.setAttribute("data-preloader", "disable");
 					document.getElementById("customizerclose-btn").click();
-				}
-
-				if (ele == 'data-bs-theme' || ele == 'data-theme' || ele == 'data-theme-colors') {
-					// Dispatch the resize event on the window object
-					window.dispatchEvent(resizeEvent);
-				}
-				if (ele == 'data-theme') {
-					// Dispatch the resize event on the window object
-					document.documentElement.setAttribute("data-theme", x.value);
-					document.getElementById("body-img").style.display = (x.value === "galaxy") ? "block" : "none";
-					if (x.value === "galaxy"){
-						document.documentElement.setAttribute("data-sidebar", "dark");
-						document.documentElement.setAttribute("data-bs-theme", "dark");
-					} else {
-						document.documentElement.setAttribute("data-sidebar", sessionStorage.getItem("data-sidebar"))
-						document.documentElement.setAttribute("data-bs-theme", sessionStorage.getItem("data-bs-theme"))
-					}
-				}
-				if (ele == 'data-theme-colors' || ele == 'data-theme') {
-					setTimeout(() => {
-						window.dispatchEvent(resizeEvent);
-					}, 200);
 				}
 			});
 		});
@@ -1942,19 +1654,7 @@ File: Main Js File
 				}
 			});
 		}
-
-		if (document.querySelectorAll("[data-bs-target='#collapseBgGradient.show']")) {
-			Array.from(document.querySelectorAll("[data-bs-target='#collapseBgGradient.show']")).forEach(function (subElem) {
-				subElem.addEventListener("click", function () {
-					var myCollapse = document.getElementById('collapseBgGradient')
-					var bsCollapse = new bootstrap.Collapse(myCollapse, {
-						toggle: false,
-					})
-					bsCollapse.hide()
-				})
-			});
-		}
-
+		
 		Array.from(document.querySelectorAll("[name='data-sidebar']")).forEach(function (elem) {
 			if (document.querySelector("[data-bs-target='#collapseBgGradient']")) {
 				if (document.querySelector("#collapseBgGradient .form-check input:checked")) {
@@ -1969,7 +1669,7 @@ File: Main Js File
 					} else {
 						document.querySelector("[data-bs-target='#collapseBgGradient']").classList.remove("active");
 					}
-				})
+				})	
 			}
 		})
 
@@ -1990,13 +1690,13 @@ File: Main Js File
 			layoutSwitch(isLayoutAttributes);
 
 			// open right sidebar on first time load
-			//var offCanvas = document.querySelector('.btn[data-bs-target="#theme-settings-offcanvas"]');
-			//offCanvas ? offCanvas.click() : "";
+			var offCanvas = document.querySelector('.btn[data-bs-target="#theme-settings-offcanvas"]');
+			offCanvas ? offCanvas.click() : "";
 		} else {
 			var isLayoutAttributes = {};
 			isLayoutAttributes["data-layout"] = sessionStorage.getItem("data-layout");
 			isLayoutAttributes["data-sidebar-size"] = sessionStorage.getItem("data-sidebar-size");
-			isLayoutAttributes["data-bs-theme"] = sessionStorage.getItem("data-bs-theme");
+			isLayoutAttributes["data-layout-mode"] = sessionStorage.getItem("data-layout-mode");
 			isLayoutAttributes["data-layout-width"] = sessionStorage.getItem("data-layout-width");
 			isLayoutAttributes["data-sidebar"] = sessionStorage.getItem("data-sidebar");
 			isLayoutAttributes['data-sidebar-image'] = sessionStorage.getItem('data-sidebar-image');
@@ -2005,17 +1705,8 @@ File: Main Js File
 			isLayoutAttributes["data-topbar"] = sessionStorage.getItem("data-topbar");
 			isLayoutAttributes["data-preloader"] = sessionStorage.getItem("data-preloader");
 			isLayoutAttributes["data-body-image"] = sessionStorage.getItem("data-body-image");
-			isLayoutAttributes["data-theme"] = sessionStorage.getItem("data-theme");
-			isLayoutAttributes["data-theme-colors"] = sessionStorage.getItem("data-theme-colors");
 			layoutSwitch(isLayoutAttributes);
 		}
-
-		// sidebarUserProfile
-		document.getElementById("sidebarUserProfile")?.addEventListener("click", function (event) {
-			(event.target.checked) ?
-				document.documentElement.setAttribute("data-sidebar-user-show", ""):
-				document.documentElement.removeAttribute("data-sidebar-user-show");
-		});
 	}
 
 	function initFullScreen() {
@@ -2074,11 +1765,9 @@ File: Main Js File
 		var lightDarkBtn = document.querySelectorAll(".light-dark-mode");
 		if (lightDarkBtn && lightDarkBtn.length) {
 			lightDarkBtn[0].addEventListener("click", function (event) {
-				html.hasAttribute("data-bs-theme") && html.getAttribute("data-bs-theme") == "dark" ?
-					setLayoutMode("data-bs-theme", "light", "layout-mode-light", html) :
-					setLayoutMode("data-bs-theme", "dark", "layout-mode-dark", html);
-				// Dispatch the resize event on the window object
-				window.dispatchEvent(resizeEvent);
+				html.hasAttribute("data-layout-mode") && html.getAttribute("data-layout-mode") == "dark" ?
+					setLayoutMode("data-layout-mode", "light", "layout-mode-light", html) :
+					setLayoutMode("data-layout-mode", "dark", "layout-mode-dark", html);
 			});
 		}
 	}

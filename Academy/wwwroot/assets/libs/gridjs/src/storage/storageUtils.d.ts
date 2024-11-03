@@ -1,7 +1,7 @@
-import { Config } from '../config';
+import { UserConfig } from '../config';
 import Storage from './storage';
 declare class StorageUtils {
-    static createFromConfig(config: Config): Storage<any>;
+    static createFromUserConfig(userConfig: UserConfig): Storage<any>;
     static tableElementToArray(element: HTMLElement): any[][];
 }
 export default StorageUtils;

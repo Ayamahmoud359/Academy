@@ -4,14 +4,8 @@
 
 .layout-wrapper {
     &.landing {
-        background-color: var(--#{$prefix}secondary-bg);
+        background-color: var(--#{$prefix}card-bg-custom);
         font-size: 15px;
-    }
-}
-
-.navbar-show{
-    .vertical-overlay{
-        display: block;
     }
 }
 
@@ -34,7 +28,7 @@
         position: absolute;
         width: 24px;
         height: 24px;
-        background-color: rgba(var(--#{$prefix}success-rgb), 0.2);
+        background-color: rgba($success, 0.2);
         border-radius: 50%;
         bottom: 0;
         left: 0;
@@ -47,7 +41,7 @@
     padding: 10px 0px;
     transition: all 0.5s ease;
     @media (max-width: 991.98px) {
-        background-color: var(--#{$prefix}secondary-bg);
+        background-color: var(--#{$prefix}card-bg-custom);
         box-shadow: 0 1px 16px -2px rgba(56, 65, 74, 0.15);
         padding: 10px 8px;
     }
@@ -58,8 +52,8 @@
                 font-size: 16px;
                 font-weight: $font-weight-medium;
                 transition: all 0.4s;
-                font-family: var(--#{$prefix}font-family-secondary);
-                color: var(--#{$prefix}body-color);
+                font-family: $font-family-secondary;
+                color: var(--#{$prefix}dark);
                 padding: 14px;
 
                 @media (max-width: 991.98px) {
@@ -69,14 +63,14 @@
                 &:hover,
                 &.active,
                 &:focus {
-                    color: var(--#{$prefix}success) !important;
+                    color: $success !important;
                 }
             }
         }
     }
 
     &.is-sticky {
-        background-color: var(--#{$prefix}secondary-bg);
+        background-color: var(--#{$prefix}card-bg-custom);
         box-shadow: 0 1px 16px -2px rgba(56, 65, 74, 0.15);
     }
 }
@@ -103,7 +97,7 @@
         .navbar-nav {
             .nav-item {
                 .nav-link {
-                    color: var(--#{$prefix}body-color);
+                    color: var(--#{$prefix}dark);
                 }
             }
         }
@@ -127,14 +121,14 @@
     .hero-shape-svg {
         svg {
             path {
-                fill: var(--#{$prefix}secondary-bg);
+                fill: var(--#{$prefix}card-bg-custom);
             }
         }
     }
 }
 
 .bg-overlay-pattern {
-    background-image: url("../images/landing/bg-pattern.png");
+    background-image: url("../../../images/landing/bg-pattern.png");
     background-color: transparent;
     background-position: center;
     background-size: cover;
@@ -147,7 +141,7 @@
 
     .carousel-item {
         .demo-item {
-            background-color: var(--#{$prefix}secondary-bg);
+            background-color: var(--#{$prefix}card-bg-custom);
             padding: 8px;
             border-radius: 7px;
         }
@@ -224,7 +218,7 @@
 
         &:hover {
             color: $white;
-            background-color: var(--#{$prefix}primary);
+            background-color: $primary;
         }
     }
 }
@@ -237,7 +231,7 @@
 
 // dark
 
-[data-bs-theme="dark"] {
+[data-layout-mode="dark"] {
     .layout-wrapper.landing {
 
         .demo-img-patten-top,
@@ -246,7 +240,7 @@
         }
 
         footer.bg-dark {
-            background-color: var(--#{$prefix}secondary-bg) !important;
+            background-color: var(--#{$prefix}card-bg-custom) !important;
         }
     }
 

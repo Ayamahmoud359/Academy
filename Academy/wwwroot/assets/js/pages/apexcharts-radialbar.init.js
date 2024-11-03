@@ -9,30 +9,25 @@ File: Radialbar Chart init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
-        if (colors) {
-            colors = JSON.parse(colors);
-            return colors.map(function (value) {
-                var newValue = value.replace(" ", "");
-                if (newValue.indexOf(",") === -1) {
-                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
-                    if (color) return color;
-                    else return newValue;;
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
+        colors = JSON.parse(colors);
+        return colors.map(function (value) {
+            var newValue = value.replace(" ", "");
+            if (newValue.indexOf(",") === -1) {
+                var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                if (color) return color;
+                else return newValue;;
+            } else {
+                var val = value.split(',');
+                if (val.length == 2) {
+                    var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                    rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
+                    return rgbaColor;
                 } else {
-                    var val = value.split(',');
-                    if (val.length == 2) {
-                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
-                        rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
-                        return rgbaColor;
-                    } else {
-                        return newValue;
-                    }
+                    return newValue;
                 }
-            });
-        } else {
-            console.warn('data-colors attributes not found on', chartId);
-        }
+            }
+        });
     }
 }
 
@@ -234,6 +229,56 @@ var chart = new ApexCharts(document.querySelector("#gradient_radialbar"), option
 chart.render();
 }
 
+
+// Radialbars with Image
+var chartStorkeRadialbarColors = getChartColorsArray("stroked_radialbar");
+if (chartStorkeRadialbarColors) {
+    var options = {
+        series: [67],
+        chart: {
+            height: 315,
+            type: 'radialBar',
+        },
+        plotOptions: {
+            radialBar: {
+                hollow: {
+                    margin: 15,
+                    size: '65%',
+                    image: '/assets/images/comingsoon.png',
+                    imageWidth: 56,
+                    imageHeight: 56,
+                    imageClipped: false
+                },
+                dataLabels: {
+                    name: {
+                        show: false,
+                        color: '#fff'
+                    },
+                    value: {
+                        show: true,
+                        color: '#333',
+                        offsetY: 65,
+                        fontSize: '22px'
+                    }
+                }
+            }
+        },
+        fill: {
+            type: 'image',
+            image: {
+                src: ['/assets/images/small/img-4.jpg'],
+            }
+        },
+        stroke: {
+            lineCap: 'round'
+        },
+        labels: ['Volatility'],
+    };
+
+    var chart = new ApexCharts(document.querySelector("#radialbar_with_img"), options);
+    chart.render();
+};
+
 // Stroked Gauge
 var chartStorkeRadialbarColors = getChartColorsArray("stroked_radialbar");
 if(chartStorkeRadialbarColors){
@@ -286,57 +331,6 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#stroked_radialbar"), options);
 chart.render();
 }
-
-
-// Radialbars with Image
-var chartStorkeRadialbarColors = getChartColorsArray("stroked_radialbar");
-if (chartStorkeRadialbarColors) {
-    var options = {
-        series: [67],
-        chart: {
-            height: 315,
-            type: 'radialBar',
-        },
-        plotOptions: {
-            radialBar: {
-                hollow: {
-                    margin: 15,
-                    size: '65%',
-                    image: './assets/images/comingsoon.png',
-                    imageWidth: 56,
-                    imageHeight: 56,
-                    imageClipped: false
-                },
-                dataLabels: {
-                    name: {
-                        show: false,
-                        color: '#fff'
-                    },
-                    value: {
-                        show: true,
-                        color: '#333',
-                        offsetY: 65,
-                        fontSize: '22px'
-                    }
-                }
-            }
-        },
-        fill: {
-            type: 'image',
-            image: {
-                src: ['./assets/images/small/img-4.jpg'],
-            }
-        },
-        stroke: {
-            lineCap: 'round'
-        },
-        labels: ['Volatility'],
-    };
-
-    var chart = new ApexCharts(document.querySelector("#radialbar_with_img"), options);
-    chart.render();
-};
-
 
 // Semi Circle
 var chartSemiRadialbarColors = getChartColorsArray("semi_radialbar");

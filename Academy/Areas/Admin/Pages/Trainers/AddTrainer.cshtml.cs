@@ -1,6 +1,5 @@
 using Academy.DTO;
 using Academy.Models;
-using CRM.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,6 +8,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using System.Text.Encodings.Web;
 using System.Text;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Academy.Data;
 
 namespace Academy.Areas.Admin.Pages.AddTrainer
 {
@@ -16,8 +16,13 @@ namespace Academy.Areas.Admin.Pages.AddTrainer
     {
         [BindProperty]
         public TrainerVM Trainer { get; set; }
+        // Property to hold the selected values
+       
+        [BindProperty]
+        public List<int> SelectedCategories { get; set; }
         public List<Branch> Branches { get; set; }
         public List<Department> Departments { get; set; }
+        public CategoriesDepartmentsVM categories { get; set; }
 
         private readonly AcademyContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -28,6 +33,8 @@ namespace Academy.Areas.Admin.Pages.AddTrainer
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            categories= new CategoriesDepartmentsVM();
+
         }
         public void OnGet()
         {
@@ -50,19 +57,40 @@ namespace Academy.Areas.Admin.Pages.AddTrainer
                     DepartmentId = Trainer.DepartmentId,
                     IsActive = true,
                     
+                    
                 };
                 try
                 {
                     _context.Trainers.Add(coach);
                     await _context.SaveChangesAsync();
                 }
+
+               
                 catch(Exception exc)
                 {
                     ModelState.AddModelError(string.Empty, exc.Message);
                     return Page();
 
                 }
-               
+                var categoryTrainer = new List<CategoryTrainers>();
+                foreach (var category in SelectedCategories)
+                {
+                    categoryTrainer.Add(new CategoryTrainers
+                    {
+                        TrainerId = coach.TrainerId,
+                        CategoryId = category
+                    });
+                }
+                try
+                {
+                    _context.CategoryTrainers.AddRange(categoryTrainer);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception exc)
+                {
+                    ModelState.AddModelError(string.Empty, exc.Message);
+                    return Page();
+                }
 
                 var user = new ApplicationUser
                 {
@@ -98,10 +126,38 @@ namespace Academy.Areas.Admin.Pages.AddTrainer
                 }
                
             }
-            return Page();
+            return Redirect("/add/Trainers/addTrainer");
 
 
         }
+
+        public async Task<PartialViewResult> OnPostCategoriesDepartment(int departmentId)
+        {
+            try
+            {
+                // Retrieve categories based on the department ID
+                var categoriesInDepartment = _context.Categories
+                    .Where(e => e.DepartmentId == departmentId)
+                    .ToList();
+
+                // Assign the department ID and categories to the view model
+                categories = new CategoriesDepartmentsVM
+                {
+                    DepartmentId = departmentId,
+                    categories = categoriesInDepartment
+                };
+
+                // Return the partial view with the populated view model
+                return Partial("Trainers/_categories", categories);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
 
     }
 }

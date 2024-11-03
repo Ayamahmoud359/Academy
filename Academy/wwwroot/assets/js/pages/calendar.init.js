@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 1,
             title: "World Braille Day",
             start: "2022-01-04",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
 
         },
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 2,
             title: "World Leprosy Day",
             start: "2022-01-30",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 3,
             title: "International Mother Language Day",
             start: "2022-02-21",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 4,
             title: "International Women's Day",
             start: "2022-03-08",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 5,
             title: "World Thinking Day",
             start: "2022-02-22",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 6,
             title: "International Mother Language Day",
             start: "2022-03-21",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 7,
             title: "World Water Day",
             start: "2022-03-22",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 8,
             title: "World Health Day",
             start: "2022-04-07",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 9,
             title: "International Special Librarians Day",
             start: "2022-04-16",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
 
@@ -107,14 +107,14 @@ document.addEventListener("DOMContentLoaded", function () {
             id: 10,
             title: "Earth Day",
             start: "2022-04-22",
-            className: "bg-info-subtle",
+            className: "bg-soft-info",
             allDay: true
         },
         {
             id: 153,
             title: 'All Day Event',
             start: new Date(y, m, 1),
-            className: 'bg-primary-subtle',
+            className: 'bg-soft-primary',
             location: 'San Francisco, US',
             allDay: true,
             extendedProps: {
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             start: new Date(y, m, d - 5),
             end: new Date(y, m, d - 2),
             allDay: true,
-            className: 'bg-warning-subtle',
+            className: 'bg-soft-warning',
             extendedProps: {
                 department: 'Long Event'
             },
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function () {
             start: new Date(y, m, d + 22, 20, 0),
             end: new Date(y, m, d + 24, 16, 0),
             allDay: true,
-            className: 'bg-danger-subtle',
+            className: 'bg-soft-danger',
             location: 'California, US',
             extendedProps: {
                 department: 'Meeting with Alexis'
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
             start: new Date(y, m, d + 4, 16, 0),
             end: new Date(y, m, d + 9, 16, 0),
             allDay: true,
-            className: 'bg-primary-subtle',
+            className: 'bg-soft-primary',
             location: 'Las Vegas, US',
             extendedProps: {
                 department: 'Repeating Event'
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: 'Meeting With Designer',
             start: new Date(y, m, d, 12, 30),
             allDay: true,
-            className: 'bg-success-subtle',
+            className: 'bg-soft-success',
             location: 'Head Office, US',
             extendedProps: {
                 department: 'Meeting'
@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
             start: new Date(y, m, d + 9),
             end: new Date(y, m, d + 11),
             allDay: true,
-            className: 'bg-danger-subtle',
+            className: 'bg-soft-danger',
             location: 'Head Office, US',
             extendedProps: {
                 department: 'Lunch'
@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
             title: 'Birthday Party',
             start: new Date(y, m, d + 1, 19, 0),
             allDay: true,
-            className: 'bg-success-subtle',
+            className: 'bg-soft-success',
             location: 'Los Angeles, US',
             extendedProps: {
                 department: 'Birthday Party'
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
             end: new Date(y, m, 29),
             allDay: true,
             url: 'http://google.com/',
-            className: 'bg-dark-subtle',
+            className: 'bg-soft-dark',
         },
         {
             id: 456,
@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
             start: new Date(y, m, d + 23, 20, 0),
             end: new Date(y, m, d + 24, 16, 0),
             allDay: true,
-            className: 'bg-info-subtle',
+            className: 'bg-soft-info',
             location: 'Head Office, US',
             extendedProps: {
                 department: 'Discussion'
@@ -341,14 +341,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     day = '0' + day;
                 return [year, month, day].join('-');
             };
-            var updateDay = null
-            if(ed_date != null){
-                var endUpdateDay = new Date(ed_date);
-                updateDay = endUpdateDay.setDate(endUpdateDay.getDate() - 1);
-            }
-            
-            var r_date = ed_date == null ? (str_dt(st_date)) : (str_dt(st_date)) + ' to ' + (str_dt(updateDay));
-            var er_date = ed_date == null ? (date_r(st_date)) : (date_r(st_date)) + ' to ' + (date_r(updateDay));
+            var r_date = ed_date == null ? (str_dt(st_date)) : (str_dt(st_date)) + ' to ' + (str_dt(ed_date));
+            var er_date = ed_date == null ? (date_r(st_date)) : (date_r(st_date)) + ' to ' + (date_r(ed_date));
 
             flatpickr(start_date, {
                 defaultDate: er_date,
@@ -455,11 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var updatedCategory = document.getElementById('event-category').value;
         var start_date = (document.getElementById("event-start-date").value).split("to");
         var updateStartDate = new Date(start_date[0].trim());
-
-        var newdate = new Date(start_date[1]);
-        newdate.setDate(newdate.getDate() + 1);
-
-        var updateEndDate = (start_date[1]) ? newdate : '';
+        var updateEndDate = (start_date[1]) ? new Date(start_date[1].trim()) : '';
 
         var end_date = null;
         var event_location = document.getElementById("event-location").value;
@@ -708,8 +698,8 @@ function upcomingEvent(a) {
         u_event = "<div class='card mb-3'>\
                         <div class='card-body'>\
                             <div class='d-flex mb-3'>\
-                                <div class='flex-grow-1'><i class='mdi mdi-checkbox-blank-circle me-2 text-" + category[1] + "'></i><span class='fw-medium'>" + startDate + end_dt + " </span></div>\
-                                <div class='flex-shrink-0'><small class='badge bg-primary-subtle text-primary ms-auto'>" + e_time_s + e_time_e + "</small></div>\
+                                <div class='flex-grow-1'><i class='mdi mdi-checkbox-blank-circle me-2 text-" + category[2] + "'></i><span class='fw-medium'>" + startDate + end_dt + " </span></div>\
+                                <div class='flex-shrink-0'><small class='badge badge-soft-primary ms-auto'>" + e_time_s + e_time_e + "</small></div>\
                             </div>\
                             <h6 class='card-title fs-16'> " + title + "</h6>\
                             <p class='text-muted text-truncate-two-lines mb-0'> " + description + "</p>\
@@ -723,7 +713,7 @@ function getTime(params) {
     params = new Date(params);
     if (params.getHours() != null) {
         var hour = params.getHours();
-        var minute = (params.getMinutes()) ? params.getMinutes() : 0;
+        var minute = (params.getMinutes()) ? params.getMinutes() : 00;
         return hour + ":" + minute;
     }
 }

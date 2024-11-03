@@ -13,7 +13,6 @@ var checkAll = document.getElementById("checkAll");
 if (checkAll) {
   checkAll.onclick = function () {
     var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
-    var checkedCount = document.querySelectorAll('.form-check-all input[type="checkbox"]:checked').length;
     for (var i = 0; i < checkboxes.length; i++) {
       checkboxes[i].checked = this.checked;
       if (checkboxes[i].checked) {
@@ -22,13 +21,10 @@ if (checkAll) {
           checkboxes[i].closest("tr").classList.remove("table-active");
       }
     }
-
-    (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'none' : document.getElementById("remove-actions").style.display = 'block';
   };
 }
 
 var perPage = 8;
-var editlist = false;
 
 //Table
 var options = {
@@ -49,7 +45,6 @@ var options = {
     })
   ]
 };
-
 // Init list
 var customerList = new List("customerList", options).on("updated", function (list) {
   list.matchingItems.length == 0 ?
@@ -156,17 +151,19 @@ function updateList() {
     return statusFilter;
   });
   userList.update();
-};
+}
 
 document.getElementById("showModal").addEventListener("show.bs.modal", function (e) {
   if (e.relatedTarget.classList.contains("edit-item-btn")) {
     document.getElementById("exampleModalLabel").innerHTML = "Edit Customer";
     document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-    document.getElementById("add-btn").innerHTML = "Update";
+    document.getElementById("add-btn").style.display = "none";
+    document.getElementById("edit-btn").style.display = "block";
   } else if (e.relatedTarget.classList.contains("add-btn")) {
     document.getElementById("exampleModalLabel").innerHTML = "Add Customer";
     document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-    document.getElementById("add-btn").innerHTML = "Add Customer";
+    document.getElementById("edit-btn").style.display = "none";
+    document.getElementById("add-btn").style.display = "block";
   } else {
     document.getElementById("exampleModalLabel").innerHTML = "List Customer";
     document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
@@ -179,6 +176,7 @@ document.getElementById("showModal").addEventListener("hidden.bs.modal", functio
 });
 
 document.querySelector("#customerList").addEventListener("click", function () {
+  refreshCallbacks();
   ischeckboxcheck();
 });
 
@@ -226,77 +224,63 @@ function SearchData() {
 
 
 var count = 11;
-var forms = document.querySelectorAll('.tablelist-form')
-Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-            if (customerNameField.value !== "" && 
-                emailField.value !== "" && 
-                dateField.value !== "" && 
-                phoneField.value !== "" && !editlist) {
-              customerList.add({
-                id: '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ'+count+"</a>",
-                customer_name: customerNameField.value,
-                email: emailField.value,
-                date: dateField.value,
-                phone: phoneField.value,
-                status: isStatus(statusField.value),
-              });
-              customerList.sort('id', { order: "desc" });
-              document.getElementById("close-modal").click();
-              clearFields();
-              refreshCallbacks();
-              filterContact("All");
-              count++;
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Customer inserted successfully!',
-                showConfirmButton: false,
-                timer: 2000,
-                showCloseButton: true
-              });
-            } else if (
-              customerNameField.value !== "" &&
-              emailField.value !== "" &&
-              dateField.value !== "" &&
-              phoneField.value !== "" && editlist
-          ){
-            var editValues = customerList.get({
-              id: idField.value,
-            });
-            Array.from(editValues).forEach(function (x) {
-              isid = new DOMParser().parseFromString(x._values.id, "text/html");
-              var selectedid = isid.body.firstElementChild.innerHTML;
-              if (selectedid == itemId) {
-                x.values({
-                  id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
-                  customer_name: customerNameField.value,
-                  email: emailField.value,
-                  date: dateField.value,
-                  phone: phoneField.value,
-                  status: isStatus(statusField.value),
-                });
-              }
-            });
-            document.getElementById("close-modal").click();
-            clearFields();
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: 'Customer updated Successfully!',
-              showConfirmButton: false,
-              timer: 2000,
-              showCloseButton: true
-            });
-          }
-        }
-    }, false)
-})
+addBtn.addEventListener("click", function (e) {
+  if (customerNameField.value !== "" && emailField.value !== "" && dateField.value !== "" && phoneField.value !== "") {
+    customerList.add({
+      id: '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ'+count+"</a>",
+      customer_name: customerNameField.value,
+      email: emailField.value,
+      date: dateField.value,
+      phone: phoneField.value,
+      status: isStatus(statusField.value),
+    });
+    customerList.sort('id', { order: "desc" });
+    document.getElementById("close-modal").click();
+    clearFields();
+    refreshCallbacks();
+    filterContact("All");
+    count++;
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Customer inserted successfully!',
+      showConfirmButton: false,
+      timer: 2000,
+      showCloseButton: true
+    });
+  }
+});
+
+editBtn.addEventListener("click", function (e) {
+  document.getElementById("exampleModalLabel").innerHTML = "Edit Customer";
+  var editValues = customerList.get({
+    id: idField.value,
+  });
+  Array.from(editValues).forEach(function (x) {
+    isid = new DOMParser().parseFromString(x._values.id, "text/html");
+    var selectedid = isid.body.firstElementChild.innerHTML;
+    if (selectedid == itemId) {
+      x.values({
+        id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
+        customer_name: customerNameField.value,
+        email: emailField.value,
+        date: dateField.value,
+        phone: phoneField.value,
+        status: isStatus(statusField.value),
+      });
+    }
+  });
+  document.getElementById("close-modal").click();
+  clearFields();
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: 'Customer updated Successfully!',
+    showConfirmButton: false,
+    timer: 2000,
+    showCloseButton: true
+  });
+});
 
 var statusVal = new Choices(statusField);
 
@@ -304,13 +288,13 @@ function isStatus(val) {
   switch (val) {
     case "Active":
       return (
-        '<span class="badge bg-success-subtle text-success text-uppercase">' +
+        '<span class="badge badge-soft-success text-uppercase">' +
         val +
         "</span>"
       );
     case "Block":
       return (
-        '<span class="badge bg-danger-subtle text-danger text-uppercase">' +
+        '<span class="badge badge-soft-danger text-uppercase">' +
         val +
         "</span>"
       );
@@ -318,89 +302,77 @@ function isStatus(val) {
 }
 
 function ischeckboxcheck() {
-  Array.from(document.getElementsByName("chk_child")).forEach(function (x) {
-      x.addEventListener("change", function (e) {
-          if (x.checked == true) {
-              e.target.closest("tr").classList.add("table-active");
-          } else {
-              e.target.closest("tr").classList.remove("table-active");
-          }
-
-          var checkedCount = document.querySelectorAll('[name="chk_child"]:checked').length;
-          if (e.target.closest("tr").classList.contains("table-active")) {
-              (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-          } else {
-              (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-          }
-      });
+  Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
+    x.addEventListener("click", function (e) {
+      if (e.target.checked) {
+        e.target.closest("tr").classList.add("table-active");
+      } else {
+        e.target.closest("tr").classList.remove("table-active");
+      }
+    });
   });
 }
 
 function refreshCallbacks() {
-  if(removeBtns){
-    Array.from(removeBtns).forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.target.closest("tr").children[1].innerText;
-        itemId = e.target.closest("tr").children[1].innerText;
-        var itemValues = customerList.get({
-          id: itemId,
-        });
-  
-        Array.from(itemValues).forEach(function (x) {
-          deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
-  
-          var isElem = deleteid.body.firstElementChild;
-          var isdeleteid = deleteid.body.firstElementChild.innerHTML;
-  
-          if (isdeleteid == itemId) {
-            document.getElementById("delete-record").addEventListener("click", function () {
-              customerList.remove("id", isElem.outerHTML);
-              document.getElementById("deleteRecord-close").click();
-            });
-          }
-        });
+  Array.from(removeBtns).forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.target.closest("tr").children[1].innerText;
+      itemId = e.target.closest("tr").children[1].innerText;
+      var itemValues = customerList.get({
+        id: itemId,
+      });
+
+      Array.from(itemValues).forEach(function (x) {
+        deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+
+        var isElem = deleteid.body.firstElementChild;
+        var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+
+        if (isdeleteid == itemId) {
+          document.getElementById("delete-record").addEventListener("click", function () {
+            customerList.remove("id", isElem.outerHTML);
+            document.getElementById("deleteRecordModal").click();
+          });
+        }
       });
     });
-  }
-  
-  if(editBtns){
-    Array.from(editBtns).forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        e.target.closest("tr").children[1].innerText;
-        itemId = e.target.closest("tr").children[1].innerText;
-        var itemValues = customerList.get({
-          id: itemId,
-        });
-  
-        Array.from(itemValues).forEach(function (x) {
-          isid = new DOMParser().parseFromString(x._values.id, "text/html");
-          var selectedid = isid.body.firstElementChild.innerHTML;
-          if (selectedid == itemId) {
-            editlist = true;
-            idField.value = selectedid;
-            customerNameField.value = x._values.customer_name;
-            emailField.value = x._values.email;
-            dateField.value = x._values.date;
-            phoneField.value = x._values.phone;
-  
-            if (statusVal) statusVal.destroy();
-            statusVal = new Choices(statusField, {
-              searchEnabled: false
-            });
-            val = new DOMParser().parseFromString(x._values.status, "text/html");
-            var statusSelec = val.body.firstElementChild.innerHTML;
-            statusVal.setChoiceByValue(statusSelec);
-  
-            flatpickr("#date-field", {
-              enableTime: true,
-              dateFormat: "d M, Y",
-              defaultDate: x._values.date,
-            });
-          }
-        });
+  });
+
+  Array.from(editBtns).forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.target.closest("tr").children[1].innerText;
+      itemId = e.target.closest("tr").children[1].innerText;
+      var itemValues = customerList.get({
+        id: itemId,
+      });
+
+      Array.from(itemValues).forEach(function (x) {
+        isid = new DOMParser().parseFromString(x._values.id, "text/html");
+        var selectedid = isid.body.firstElementChild.innerHTML;
+        if (selectedid == itemId) {
+          idField.value = selectedid;
+          customerNameField.value = x._values.customer_name;
+          emailField.value = x._values.email;
+          dateField.value = x._values.date;
+          phoneField.value = x._values.phone;
+
+          if (statusVal) statusVal.destroy();
+          statusVal = new Choices(statusField, {
+            searchEnabled: false
+          });
+          val = new DOMParser().parseFromString(x._values.status, "text/html");
+          var statusSelec = val.body.firstElementChild.innerHTML;
+          statusVal.setChoiceByValue(statusSelec);
+
+          flatpickr("#date-field", {
+            enableTime: true,
+            dateFormat: "d M, Y",
+            defaultDate: x._values.date,
+          });
+        }
       });
     });
-  }
+  });
 }
 
 function clearFields() {
@@ -426,10 +398,8 @@ function deleteMultiple() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      customClass: {
-        confirmButton: 'btn btn-primary w-xs me-2 mt-2',
-        cancelButton: 'btn btn-danger w-xs mt-2',
-      },
+      confirmButtonClass: 'btn btn-primary w-xs me-2 mt-2',
+      cancelButtonClass: 'btn btn-danger w-xs mt-2',
       confirmButtonText: "Yes, delete it!",
       buttonsStyling: false,
       showCloseButton: true
@@ -438,15 +408,12 @@ function deleteMultiple() {
           for (i = 0; i < ids_array.length; i++) {
             customerList.remove("id", `<a href="javascript:void(0);" class="fw-medium link-primary">${ids_array[i]}</a>`);
           }
-          document.getElementById("remove-actions").style.display = 'none';
           document.getElementById("checkAll").checked = false;
           Swal.fire({
               title: 'Deleted!',
               text: 'Your data has been deleted.',
-            icon: 'success',
-              customClass: {
-                confirmButton: 'btn btn-info w-xs mt-2',
-              },
+              icon: 'success',
+              confirmButtonClass: 'btn btn-info w-xs mt-2',
               buttonsStyling: false
           });
       }
@@ -454,9 +421,7 @@ function deleteMultiple() {
   } else {
     Swal.fire({
       title: 'Please select at least one checkbox',
-      customClass: {
-        confirmButton: 'btn btn-info',
-      },
+      confirmButtonClass: 'btn btn-info',
       buttonsStyling: false,
       showCloseButton: true
     });

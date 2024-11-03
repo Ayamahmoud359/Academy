@@ -7,7 +7,6 @@ File: Two step verification Init Js File
 */
 
 // move next
-
 function getInputElement(index) {
     return document.getElementById('digit' + index + '-input');
 }

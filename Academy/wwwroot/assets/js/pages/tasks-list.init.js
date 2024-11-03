@@ -8,23 +8,19 @@ File: Tasks-list init js
 
 var checkAll = document.getElementById("checkAll");
 if (checkAll) {
-  checkAll.onclick = function () {
-    var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
-    var checkedCount = document.querySelectorAll('.form-check-all input[type="checkbox"]:checked').length;
-    for (var i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].checked = this.checked;
-      if (checkboxes[i].checked) {
-          checkboxes[i].closest("tr").classList.add("table-active");
-      } else {
-          checkboxes[i].closest("tr").classList.remove("table-active");
-      }
-    }
-
-    (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'none' : document.getElementById("remove-actions").style.display = 'block';
-  };
+    checkAll.onclick = function () {
+        var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = this.checked;
+            if (checkboxes[i].checked) {
+                checkboxes[i].closest("tr").classList.add("table-active");
+            } else {
+                checkboxes[i].closest("tr").classList.remove("table-active");
+            }
+        }
+    };
 }
 var perPage = 8;
-var editlist = false;
 
 //Table
 var options = {
@@ -80,28 +76,18 @@ const xhttp = new XMLHttpRequest();
 xhttp.onload = function () {
     var json_records = JSON.parse(this.responseText);
     Array.from(json_records).forEach(function (raw) {
-
-        var assignedElem = raw.assignedto;
-        var showElem = 3;
-        var imgHtml = '<div class="avatar-group flex-nowrap">';
-        Array.from(assignedElem.slice(0, showElem)).forEach(function (img) {
-            imgHtml += '<a href="javascript: void(0);" class="avatar-group-item" data-img="' + img.assigneeImg + '"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+img.assigneeName+'">\
-                <img src="'+ img.assigneeImg + '" alt="" class="rounded-circle avatar-xxs" />\
-            </a>';
+        var imgHtml = `<div class="avatar-group">`;
+        Array.from(raw.assignedto).forEach(function (img) {
+            imgHtml += `
+                <a href="javascript: void(0);" class="avatar-group-item" data-img="${img}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                    <img src="/assets/images/users/${img}" alt="" class="rounded-circle avatar-xxs" />
+                </a>
+            `;
         });
-        if(assignedElem.length > showElem){
-            var elemLength = assignedElem.length - showElem;
-            imgHtml += '<a href="javascript: void(0);" class="avatar-group-item"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+elemLength+' More">\
-            <div class="avatar-xxs">\
-            <div class="avatar-title rounded-circle">'+elemLength+'+</div>\
-            </div>\
-        </a>'
-        }
-        imgHtml += '</div>';
-
+        imgHtml += `</div>`;
         tasksList.add({
-            id: '<a href="/tasks/details" class="fw-medium link-primary">#VLZ' + raw.id + "</a>",
-            project_name: '<a href="/projects/overview" class="fw-medium link-primary">' + raw.project_name + "</a>",
+            id: '<a href="/Tasks/TaskDetails" class="fw-medium link-primary">#VLZ' + raw.id + "</a>",
+            project_name: '<a href="/Projects/Overview" class="fw-medium link-primary">' + raw.project_name + "</a>",
             tasks_name: raw.tasks_name,
             client_name: raw.client_name,
             assignedto: imgHtml,
@@ -111,9 +97,8 @@ xhttp.onload = function () {
         });
         tasksList.sort('id', { order: "desc" });
         refreshCallbacks();
-        tooltipElm();
     });
-    tasksList.remove("id", `<a href="/tasks/details" class="fw-medium link-primary">#VLZ501</a>`);
+    tasksList.remove("id", `<a href="/Tasks/TaskDetails" class="fw-medium link-primary">#VLZ501</a>`);
 }
 xhttp.open("GET", "/assets/json/tasks-list.json");
 xhttp.send();
@@ -139,11 +124,6 @@ var idField = document.getElementById("tasksId"),
     editBtns = document.getElementsByClassName("edit-item-btn");
 refreshCallbacks();
 //filterOrder("All");
-
-function tooltipElm(){
-    var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-}
 
 function filterOrder(isValue) {
     var values_status = isValue;
@@ -187,11 +167,13 @@ document.getElementById("showModal").addEventListener("show.bs.modal", function 
     if (e.relatedTarget.classList.contains("edit-item-btn")) {
         document.getElementById("exampleModalLabel").innerHTML = "Edit Task";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Update";
+        document.getElementById("add-btn").style.display = "none";
+        document.getElementById("edit-btn").style.display = "block";
     } else if (e.relatedTarget.classList.contains("add-btn")) {
         document.getElementById("exampleModalLabel").innerHTML = "Add Task";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Add Task";
+        document.getElementById("edit-btn").style.display = "none";
+        document.getElementById("add-btn").style.display = "block";
     } else {
         document.getElementById("exampleModalLabel").innerHTML = "List Task";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
@@ -203,6 +185,7 @@ document.getElementById("showModal").addEventListener("hidden.bs.modal", functio
 });
 
 document.querySelector("#tasksList").addEventListener("click", function () {
+    refreshCallbacks();
     ischeckboxcheck();
 });
 
@@ -212,89 +195,74 @@ var tr = table.getElementsByTagName("tr");
 var trlist = table.querySelectorAll(".list tr");
 
 var count = 11;
-var forms = document.querySelectorAll('.tablelist-form')
-Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-            
-            if (
-                projectNameField.value !== "" &&
-                tasksTitleField.value !== "" &&
-                clientNameField.value !== "" &&
-                dateDueField.value !== "" &&
-                priorityField.value !== "" &&
-                statusField.value !== "" && !editlist
-            ) {
-                tasksList.add({
-                    id: '<a href="/tasks/details" class="fw-medium link-primary">#VLZ'+count+"</a>",
-                    project_name: '<a href="/projects/overview" class="fw-medium link-primary">'+projectNameField.value+"</a>",
-                    tasks_name: tasksTitleField.value,
-                    client_name: clientNameField.value,
-                    assignedto: assignToUsers(),
-                    due_date: fomateDate(dateDueField.value),
-                    status: isStatus(statusField.value),
-                    priority: isPriority(priorityField.value)
-                });
-                tasksList.sort('id', { order: "desc" });
-                document.getElementById("close-modal").click();
-                clearFields();
-                refreshCallbacks();
-                tooltipElm();
-                count++;
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Task inserted successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
-            } else if (
-                projectNameField.value !== "" &&
-                tasksTitleField.value !== "" &&
-                clientNameField.value !== "" &&
-                dateDueField.value !== "" &&
-                priorityField.value !== "" &&
-                statusField.value !== "" && editlist
-            ) {
-                var editValues = tasksList.get({
-                    id: idField.value,
-                });
-                Array.from(editValues).forEach(function (x) {
-                    isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var selectedid = isid.body.firstElementChild.innerHTML;
-                    if (selectedid == itemId) {
-                        x.values({
-                            id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
-                            project_name: '<a href="/projects/overview" class="fw-medium link-primary">' +projectNameField.value+"</a>",
-                            tasks_name: tasksTitleField.value,
-                            client_name: clientNameField.value,
-                            assignedto: assignToUsers(),
-                            due_date: fomateDate(dateDueField.value),
-                            status: isStatus(statusField.value),
-                            priority: isPriority(priorityField.value)
-                        });
-                    }
-                });
-                document.getElementById("close-modal").click();
-                clearFields();
-                tooltipElm();
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Task updated Successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
-            }
+addBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (
+        projectNameField.value !== "" &&
+        tasksTitleField.value !== "" &&
+        clientNameField.value !== "" &&
+        dateDueField.value !== "" &&
+        priorityField.value !== "" &&
+        statusField.value !== ""
+    ) {
+        tasksList.add({
+            id: '<a href="/Tasks/TaskDetails" class="fw-medium link-primary">#VLZ'+count+"</a>",
+            project_name: '<a href="/Projects/Overview" class="fw-medium link-primary">'+projectNameField.value+"</a>",
+            tasks_name: tasksTitleField.value,
+            client_name: clientNameField.value,
+            assignedto: assignToUsers(),
+            due_date: fomateDate(dateDueField.value),
+            status: isStatus(statusField.value),
+            priority: isPriority(priorityField.value)
+        });
+        tasksList.sort('id', { order: "desc" });
+        document.getElementById("close-modal").click();
+        clearFields();
+        refreshCallbacks();
+        count++;
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Task inserted successfully!',
+            showConfirmButton: false,
+            timer: 2000,
+            showCloseButton: true
+        });
+    }
+});
+
+editBtn.addEventListener("click", function (e) {
+    document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
+    var editValues = tasksList.get({
+        id: idField.value,
+    });
+    Array.from(editValues).forEach(function (x) {
+        isid = new DOMParser().parseFromString(x._values.id, "text/html");
+        var selectedid = isid.body.firstElementChild.innerHTML;
+        if (selectedid == itemId) {
+            x.values({
+                id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
+                project_name: '<a href="/Projects/Overview" class="fw-medium link-primary">' +projectNameField.value+"</a>",
+                tasks_name: tasksTitleField.value,
+                client_name: clientNameField.value,
+                assignedto: assignToUsers(),
+                due_date: fomateDate(dateDueField.value),
+                status: isStatus(statusField.value),
+                priority: isPriority(priorityField.value)
+            });
         }
-    }, false)
-})
+    });
+    document.getElementById("close-modal").click();
+    clearFields();
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Task updated Successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        showCloseButton: true
+    });
+});
 
 
 var example = new Choices(priorityField, {
@@ -348,51 +316,41 @@ function SearchData() {
 }
 
 function ischeckboxcheck() {
-    Array.from(document.getElementsByName("chk_child")).forEach(function (x) {
-        x.addEventListener("change", function (e) {
-            if (x.checked == true) {
+    Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
+        x.addEventListener("click", function (e) {
+            if (e.target.checked) {
                 e.target.closest("tr").classList.add("table-active");
             } else {
                 e.target.closest("tr").classList.remove("table-active");
-            }
-  
-            var checkedCount = document.querySelectorAll('[name="chk_child"]:checked').length;
-            if (e.target.closest("tr").classList.contains("table-active")) {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-            } else {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
             }
         });
     });
 }
 
 function refreshCallbacks() {
-    if (removeBtns){
-        Array.from(removeBtns).forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.target.closest("tr").children[1].innerText;
-                itemId = e.target.closest("tr").children[1].innerText;
-                var itemValues = tasksList.get({
-                    id: itemId,
-                });
-    
-                Array.from(itemValues).forEach(function (x) {
-                    deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var isElem = deleteid.body.firstElementChild;
-                    var isdeleteid = deleteid.body.firstElementChild.innerHTML;
-    
-                    if (isdeleteid == itemId) {
-                        document.getElementById("delete-record").addEventListener("click", function () {
-                            tasksList.remove("id", isElem.outerHTML);
-                            document.getElementById("deleteRecord-close").click();
-                        });
-                    }
-                });
+    Array.from(removeBtns).forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = tasksList.get({
+                id: itemId,
+            });
+
+            Array.from(itemValues).forEach(function (x) {
+                deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+                var isElem = deleteid.body.firstElementChild;
+                var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+
+                if (isdeleteid == itemId) {
+                    document.getElementById("delete-record").addEventListener("click", function () {
+                        tasksList.remove("id", isElem.outerHTML);
+                        document.getElementById("deleteOrder").click();
+                    });
+                }
             });
         });
-    }
-    
-    if (editBtns){
+    });
+
     Array.from(editBtns).forEach(function (btn) {
         btn.addEventListener("click", function (e) {
             e.target.closest("tr").children[1].innerText;
@@ -405,7 +363,6 @@ function refreshCallbacks() {
                 isid = new DOMParser().parseFromString(x._values.id, "text/html");
                 var selectedid = isid.body.firstElementChild.innerHTML;
                 if (selectedid == itemId) {
-                    editlist = true;
                     idField.value = selectedid;
 
                     project = new DOMParser().parseFromString(x._values.project_name, "text/html");
@@ -416,18 +373,6 @@ function refreshCallbacks() {
                     tasksTitleField.value = x._values.tasks_name;
                     clientNameField.value = x._values.client_name;
                     dateDueField.value = x._values.due_date;
-
-                    Array.from(document.querySelectorAll('input[name="assignedTo[]"]')).forEach(function (subElem) {
-                        var checkedElem = subElem.parentElement;
-                        var nameelem = checkedElem.querySelector(".flex-grow-1").innerHTML;
-
-                        var assignElem = new DOMParser().parseFromString(x._values.assignedto, "text/html");
-                        assignElem.querySelectorAll(".avatar-group .avatar-group-item").forEach(function(item){
-                            if(item.getAttribute('data-bs-title') == nameelem){
-                                subElem.checked = true;
-                            };
-                        });
-                    });
 
                     if (statusVal) statusVal.destroy();
                     statusVal = new Choices(statusField, {
@@ -454,7 +399,6 @@ function refreshCallbacks() {
             });
         });
     });
-}
 
 }
 
@@ -464,11 +408,6 @@ function clearFields() {
     clientNameField.value = "";
     assignedtoNameField.value = "";
     dateDueField.value = "";
-
-    document.querySelectorAll('input[name="assignedTo[]"]').forEach(function(item){
-        item.checked = false;
-    });
-
     if (example)
         example.destroy();
     example = new Choices(priorityField);
@@ -493,13 +432,13 @@ document.querySelector(".pagination-prev").addEventListener("click", function ()
 function isStatus(val) {
     switch (val) {
         case "Pending":
-            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge bg-secondary-subtle text-secondary text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-secondary text-uppercase">' + val + "</span>");
         case "Completed":
-            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
     }
 }
 
@@ -521,36 +460,22 @@ function fomateDate(date) {
 }
 
 function assignToUsers() {
-    var assignedtousers = [];
-    var assignedTo =  document.querySelectorAll('input[name="assignedTo[]"]:checked');
-    Array.from(assignedTo).forEach(function (ele) {
-        var checkedElem = ele.parentElement;
-        var imgpath = checkedElem.querySelector(".avatar-xxs").getAttribute('src');
-        var namepath = checkedElem.querySelector(".flex-grow-1").innerHTML;
-        var obj = {};
-        obj["assigneeName"] = namepath
-        obj["assigneeImg"] = imgpath
-        assignedtousers.push(obj);
-    });
+    var assignedTo = document.querySelectorAll('input[name="assignedTo[]"]:checked');
+    var assignedtousers = `<div class="avatar-group">`;
 
-    var assignedElem = assignedtousers;
-    var showElem = 3;
-    var imgHtml = '<div class="avatar-group flex-nowrap">';
-    Array.from(assignedElem.slice(0, showElem)).forEach(function (img) {
-        imgHtml += '<a href="javascript: void(0);" class="avatar-group-item" data-img="' + img.assigneeImg + '"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+img.assigneeName+'">\
-            <img src="'+ img.assigneeImg + '" alt="" class="rounded-circle avatar-xxs" />\
-        </a>';
-    });
-    if(assignedElem.length > showElem){
-        var elemLength = assignedElem.length - showElem;
-        imgHtml += '<a href="javascript: void(0);" class="avatar-group-item"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+elemLength+' More">\
-        <div class="avatar-xxs">\
-        <div class="avatar-title rounded-circle">'+elemLength+'+</div>\
-        </div>\
-    </a>'
+    if (assignedTo.length > 0) {
+        Array.from(assignedTo).forEach(function (ele) {
+            assignedtousers += `<a href="javascript: void(0);" class="avatar-group-item" data-img="${ele.value}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Username">
+                    <img src="/assets/images/users/${ele.value}" alt="" class="rounded-circle avatar-xxs" />
+                </a>`;
+        })
+    } else {
+        assignedtousers += `<a href="javascript: void(0);" class="avatar-group-item" data-img="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-3.jpg" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Title">
+                <img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-3.jpg" alt="" class="rounded-circle avatar-xxs" />
+            </a>`;
     }
-    imgHtml += '</div>';
-    return imgHtml;
+    assignedtousers += `</div>`;
+    return assignedtousers;
 }
 
 function deleteMultiple() {
@@ -569,27 +494,22 @@ function deleteMultiple() {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            customClass: {
-                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
-                cancelButton: 'btn btn-danger w-xs mt-2',
-            },
+            confirmButtonClass: 'btn btn-primary w-xs me-2 mt-2',
+            cancelButtonClass: 'btn btn-danger w-xs mt-2',
             confirmButtonText: "Yes, delete it!",
             buttonsStyling: false,
             showCloseButton: true
         }).then(function (result) {
             if (result.value) {
                 for (i = 0; i < ids_array.length; i++) {
-                    tasksList.remove("id", `<a href="/tasks/details" class="fw-medium link-primary">${ids_array[i]}</a>`);
+                    tasksList.remove("id", `<a href="/Tasks/TaskDetails" class="fw-medium link-primary">${ids_array[i]}</a>`);
                 }
-                document.getElementById("remove-actions").style.display = 'none';
                 document.getElementById("checkAll").checked = false;
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your data has been deleted.',
                     icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-info w-xs mt-2',
-                    },
+                    confirmButtonClass: 'btn btn-info w-xs mt-2',
                     buttonsStyling: false
                 });
             }
@@ -598,9 +518,7 @@ function deleteMultiple() {
     } else {
         Swal.fire({
             title: 'Please select at least one checkbox',
-            customClass: {
-                confirmButton: 'btn btn-info',
-            },
+            confirmButtonClass: 'btn btn-info',
             buttonsStyling: false,
             showCloseButton: true
         });

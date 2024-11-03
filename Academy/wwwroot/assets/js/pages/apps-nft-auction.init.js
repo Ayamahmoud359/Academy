@@ -8,14 +8,14 @@ File: apps-nft-auction init js
 
 try {
     var setEndDate1 = "March 19, 2024 6:0:0";
-    var setEndDate2 = "April 16, 2024 5:3:1";
-    var setEndDate3 = "Dec 01, 2024 1:0:1";
+    var setEndDate2 = "April 16, 2023 5:3:1";
+    var setEndDate3 = "Dec 01, 2023 1:0:1";
     var setEndDate4 = "Nov 26, 2024 1:2:1";
-    var setEndDate5 = "May 27, 2024 1:6:6";
-    var setEndDate6 = "May 20, 2024 2:5:5";
-    var setEndDate7 = "June 10, 2024 5:1:4";
-    var setEndDate8 = "June 25, 2024 1:6:3";
-    var setEndDate9 = "July 08, 2024 1:5:2";
+    var setEndDate5 = "May 27, 2023 1:6:6";
+    var setEndDate6 = "May 20, 2023 2:5:5";
+    var setEndDate7 = "June 10, 2023 5:1:4";
+    var setEndDate8 = "June 25, 2023 1:6:3";
+    var setEndDate9 = "July 08, 2023 1:5:2";
 
     function startCountDownDate(dateVal) {
         var countDownDate = new Date(dateVal).getTime();

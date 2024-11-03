@@ -55,14 +55,14 @@ function loadTeamData(datas) {
 
     Array.from(datas).forEach(function (teamData, index) {
         var checkBookmark = teamData.bookmark ? "active" : "";
-        var isUserProfile = teamData.memberImg ? '<img src="'+teamData.memberImg+'" alt="" class="member-img img-fluid d-block rounded-circle" />'
+        var isUserProfile = teamData.memberImg ? '<img src="/'+teamData.memberImg+'" alt="" class="member-img img-fluid d-block rounded-circle" />'
                     : '<div class="avatar-title border bg-light text-primary rounded-circle text-uppercase">' + teamData.nickname + '</div>';
 
         document.querySelector("#team-member-list").innerHTML +=
         '<div class="col">\
             <div class="card team-box">\
                 <div class="team-cover">\
-                    <img src="'+teamData.coverImg+'" alt="" class="img-fluid" />\
+                    <img src="/'+teamData.coverImg+'" alt="" class="img-fluid" />\
                 </div>\
                 <div class="card-body p-4">\
                     <div class="row align-items-center team-row">\
@@ -111,7 +111,7 @@ function loadTeamData(datas) {
                         </div>\
                         <div class="col-lg-2 col">\
                             <div class="text-end">\
-                                <a href="/pages/profile" class="btn btn-light view-btn">View Profile</a>\
+                                <a href="/Pages/ProfileSimple" class="btn btn-light view-btn">View Profile</a>\
                             </div>\
                         </div>\
                     </div>\

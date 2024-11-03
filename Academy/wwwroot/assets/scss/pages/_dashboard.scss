@@ -11,9 +11,6 @@
 
 .upcoming-scheduled{
     position: relative;
-    @media (max-width: 575.98px) {
-        top: 35px !important;
-    }
     .flatpickr-months{
         position: absolute !important;
         top: -45px !important;
@@ -21,7 +18,7 @@
         right: 0px !important;
         width: 200px;
         background-color: transparent;
-
+        
         .flatpickr-month{
             color: $gray-600 !important;
             fill: $gray-600 !important;
@@ -38,7 +35,7 @@
             left: 0;
         }
         .flatpickr-monthDropdown-months {
-            border: 1px solid var(--#{$prefix}border-color);
+            border: 1px solid $border-color;
             border-radius: 4px;
             height: 26px;
         }
@@ -46,23 +43,23 @@
             background-color: var(--#{$prefix}light);
             border: none;
             span.flatpickr-weekday {
-                color: var(--#{$prefix}body-color);
+                color: var(--#{$prefix}dark);
                 background-color: var(--#{$prefix}light);
             }
         }
         .flatpickr-day{
             &.today{
                 color: $white !important;
-                background-color: var(--#{$prefix}success);
-                border-color: var(--#{$prefix}success) !important;
+                background-color: $success;
+                border-color: $success !important;
                 &:hover{
-                    color: var(--#{$prefix}success) !important;
-                    background-color: rgba(var(--#{$prefix}success-rgb), 0.2) !important;
+                    color: $success !important;
+                    background-color: rgba($success, 0.2) !important;
                 }
             }
             &.selected{
-                background-color: var(--#{$prefix}success) !important;
-                border-color: var(--#{$prefix}success) !important;
+                background-color: $success !important;
+                border-color: $success !important;
                 color: $white;
             }
         }
@@ -79,7 +76,7 @@
 
 .crm-widget {
     .col {
-        border-right: 1px solid var(--#{$prefix}border-color);
+        border-right: 1px solid $border-color;
         &:last-child {
             border: 0px;
         }
@@ -88,12 +85,12 @@
                 border-right: 0px;
             }
             &:last-child { 
-                border-right: 1px solid var(--#{$prefix}border-color);
+                border-right: 1px solid $border-color;
             }
          }
         @media (max-width: 767.98px) {
             border-right: 0px;
-            border-bottom: 1px solid var(--#{$prefix}border-color);
+            border-bottom: 1px solid $border-color;
         }
     }
 }   
@@ -114,14 +111,14 @@
 //nft dashboard
 
 .bg-marketplace {
-    background-image: url(../images/nft/marketplace.png);
+    background-image: url(../../../images/nft/marketplace.png);
     background-size: cover;
 }
 
 .dash-countdown {
     .countdownlist {
         .count-num {
-            background-color: var(--#{$prefix}secondary-bg);
+            background-color: var(--#{$prefix}card-bg-custom);
             padding: 16px 8px;
             font-size: 22px;
 
@@ -139,14 +136,6 @@
     }
 }
 
-[data-layout-width="boxed"] {
-    .dash-countdown {
-        .countdownlist {
-            flex-wrap: wrap;
-        }
-    }
-}
-
 .marketplace-icon {
     position: absolute;
     float: right;
@@ -160,8 +149,8 @@
         top: 34px;
         width: 28px;
         height: 28px;
-        background-color: rgba(var(--#{$prefix}primary-rgb), 0.1);
-        color: var(--#{$prefix}primary);
+        background-color: rgba($primary, 0.1);
+        color: $primary;
         border-radius: .3rem;
         right: 16px !important;
     }
@@ -192,12 +181,4 @@
     height: 32px;
     display: inline-block;
     vertical-align: middle;
-}
-
-#portfolio_donut_charts {
-    .apexcharts-pie {
-        text {
-            fill: var(--#{$prefix}body-color);
-        }
-    }
 }

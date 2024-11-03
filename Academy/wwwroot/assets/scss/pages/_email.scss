@@ -12,7 +12,7 @@
 .email-menu-sidebar {
     height: calc(100vh - 137px);
     position: relative;
-    background-color: var(--#{$prefix}secondary-bg);
+    background-color: var(--#{$prefix}card-bg-custom);
     transition: all 0.2s;
 
     @media (min-width: 992px) {
@@ -58,7 +58,7 @@
         font-weight: $font-weight-medium;
 
         &:hover {
-            color: var(--#{$prefix}primary);
+            color: $primary;
         }
 
         i {
@@ -66,37 +66,29 @@
         }
 
         &.active {
-            color: var(--#{$prefix}success);
+            color: $success;
             font-weight: $font-weight-semibold;
 
             i {
-                color: var(--#{$prefix}success);
+                color: $success;
             }
         }
     }
 }
 
-.email-chat-list{
-    a{
-        padding: 6px 24px;
-        &.active{
-            background-color: rgba(var(--#{$prefix}light-rgb), .7);
-        }
-    }
-}
 .email-topbar-link {
     .btn-ghost-secondary {
-        color: var(--#{$prefix}secondary-color);
+        color: $text-muted;
 
         &:hover {
-            color: var(--#{$prefix}secondary);
+            color: $secondary;
         }
     }
 }
 
 .email-content {
     width: 100%;
-    background-color: var(--#{$prefix}secondary-bg);
+    background-color: var(--#{$prefix}card-bg-custom);
     transition: all 0.2s;
 }
 
@@ -109,35 +101,38 @@
 }
 
 .email-detail-content {
-    position: relative;
-    top: 0;
-    bottom: 0;
-    left: -2px;
-    width: 0;
-    background-color: var(--#{$prefix}secondary-bg);
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 68%;
+    width: 32%;
+    background-color: var(--#{$prefix}card-bg-custom);
     transform: translateX(200%);
     transition: all 0.2s;
-    display: none;
+    visibility: hidden;
     border-left: 2px solid var(--#{$prefix}body-bg);
 }
 
 .email-detail-show {
     .email-detail-content {
         transform: none;
-        display: block;
-        width: 60%;
+        visibility: visible;
     }
 
     .email-content {
+        margin-right: 32%;
+
+        @media (max-width: 1349.98px) {
             margin-right: 0;
+        }
     }
 }
 
 .email-detail-content-scroll {
-    height: calc(100vh - 400px);
+    height: calc(100vh - 390px);
 
     @media (max-width: 1349.98px) {
-        height: calc(100vh - 257px);
+        height: calc(100vh - 252px);
     }
 }
 
@@ -164,7 +159,7 @@
         clear: both;
 
         a {
-            color: var(--#{$prefix}heading-color);
+            color: var(--#{$prefix}gray-700);
         }
 
         &:hover {
@@ -244,7 +239,7 @@
                 white-space: nowrap;
 
                 .teaser{
-                    color: var(--#{$prefix}secondary-color);
+                    color: var(--#{$prefix}gray-600);
                 }
             }
 
@@ -257,16 +252,16 @@
 
         &.active,
         &.active:hover {
-            box-shadow: inset 3px 0 0 var(--#{$prefix}primary);
+            box-shadow: inset 3px 0 0 $primary;
             background-color: var(--#{$prefix}light);
         }
 
 
         &.unread {
-            color: var(--#{$prefix}body-color);
+            color: var(--#{$prefix}gray-800);
 
             a {
-                color: var(--#{$prefix}body-color);
+                color: var(--#{$prefix}gray-800);
                 font-weight: $font-weight-semibold;
             }
         }
@@ -294,7 +289,6 @@
 
 @media (max-width: 1349.98px) {
     .email-detail-content {
-        display: block;
         position: fixed;
         top: 0;
         bottom: 0;
@@ -305,14 +299,11 @@
         z-index: 1003;
         box-shadow: $box-shadow-lg;
         transform: translateX(100%);
-        visibility: hidden;
     }
 
     .email-detail-show {
         .email-detail-content {
-            width: 400px;
             transform: none;
-            visibility: visible;
         }
     }
 }
@@ -345,33 +336,6 @@
     @media (max-width: 515.98px) {
         left: 16px;
         right: 16px;
-    }
-}
-
-.message-list-scroll{
-    position: relative;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        -webkit-appearance: none;
-    }
-
-    &::-webkit-scrollbar:vertical {
-        width: 12px;
-    }
-
-    &::-webkit-scrollbar:horizontal {
-        height: 12px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(var(--#{$prefix}body-color-rgb), .075);
-        border-radius: 10px;
-        border: 2px solid var(--#{$prefix}secondary-bg);
-    }
-
-    &::-webkit-scrollbar-track {
-        border-radius: 10px;
-        background-color: var(--#{$prefix}secondary-bg);
     }
 }
 

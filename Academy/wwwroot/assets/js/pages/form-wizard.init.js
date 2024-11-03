@@ -22,11 +22,11 @@ if (document.querySelector("#profile-img-file-input"))
     });
 
 if (document.querySelectorAll(".form-steps"))
-    Array.from(document.querySelectorAll(".form-steps")).forEach(function (form) {
+Array.from(document.querySelectorAll(".form-steps")).forEach(function (form) {
 
         // next tab
-        if (form.querySelectorAll(".nexttab")){
-            Array.from(form.querySelectorAll(".nexttab")).forEach(function (nextButton) {
+        if (form.querySelectorAll(".nexttab"))
+        Array.from(form.querySelectorAll(".nexttab")).forEach(function (nextButton) {
                 var tabEl = form.querySelectorAll('button[data-bs-toggle="pill"]');
                 Array.from(tabEl).forEach(function (item) {
                     item.addEventListener('show.bs.tab', function (event) {
@@ -34,22 +34,14 @@ if (document.querySelectorAll(".form-steps"))
                     });
                 });
                 nextButton.addEventListener("click", function () {
-                    form.classList.add('was-validated');
-                    form.querySelectorAll(".tab-pane.show .form-control").forEach(function(elem){
-                        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-                        if(elem.value.length > 0 && elem.value.match(validRegex)){
-                            var nextTab = nextButton.getAttribute('data-nexttab');
-                            document.getElementById(nextTab).click();
-                            form.classList.remove('was-validated');
-                        }
-                    })
-                })
+                    var nextTab = nextButton.getAttribute('data-nexttab');
+                    document.getElementById(nextTab).click();
+                });
             });
-        }
 
         //Pervies tab
         if (form.querySelectorAll(".previestab"))
-            Array.from(form.querySelectorAll(".previestab")).forEach(function (prevButton) {
+        Array.from(form.querySelectorAll(".previestab")).forEach(function (prevButton) {
 
                 prevButton.addEventListener("click", function () {
                     var prevTab = prevButton.getAttribute('data-previous');
@@ -64,11 +56,9 @@ if (document.querySelectorAll(".form-steps"))
         // Step number click
         var tabButtons = form.querySelectorAll('button[data-bs-toggle="pill"]');
         if (tabButtons)
-            Array.from(tabButtons).forEach(function (button, i) {
+        Array.from(tabButtons).forEach(function (button, i) {
                 button.setAttribute("data-position", i);
                 button.addEventListener("click", function () {
-                    form.classList.remove('was-validated');
-           
                     var getProgressBar = button.getAttribute("data-progressbar");
                     if (getProgressBar) {
                         var totalLength = document.getElementById("custom-progress-bar").querySelectorAll("li").length - 1;

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Data.SqlClient;
 using Academy.Models;
 
-namespace CRM.Data
+namespace Academy.Data
 {
     public partial class AcademyContext : DbContext
     {

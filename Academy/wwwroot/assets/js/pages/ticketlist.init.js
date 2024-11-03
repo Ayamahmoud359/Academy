@@ -24,7 +24,6 @@ var checkAll = document.getElementById("checkAll");
 if (checkAll) {
     checkAll.onclick = function () {
         var checkboxes = document.querySelectorAll('.form-check-all input[type="checkbox"]');
-        var checkedCount = document.querySelectorAll('.form-check-all input[type="checkbox"]:checked').length;
         for (var i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = this.checked;
             if (checkboxes[i].checked) {
@@ -33,13 +32,9 @@ if (checkAll) {
                 checkboxes[i].closest("tr").classList.remove("table-active");
             }
         }
-
-        (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'none' : document.getElementById("remove-actions").style.display = 'block';
     };
 }
 var perPage = 8;
-var editlist = false;
-
 //Table
 var options = {
     valueNames: [
@@ -182,12 +177,14 @@ document.getElementById("showModal").addEventListener("show.bs.modal", function 
     if (e.relatedTarget.classList.contains("edit-item-btn")) {
         document.getElementById("exampleModalLabel").innerHTML = "Edit Ticket";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Update";
+        document.getElementById("add-btn").style.display = "none";
+        document.getElementById("edit-btn").style.display = "block";
     } else if (e.relatedTarget.classList.contains("add-btn")) {
         document.getElementById("modal-id").style.display = "none";
         document.getElementById("exampleModalLabel").innerHTML = "Add Ticket";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "block";
-        document.getElementById("add-btn").innerHTML = "Add Ticket";
+        document.getElementById("edit-btn").style.display = "none";
+        document.getElementById("add-btn").style.display = "block";
     } else {
         document.getElementById("exampleModalLabel").innerHTML = "List Ticket";
         document.getElementById("showModal").querySelector(".modal-footer").style.display = "none";
@@ -201,6 +198,7 @@ document.getElementById("showModal").addEventListener("hidden.bs.modal", functio
 });
 
 document.querySelector("#ticketsList").addEventListener("click", function () {
+    refreshCallbacks();
     ischeckboxcheck();
 });
 
@@ -246,92 +244,76 @@ function SearchData() {
 }
 
 var count = 14;
-var forms = document.querySelectorAll('.tablelist-form')
-Array.prototype.slice.call(forms).forEach(function (form) {
-    form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-        } else {
-            event.preventDefault();
-            if (
-                tasksTitleField.value !== "" &&
-                client_nameNameField.value !== "" &&
-                assignedtoNameField.value !== "" &&
-                dateField.value !== "" &&
-                dateDueField.value !== "" &&
-                statusField.value !== "" &&
-                priorityField.value !== "" && !editlist
-            ) {
-                ticketsList.add({
-                    id: '<a href="javascript:void(0);" onclick="ViewTickets(this)" data-id="' + count + '" class="fw-medium link-primary ticket-id">#VLZ' + count + "</a>",
-                    tasks_name: tasksTitleField.value,
-                    client_name: client_nameNameField.value,
-                    assignedto: assignedtoNameField.value,
-                    create_date: dateField.value,
-                    due_date: dateDueField.value,
-                    priority: isPriority(priorityField.value),
-                    status: isStatus(statusField.value),
-                });
-                ticketsList.sort('id', { order: "desc" });
-                document.getElementById("close-modal").click();
-                clearFields();
-                refreshCallbacks();
-                filterOrder("All");
-                count++;
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Ticket inserted successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
-            }else if (
-                tasksTitleField.value !== "" &&
-                client_nameNameField.value !== "" &&
-                assignedtoNameField.value !== "" &&
-                dateField.value !== "" &&
-                dateDueField.value !== "" &&
-                statusField.value !== "" &&
-                priorityField.value !== "" && editlist
-            ) {
-                var editValues = ticketsList.get({
-                    id: idField.value,
-                });
-                Array.from(editValues).forEach(function (x) {
-                    isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var selectedid = isid.body.firstElementChild.innerHTML;
-                    if (selectedid == itemId) {
-                        x.values({
-                            id: '<a href="javascript:void(0);" onclick="ViewTickets(this)" data-id="' + idField.value + '" class="fw-medium link-primary">' +
-                                idField.value +
-                                "</a>",
-                            tasks_name: tasksTitleField.value,
-                            client_name: client_nameNameField.value,
-                            create_date: str_dt(dateField.value),
-                            due_date: str_dt(dateDueField.value),
-                            priority: isPriority(priorityField.value),
-                            status: isStatus(statusField.value),
-                        });
-                    }
-                });
-                document.getElementById("close-modal").click();
-                clearFields();
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Ticket updated Successfully!',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    showCloseButton: true
-                });
-            }
+addBtn.addEventListener("click", function (e) {
+    if (
+        tasksTitleField.value !== "" &&
+        client_nameNameField.value !== "" &&
+        assignedtoNameField.value !== "" &&
+        dateField.value !== "" &&
+        dateDueField.value !== "" &&
+        statusField.value !== "" &&
+        priorityField.value !== ""
+    ) {
+        ticketsList.add({
+            id: '<a href="javascript:void(0);" onclick="ViewTickets(this)" data-id="' + count + '" class="fw-medium link-primary ticket-id">#VLZ' + count + "</a>",
+            tasks_name: tasksTitleField.value,
+            client_name: client_nameNameField.value,
+            assignedto: assignedtoNameField.value,
+            create_date: dateField.value,
+            due_date: dateDueField.value,
+            priority: isPriority(priorityField.value),
+            status: isStatus(statusField.value),
+        });
+        ticketsList.sort('id', { order: "desc" });
+        document.getElementById("close-modal").click();
+        clearFields();
+        refreshCallbacks();
+        filterOrder("All");
+        count++;
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Ticket inserted successfully!',
+            showConfirmButton: false,
+            timer: 2000,
+            showCloseButton: true
+        });
+    }
+});
+
+editBtn.addEventListener("click", function (e) {
+    document.getElementById("exampleModalLabel").innerHTML = "Edit Order";
+    var editValues = ticketsList.get({
+        id: idField.value,
+    });
+    Array.from(editValues).forEach(function (x) {
+        isid = new DOMParser().parseFromString(x._values.id, "text/html");
+        var selectedid = isid.body.firstElementChild.innerHTML;
+        if (selectedid == itemId) {
+            x.values({
+                id: '<a href="javascript:void(0);" onclick="ViewTickets(this)" data-id="' + idField.value + '" class="fw-medium link-primary">' +
+                    idField.value +
+                    "</a>",
+                tasks_name: tasksTitleField.value,
+                client_name: client_nameNameField.value,
+                create_date: str_dt(dateField.value),
+                due_date: str_dt(dateDueField.value),
+                priority: isPriority(priorityField.value),
+                status: isStatus(statusField.value),
+            });
         }
-    }, false)
-})
-
-
+    });
+    document.getElementById("close-modal").click();
+    clearFields();
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Ticket updated Successfully!',
+        showConfirmButton: false,
+        timer: 2000,
+        showCloseButton: true
+    });
+});
 var example = new Choices(priorityField, {
     searchEnabled: false,
 });
@@ -343,13 +325,13 @@ var statusVal = new Choices(statusField, {
 function isStatus(val) {
     switch (val) {
         case "Open":
-            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
         case "Closed":
-            return ('<span class="badge bg-danger-subtle text-danger text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-danger text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
     }
 }
 
@@ -366,101 +348,89 @@ function isPriority(val) {
 
 function ischeckboxcheck() {
     Array.from(document.getElementsByName("checkAll")).forEach(function (x) {
-        x.addEventListener("change", function (e) {
-            if (x.checked == true) {
+        x.addEventListener("click", function (e) {
+            if (e.target.checked) {
                 e.target.closest("tr").classList.add("table-active");
             } else {
                 e.target.closest("tr").classList.remove("table-active");
-            }
-
-            var checkedCount = document.querySelectorAll('[name="checkAll"]:checked').length;
-            if (e.target.closest("tr").classList.contains("table-active")) {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
-            } else {
-                (checkedCount > 0) ? document.getElementById("remove-actions").style.display = 'block': document.getElementById("remove-actions").style.display = 'none';
             }
         });
     });
 }
 
 function refreshCallbacks() {
-    if(removeBtns){
-        Array.from(removeBtns).forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.target.closest("tr").children[1].innerText;
-                itemId = e.target.closest("tr").children[1].innerText;
-                var itemValues = ticketsList.get({
-                    id: itemId,
-                });
-    
-                Array.from(itemValues).forEach(function (x) {
-                    deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
-    
-                    var isElem = deleteid.body.firstElementChild;
-                    var isdeleteid = deleteid.body.firstElementChild.innerHTML;
-    
-                    if (isdeleteid == itemId) {
-                        document.getElementById("delete-record").addEventListener("click", function () {
-                            ticketsList.remove("id", isElem.outerHTML);
-                            document.getElementById("deleteRecord-close").click();
-                        });
-                    }
-                });
+    Array.from(removeBtns).forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = ticketsList.get({
+                id: itemId,
             });
-        });
-    }
 
-    if(editBtns){
-        Array.from(editBtns).forEach(function (btn) {
-            btn.addEventListener("click", function (e) {
-                e.target.closest("tr").children[1].innerText;
-                itemId = e.target.closest("tr").children[1].innerText;
-                var itemValues = ticketsList.get({
-                    id: itemId,
-                });
-    
-                Array.from(itemValues).forEach(function (x) {
-                    isid = new DOMParser().parseFromString(x._values.id, "text/html");
-                    var selectedid = isid.body.firstElementChild.innerHTML;
-                    if (selectedid == itemId) {
-                        editlist = true;
-                        idField.value = selectedid;
-                        tasksTitleField.value = x._values.tasks_name;
-                        client_nameNameField.value = x._values.client_name;
-                        assignedtoNameField.value = x._values.assignedto;
-                        dateField.value = x._values.create_date;
-                        dateDueField.value = x._values.due_date;
-    
-                        if (example) example.destroy();
-                        example = new Choices(priorityField, {
-                            searchEnabled: false
-                        });
-                        val = new DOMParser().parseFromString(x._values.priority, "text/html");
-                        var selected = val.body.firstElementChild.innerHTML;
-                        example.setChoiceByValue(selected);
-    
-                        if (statusVal) statusVal.destroy();
-                        statusVal = new Choices(statusField, {
-                            searchEnabled: false
-                        });
-                        val = new DOMParser().parseFromString(x._values.status, "text/html");
-                        var statusSelec = val.body.firstElementChild.innerHTML;
-                        statusVal.setChoiceByValue(statusSelec);
-    
-                        flatpickr("#date-field", {
-                            dateFormat: "d M, Y",
-                            defaultDate: x._values.create_date,
-                        });
-    
-                        flatpickr("#duedate-field", {
-                            dateFormat: "d M, Y",
-                            defaultDate: x._values.due_date,
-                        });
-                    }
-                });
+            Array.from(itemValues).forEach(function (x) {
+                deleteid = new DOMParser().parseFromString(x._values.id, "text/html");
+
+                var isElem = deleteid.body.firstElementChild;
+                var isdeleteid = deleteid.body.firstElementChild.innerHTML;
+
+                if (isdeleteid == itemId) {
+                    document.getElementById("delete-record").addEventListener("click", function () {
+                        ticketsList.remove("id", isElem.outerHTML);
+                        document.getElementById("deleteOrder").click();
+                    });
+                }
             });
         });
-    }
+    });
+
+    Array.from(editBtns).forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+            e.target.closest("tr").children[1].innerText;
+            itemId = e.target.closest("tr").children[1].innerText;
+            var itemValues = ticketsList.get({
+                id: itemId,
+            });
+
+            Array.from(itemValues).forEach(function (x) {
+                isid = new DOMParser().parseFromString(x._values.id, "text/html");
+                var selectedid = isid.body.firstElementChild.innerHTML;
+                if (selectedid == itemId) {
+                    idField.value = selectedid;
+                    tasksTitleField.value = x._values.tasks_name;
+                    client_nameNameField.value = x._values.client_name;
+                    assignedtoNameField.value = x._values.assignedto;
+                    dateField.value = x._values.create_date;
+                    dateDueField.value = x._values.due_date;
+
+                    if (example) example.destroy();
+                    example = new Choices(priorityField, {
+                        searchEnabled: false
+                    });
+                    val = new DOMParser().parseFromString(x._values.priority, "text/html");
+                    var selected = val.body.firstElementChild.innerHTML;
+                    example.setChoiceByValue(selected);
+
+                    if (statusVal) statusVal.destroy();
+                    statusVal = new Choices(statusField, {
+                        searchEnabled: false
+                    });
+                    val = new DOMParser().parseFromString(x._values.status, "text/html");
+                    var statusSelec = val.body.firstElementChild.innerHTML;
+                    statusVal.setChoiceByValue(statusSelec);
+
+                    flatpickr("#date-field", {
+                        dateFormat: "d M, Y",
+                        defaultDate: x._values.create_date,
+                    });
+
+                    flatpickr("#duedate-field", {
+                        dateFormat: "d M, Y",
+                        defaultDate: x._values.due_date,
+                    });
+                }
+            });
+        });
+    });
 }
 
 function clearFields() {
@@ -506,10 +476,8 @@ function deleteMultiple() {
             text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
-            customClass: {
-                confirmButton: 'btn btn-primary w-xs me-2 mt-2',
-                cancelButton: 'btn btn-danger w-xs mt-2',
-            },
+            confirmButtonClass: 'btn btn-primary w-xs me-2 mt-2',
+            cancelButtonClass: 'btn btn-danger w-xs mt-2',
             confirmButtonText: "Yes, delete it!",
             buttonsStyling: false,
             showCloseButton: true
@@ -518,15 +486,12 @@ function deleteMultiple() {
                 for (i = 0; i < ids_array.length; i++) {
                     ticketsList.remove("id", `<a href="javascript:void(0);" onclick="ViewTickets(this)" data-id="${ids_array[i]}" class="fw-medium link-primary ticket-id">#VLZ${ids_array[i]}</a>`);
                 }
-                document.getElementById("remove-actions").style.display = 'none';
                 document.getElementById("checkAll").checked = false;
                 Swal.fire({
                     title: 'Deleted!',
                     text: 'Your data has been deleted.',
                     icon: 'success',
-                    customClass: {
-                        confirmButton: 'btn btn-info w-xs mt-2',
-                    },
+                    confirmButtonClass: 'btn btn-info w-xs mt-2',
                     buttonsStyling: false
                 });
             }
@@ -534,9 +499,7 @@ function deleteMultiple() {
     } else {
         Swal.fire({
             title: 'Please select at least one checkbox',
-            customClass: {
-                confirmButton: 'btn btn-info',
-            },
+            confirmButtonClass: 'btn btn-info',
             buttonsStyling: false,
             showCloseButton: true
         });
@@ -553,5 +516,5 @@ function ViewTickets(data) {
     localStorage.setItem("ticket-list", JSON.stringify(item[0]._values));
     localStorage.setItem("option", "view-ticket");
     localStorage.setItem("ticket_no", t_id);
-    window.location.assign("/tickets/details");
+    window.location.assign("/SupportTickets/TicketDetails");
 }

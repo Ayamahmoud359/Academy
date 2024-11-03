@@ -9,20 +9,23 @@ File: Ecommerce Dashboard init js
 // get colors array from the string
 function getChartColorsArray(chartId) {
     if (document.getElementById(chartId) !== null) {
-        const colorAttr = "data-colors" + ("-" + document.documentElement.getAttribute("data-theme") ?? "");
-        var colors = document.getElementById(chartId).getAttribute(colorAttr) ?? document.getElementById(chartId).getAttribute("data-colors");
+        var colors = document.getElementById(chartId).getAttribute("data-colors");
         if (colors) {
             colors = JSON.parse(colors);
             return colors.map(function (value) {
                 var newValue = value.replace(" ", "");
                 if (newValue.indexOf(",") === -1) {
-                    var color = getComputedStyle(document.documentElement).getPropertyValue(newValue);
+                    var color = getComputedStyle(document.documentElement).getPropertyValue(
+                        newValue
+                    );
                     if (color) return color;
-                    else return newValue;;
+                    else return newValue;
                 } else {
-                    var val = value.split(',');
+                    var val = value.split(",");
                     if (val.length == 2) {
-                        var rgbaColor = getComputedStyle(document.documentElement).getPropertyValue(val[0]);
+                        var rgbaColor = getComputedStyle(
+                            document.documentElement
+                        ).getPropertyValue(val[0]);
                         rgbaColor = "rgba(" + rgbaColor + "," + val[1] + ")";
                         return rgbaColor;
                     } else {
@@ -31,75 +34,15 @@ function getChartColorsArray(chartId) {
                 }
             });
         } else {
-            console.warn('data-colors attributes not found on', chartId);
+            console.warn('data-colors atributes not found on', chartId);
         }
     }
 }
 
-var worldemapmarkers = "";
-var storeVisitsSourceChart = "";
-var customerImpressionChart = "";
-function loadCharts() {
-    // world map with markers
-    var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
-    if (vectorMapWorldMarkersColors) {
-        document.getElementById("sales-by-locations").innerHTML = "";
-        worldemapmarkers = "";
-        worldemapmarkers = new jsVectorMap({
-            map: "world_merc",
-            selector: "#sales-by-locations",
-            zoomOnScroll: false,
-            zoomButtons: false,
-            selectedMarkers: [0, 5],
-            regionStyle: {
-                initial: {
-                    stroke: "#9599ad",
-                    strokeWidth: 0.25,
-                    fill: vectorMapWorldMarkersColors[0],
-                    fillOpacity: 1,
-                },
-            },
-            markersSelectable: true,
-            markers: [{
-                name: "Palestine",
-                coords: [31.9474, 35.2272],
-            },
-            {
-                name: "Russia",
-                coords: [61.524, 105.3188],
-            },
-            {
-                name: "Canada",
-                coords: [56.1304, -106.3468],
-            },
-            {
-                name: "Greenland",
-                coords: [71.7069, -42.6043],
-            },
-            ],
-            markerStyle: {
-                initial: {
-                    fill: vectorMapWorldMarkersColors[1],
-                },
-                selected: {
-                    fill: vectorMapWorldMarkersColors[2],
-                },
-            },
-            labels: {
-                markers: {
-                    render: function (marker) {
-                        return marker.name;
-                    },
-                },
-            },
-        });
-    }
-
-    var linechartcustomerColors = "";
-    linechartcustomerColors = getChartColorsArray("customer_impression_charts");
-    if (linechartcustomerColors) {
-        var options = {
-            series: [{
+var linechartcustomerColors = getChartColorsArray("customer_impression_charts");
+if (linechartcustomerColors) {
+    var options = {
+        series: [{
                 name: "Orders",
                 type: "area",
                 data: [34, 65, 46, 68, 49, 61, 42, 44, 78, 52, 63, 67],
@@ -108,7 +51,8 @@ function loadCharts() {
                 name: "Earnings",
                 type: "bar",
                 data: [
-                    89.25, 98.58, 68.74, 108.87, 77.54, 84.03, 51.24, 28.57, 92.57, 42.36, 88.51, 36.57,
+                    89.25, 98.58, 68.74, 108.87, 77.54, 84.03, 51.24, 28.57, 92.57, 42.36,
+                    88.51, 36.57,
                 ],
             },
             {
@@ -116,95 +60,95 @@ function loadCharts() {
                 type: "line",
                 data: [8, 12, 7, 17, 21, 11, 5, 9, 7, 29, 12, 35],
             },
+        ],
+        chart: {
+            height: 370,
+            type: "line",
+            toolbar: {
+                show: false,
+            },
+        },
+        stroke: {
+            curve: "straight",
+            dashArray: [0, 0, 8],
+            width: [2, 0, 2.2],
+        },
+        fill: {
+            opacity: [0.1, 0.9, 1],
+        },
+        markers: {
+            size: [0, 0, 0],
+            strokeWidth: 2,
+            hover: {
+                size: 4,
+            },
+        },
+        xaxis: {
+            categories: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
             ],
-            chart: {
-                height: 370,
-                type: "line",
-                toolbar: {
-                    show: false,
-                },
+            axisTicks: {
+                show: false,
             },
-            stroke: {
-                curve: "straight",
-                dashArray: [0, 0, 8],
-                width: [2, 0, 2.2],
+            axisBorder: {
+                show: false,
             },
-            fill: {
-                opacity: [0.1, 0.9, 1],
-            },
-            markers: {
-                size: [0, 0, 0],
-                strokeWidth: 2,
-                hover: {
-                    size: 4,
-                },
-            },
+        },
+        grid: {
+            show: true,
             xaxis: {
-                categories: [
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                ],
-                axisTicks: {
-                    show: false,
+                lines: {
+                    show: true,
                 },
-                axisBorder: {
+            },
+            yaxis: {
+                lines: {
                     show: false,
                 },
             },
-            grid: {
-                show: true,
-                xaxis: {
-                    lines: {
-                        show: true,
-                    },
-                },
-                yaxis: {
-                    lines: {
-                        show: false,
-                    },
-                },
-                padding: {
-                    top: 0,
-                    right: -2,
-                    bottom: 15,
-                    left: 10,
-                },
+            padding: {
+                top: 0,
+                right: -2,
+                bottom: 15,
+                left: 10,
             },
-            legend: {
-                show: true,
-                horizontalAlign: "center",
-                offsetX: 0,
-                offsetY: -5,
-                markers: {
-                    width: 9,
-                    height: 9,
-                    radius: 6,
-                },
-                itemMargin: {
-                    horizontal: 10,
-                    vertical: 0,
-                },
+        },
+        legend: {
+            show: true,
+            horizontalAlign: "center",
+            offsetX: 0,
+            offsetY: -5,
+            markers: {
+                width: 9,
+                height: 9,
+                radius: 6,
             },
-            plotOptions: {
-                bar: {
-                    columnWidth: "30%",
-                    barHeight: "70%",
-                },
+            itemMargin: {
+                horizontal: 10,
+                vertical: 0,
             },
-            colors: linechartcustomerColors,
-            tooltip: {
-                shared: true,
-                y: [{
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: "30%",
+                barHeight: "70%",
+            },
+        },
+        colors: linechartcustomerColors,
+        tooltip: {
+            shared: true,
+            y: [{
                     formatter: function (y) {
                         if (typeof y !== "undefined") {
                             return y.toFixed(0);
@@ -228,53 +172,99 @@ function loadCharts() {
                         return y;
                     },
                 },
-                ],
-            },
-        };
-        if (customerImpressionChart != "")
-            customerImpressionChart.destroy();
-        customerImpressionChart = new ApexCharts(document.querySelector("#customer_impression_charts"), options);
-        customerImpressionChart.render();
-    }
-
-    // Simple Donut Charts
-    var chartDonutBasicColors = "";
-    chartDonutBasicColors = getChartColorsArray("store-visits-source");
-    if (chartDonutBasicColors) {
-        var options = {
-            series: [44, 55, 41, 17, 15],
-            labels: ["Direct", "Social", "Email", "Other", "Referrals"],
-            chart: {
-                height: 333,
-                type: "donut",
-            },
-            legend: {
-                position: "bottom",
-            },
-            stroke: {
-                show: false
-            },
-            dataLabels: {
-                dropShadow: {
-                    enabled: false,
-                },
-            },
-            colors: chartDonutBasicColors,
-        };
-        if (storeVisitsSourceChart != "")
-            storeVisitsSourceChart.destroy();
-        storeVisitsSourceChart = new ApexCharts(document.querySelector("#store-visits-source"), options);
-        storeVisitsSourceChart.render();
-    }
+            ],
+        },
+    };
+    var chart = new ApexCharts(
+        document.querySelector("#customer_impression_charts"),
+        options
+    );
+    chart.render();
 }
 
-window.onresize = function() {
-    setTimeout(() => {
-        loadCharts();
-    }, 0);
-};
+// Simple Donut Charts
+var chartDonutBasicColors = getChartColorsArray("store-visits-source");
+if (chartDonutBasicColors) {
+    var options = {
+        series: [44, 55, 41, 17, 15],
+        labels: ["Direct", "Social", "Email", "Other", "Referrals"],
+        chart: {
+            height: 333,
+            type: "donut",
+        },
+        legend: {
+            position: "bottom",
+        },
+        stroke: {
+            show: false
+        },
+        dataLabels: {
+            dropShadow: {
+                enabled: false,
+            },
+        },
+        colors: chartDonutBasicColors,
+    };
 
-loadCharts();
+    var chart = new ApexCharts(
+        document.querySelector("#store-visits-source"),
+        options
+    );
+    chart.render();
+}
+
+// world map with markers
+var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
+if (vectorMapWorldMarkersColors) {
+    var worldemapmarkers = new jsVectorMap({
+        map: "world_merc",
+        selector: "#sales-by-locations",
+        zoomOnScroll: false,
+        zoomButtons: false,
+        selectedMarkers: [0, 5],
+        regionStyle: {
+            initial: {
+                stroke: "#9599ad",
+                strokeWidth: 0.25,
+                fill: vectorMapWorldMarkersColors[0],
+                fillOpacity: 1,
+            },
+        },
+        markersSelectable: true,
+        markers: [{
+                name: "Palestine",
+                coords: [31.9474, 35.2272],
+            },
+            {
+                name: "Russia",
+                coords: [61.524, 105.3188],
+            },
+            {
+                name: "Canada",
+                coords: [56.1304, -106.3468],
+            },
+            {
+                name: "Greenland",
+                coords: [71.7069, -42.6043],
+            },
+        ],
+        markerStyle: {
+            initial: {
+                fill: vectorMapWorldMarkersColors[1],
+            },
+            selected: {
+                fill: vectorMapWorldMarkersColors[2],
+            },
+        },
+        labels: {
+            markers: {
+                render: function (marker) {
+                    return marker.name;
+                },
+            },
+        },
+    });
+}
 
 // Vertical Swiper
 var swiper = new Swiper(".vertical-swiper", {
@@ -314,12 +304,6 @@ if (layoutRightSideBtn) {
                 }
             });
         }
-
-        var htmlAttr = document.documentElement;
-        if (htmlAttr.getAttribute("data-layout") == "semibox") {
-            userProfileSidebar.classList.remove("d-block");
-            userProfileSidebar.classList.add("d-none");
-        }
     });
     var overlay = document.querySelector('.overlay');
     if (overlay) {
@@ -341,14 +325,5 @@ window.addEventListener("load", function () {
                 userProfileSidebar.classList.add("d-block");
             }
         });
-    }
-
-    var htmlAttr = document.documentElement
-
-    if (htmlAttr.getAttribute("data-layout") == "semibox") {
-        if (window.outerWidth > 1699) {
-            userProfileSidebar.classList.remove("d-block");
-            userProfileSidebar.classList.add("d-none");
-        }
     }
 });

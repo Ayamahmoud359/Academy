@@ -11,7 +11,7 @@ var todoList = [{
     "checkedElem": false,
     'todo': 'Added Email Templates',
     "assignedto": [{
-            "assigneeName": "Curtis Saenz",
+            "assigneeName": "Test 01",
             "assigneeImg": "/assets/images/users/avatar-1.jpg",
         },{
             "assigneeName": "John Robles",
@@ -261,15 +261,9 @@ var todoList = [{
 }];
 
 // add new project
-//Create a new folder
-var createFolderForms = document.querySelectorAll('.createProject-form')
-Array.prototype.slice.call(createFolderForms).forEach(function (form) {
-  form.addEventListener('submit', function (event) {
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      event.preventDefault();
+var addNewProject = document.getElementById('addNewProject');
+if (addNewProject) {
+    document.getElementById("addNewProject").addEventListener("click", function () {
         var projectName = document.getElementById("projectname-input").value;
         var uniqueid = Math.floor(Math.random() * 100);
         projectlisthtml =
@@ -290,20 +284,10 @@ Array.prototype.slice.call(createFolderForms).forEach(function (form) {
             var addProjectClose = document.getElementById("addProjectBtn-close");
             addProjectClose.click();
         }
-    }
-    form.classList.add('was-validated');
-  }, false)
-});
+    });
+};
 
-const projectModalEl = document.getElementById('createProjectModal')
-projectModalEl.addEventListener('show.bs.modal', event => {
-    document.getElementById("projectname-input").value = "";
-    document.querySelectorAll(".createProject-form").forEach(function(item){
-        item.classList.remove("was-validated");
-    })
-})
-
-var editList = false;
+var editFlag = false;
 flatpickr("#task-duedate-input", {
     dateFormat: "d M, Y",
 });
@@ -412,7 +396,7 @@ document.getElementById("creattask-form").addEventListener("submit", function (e
         });
     }
 
-    if (inputTitle !== "" && statusInputFieldValue !== "" && priorityInputFieldValue !== "" && !editList) {
+    if (inputTitle !== "" && statusInputFieldValue !== "" && priorityInputFieldValue !== "" && !editFlag) {
         var newTodoId = findNextId(),
             newTodo = {
                 'id': newTodoId,
@@ -427,7 +411,7 @@ document.getElementById("creattask-form").addEventListener("submit", function (e
         sortElementsById();
         document.getElementById("createTaskBtn-close").click();
 
-    } else if (inputTitle !== "" && statusInputFieldValue !== "" && priorityInputFieldValue !== "" && editList) {
+    } else if (inputTitle !== "" && statusInputFieldValue !== "" && priorityInputFieldValue !== "" && editFlag) {
         var getEditid = 0;
         getEditid = document.getElementById("taskid-input").value;
 
@@ -451,7 +435,7 @@ document.getElementById("creattask-form").addEventListener("submit", function (e
             }
             return item;
         });
-        editList = false;
+        editFlag = false;
         document.getElementById("createTaskBtn-close").click();
     }
 
@@ -583,23 +567,15 @@ function drawList(manyTodos) {
     document.getElementById("task-list").innerHTML = "";
     Array.from(manyTodos).forEach(function (singleTodo) {
         var checkinput = singleTodo.checkedElem ? "checked" : "";
-        var assignedElem = singleTodo.assignedto;
-        var showElem = 3;
-        var imgHtml = '<div class="avatar-group flex-nowrap">';
-        Array.from(assignedElem.slice(0, showElem)).forEach(function (img) {
-            imgHtml += '<a href="javascript: void(0);" class="avatar-group-item" data-img="' + img.assigneeImg + '"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+img.assigneeName+'">\
-                <img src="'+ img.assigneeImg + '" alt="" class="rounded-circle avatar-xxs" />\
-            </a>';
+        var imgHtml = `<div class="avatar-group">`;
+        Array.from(singleTodo.assignedto).forEach(function (img) {
+            imgHtml += `
+                <a href="javascript: void(0);" class="avatar-group-item" data-img="${img.assigneeImg}"  data-bs-toggle="tooltip" data-bs-placement="top" title="${img.assigneeName}">
+                    <img src="${img.assigneeImg}" alt="" class="rounded-circle avatar-xxs" />
+                </a>
+            `;
         });
-        if(assignedElem.length > showElem){
-            var elemLength = assignedElem.length - showElem;
-            imgHtml += '<a href="javascript: void(0);" class="avatar-group-item"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="'+elemLength+' More">\
-            <div class="avatar-xxs">\
-            <div class="avatar-title rounded-circle">'+elemLength+'+</div>\
-            </div>\
-        </a>'
-        }
-        imgHtml += '</div>';
+        imgHtml += `</div>`;
 
         document.getElementById("task-list").innerHTML +=
             '<tr>\
@@ -635,26 +611,6 @@ function drawList(manyTodos) {
     });
 }
 
-var isShowMenu = false;
-var todoMenuSidebar = document.getElementsByClassName('file-manager-sidebar');
-Array.from(document.querySelectorAll(".file-menu-btn")).forEach(function (item) {
-    item.addEventListener("click", function () {
-        Array.from(todoMenuSidebar).forEach(function (elm) {
-            elm.classList.add("menubar-show");
-            isShowMenu = true;
-        });
-    });
-});
-
-window.addEventListener('click', function (e) {
-    if (document.querySelector(".file-manager-sidebar").classList.contains('menubar-show')) {
-        if (!isShowMenu) {
-            document.querySelector(".file-manager-sidebar").classList.remove("menubar-show");
-        }
-        isShowMenu = false;
-    }
-});
-
 function tooltipElm(){
     var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -663,13 +619,13 @@ function tooltipElm(){
 function isStatus(val) {
     switch (val) {
         case "Pending":
-            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge bg-secondary-subtle text-secondary text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-secondary text-uppercase">' + val + "</span>");
         case "Completed":
-            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
     }
 }
 
@@ -717,7 +673,7 @@ function editTodoList() {
             getEditid = elem.getAttribute('data-edit-id');
             todoList = todoList.map(function (item) {
                 if (item.id == getEditid) {
-                    editList = true;
+                    editFlag = true;
                     document.getElementById("createTaskLabel").innerHTML = "Edit Task";
                     document.getElementById("addNewTodo").innerHTML = "Save";
                     document.getElementById("taskid-input").value = item.id;
@@ -743,7 +699,7 @@ function editTodoList() {
                                 var folderListdata = document.getElementById("assignee-member");
                                 if(subElem.classList.contains("active")){
                                     folderlisthtml =
-                                    '<a href="javascript: void(0);" class="avatar-group-item mb-2" data-img="'+subItem.assigneeImg+'"  data-bs-toggle="tooltip" data -bs-placement="top" data-bs-title="'+subItem.assigneeName+'">\
+                                    '<a href="javascript: void(0);" class="avatar-group-item mb-2" data-img="'+subItem.assigneeImg+'"  data-bs-toggle="tooltip" data -bs-placement="top" title="'+subItem.assigneeName+'">\
                                     <img src="'+subItem.assigneeImg+'" alt="" class="rounded-circle avatar-xs" />\
                                     </a>';
 

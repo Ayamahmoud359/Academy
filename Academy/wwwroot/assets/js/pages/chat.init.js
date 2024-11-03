@@ -78,10 +78,10 @@ File: Chat init js
             // set users message list
             var users = data[0].users;
             users.forEach(function (userData, index) {
-                var isUserProfile = userData.profile ? '<img src="' + userData.profile + '" class="rounded-circle img-fluid userprofile" alt=""><span class="user-status"></span>'
+                var isUserProfile = userData.profile ? '<img src="/' + userData.profile + '" class="rounded-circle img-fluid userprofile" alt=""><span class="user-status"></span>'
                     : '<div class="avatar-title rounded-circle bg-primary text-white fs-10">' + userData.nickname + '</div><span class="user-status"></span>';
 
-                var isMessageCount = userData.messagecount ? '<div class="ms-auto"><span class="badge bg-dark-subtle text-body rounded p-1">' +
+                var isMessageCount = userData.messagecount ? '<div class="ms-auto"><span class="badge badge-soft-dark rounded p-1">' +
                     userData.messagecount +
                     "</span></div>"
                     : "";
@@ -110,11 +110,11 @@ File: Chat init js
             var channelsData = data[0].channels;
             channelsData.forEach(function (isChannel, index) {
                 var isMessage = isChannel.messagecount
-                    ? '<div class="flex-shrink-0 ms-2"><span class="badge bg-dark-subtle text-body rounded p-1">' +
+                    ? '<div class="flex-shrink-0 ms-2"><span class="badge badge-soft-dark rounded p-1">' +
                     isChannel.messagecount +
                     "</span></div>"
                     : "";
-                var isMessageCount = isChannel.messagecount ? '<div class="ms-auto"><span class="badge bg-dark-subtle text-body rounded p-1">' +
+                var isMessageCount = isChannel.messagecount ? '<div class="ms-auto"><span class="badge badge-soft-dark rounded p-1">' +
                     isChannel.messagecount +
                     "</span></div>"
                     : "";
@@ -156,7 +156,7 @@ File: Chat init js
 
             usersList.forEach(function (user, index) {
                 var profile = user.profile
-                    ? '<img src="' +
+                    ? '<img src="/' +
                     user.profile +
                     '" class="img-fluid rounded-circle" alt="">'
                     : '<span class="avatar-title rounded-circle bg-primary fs-10">' + user.nickname + '</span>';
@@ -307,8 +307,8 @@ File: Chat init js
                 msgHTML +=
                     '<div class="message-img-list">\
                 <div>\
-                    <a class="popup-img d-inline-block" href="' + has_images[i] + '">\
-                        <img src="' + has_images[i] + '" alt="" class="rounded border">\
+                    <a class="popup-img d-inline-block" href="/' + has_images[i] + '">\
+                        <img src="/' + has_images[i] + '" alt="" class="rounded border">\
                     </a>\
                 </div>\
                 <div class="message-img-link">\
@@ -336,7 +336,7 @@ File: Chat init js
             <div class="p-3 border-primary border rounded-3">\
             <div class="d-flex align-items-center attached-file">\
                 <div class="flex-shrink-0 avatar-sm me-3 ms-0 attached-file-avatar">\
-                    <div class="avatar-title bg-primary-subtle text-primary rounded-circle font-size-20">\
+                    <div class="avatar-title bg-soft-primary text-primary rounded-circle font-size-20">\
                         <i class="ri-attachment-2"></i>\
                     </div>\
                 </div>\
@@ -420,7 +420,7 @@ File: Chat init js
                     var msgHTML = '<li class="chat-list' + isAlighn + '" id=' + isChat.id + '>\
                         <div class="conversation-list">';
                     if (userChatId != isChat.from_id)
-                        msgHTML += '<div class="chat-avatar"><img src="' + user.profile + '" alt=""></div>';
+                        msgHTML += '<div class="chat-avatar"><img src="/' + user.profile + '" alt=""></div>';
 
                     msgHTML += '<div class="user-chat-content">';
                     msgHTML += getMsg(isChat.id, isChat.msg, isChat.has_images, isChat.has_files, isChat.has_dropDown);
@@ -950,7 +950,7 @@ function searchMessages() {
     searchFilter = searchInput.value.toUpperCase();
     searchUL = document.getElementById("users-conversation");
     searchLI = searchUL.getElementsByTagName("li");
-    Array.from(searchLI).forEach(function (search) {
+    searchLI.forEach(function (search) {
         a = search.getElementsByTagName("p")[0] ? search.getElementsByTagName("p")[0] : '';
         txtValue = a.textContent || a.innerText ? a.textContent || a.innerText : '';
         if (txtValue.toUpperCase().indexOf(searchFilter) > -1) {
@@ -960,8 +960,3 @@ function searchMessages() {
         }
     });
 };
-
-
-// chat-conversation
-var scrollEl = new SimpleBar(document.getElementById('chat-conversation'));
-scrollEl.getScrollElement().scrollTop = document.getElementById("users-conversation").scrollHeight;

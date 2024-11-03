@@ -11,7 +11,7 @@ File: Range sliders Js File
 **********************/
 var sliderColorScheme = document.querySelectorAll('[data-rangeslider]');
 if (sliderColorScheme)
-    Array.from(sliderColorScheme).forEach(function (slider) {
+Array.from(sliderColorScheme).forEach(function (slider) {
         noUiSlider.create(slider, {
             start: 127,
             connect: 'lower',
@@ -28,7 +28,7 @@ if (sliderColorScheme)
 
 var multielementslider = document.querySelectorAll('[data-multielement]');
 if (multielementslider)
-    Array.from(multielementslider).forEach(function (slider) {
+Array.from(multielementslider).forEach(function (slider) {
         noUiSlider.create(slider, {
             start: [20, 80],
             connect: true,
@@ -47,7 +47,7 @@ var resultElement = document.getElementById('result');
 var sliders = document.getElementsByClassName('sliders');
 var colors = [0, 0, 0];
 if (sliders)
-    Array.from([].slice.call(sliders)).forEach(function (slider, index) {
+Array.from([].slice.call(sliders)).forEach(function (slider, index) {
 
         noUiSlider.create(slider, {
             start: 127,
@@ -382,7 +382,7 @@ function clickOnPip() {
     pipsSlider.noUiSlider.set(value);
 }
 if (pips)
-    Array.from(pips).forEach(function (ele) {
+Array.from(pips).forEach(function (ele) {
         // For this example. Do this in CSS!
         ele.style.cursor = 'pointer';
         ele.addEventListener('click', clickOnPip);

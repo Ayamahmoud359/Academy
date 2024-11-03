@@ -9,7 +9,7 @@ File: Coming soon Init Js File
 document.addEventListener('DOMContentLoaded', function () {
 
     // Set the date we're counting down to
-    var countDownDate = new Date("Jan 1, 2025").getTime();
+    var countDownDate = new Date("Jan 1, 2023").getTime();
 
     // Update the count down every 1 second
     var countDown = setInterval(function () {

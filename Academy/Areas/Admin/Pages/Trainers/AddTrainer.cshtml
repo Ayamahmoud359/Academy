@@ -1,6 +1,7 @@
 ﻿@page
 @model Academy.Areas.Admin.Pages.AddTrainer.IndexModel
-
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @{
     ViewBag.Title = "Add Trainer";
     ViewBag.pTitle = "Add Trainer";
@@ -19,7 +20,7 @@
             <div class="card-body">
                 <div class="live-preview">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <form method="post">
+                    <form method="post" onsubmit="return validateForm()">
                         
                         <div class="mb-3">
                             <label asp-for="@Model.Trainer.TrainerName" class="form-label">Trainer Name</label>
@@ -62,13 +63,8 @@
                             <span asp-validation-for="@Model.Trainer.DepartmentId" class="text-danger"></span>
                         </div><!--end col-->
 
-                        <div class="mb-3">
-                            <label class="form-label" asp-for="@Model.Trainer.DepartmentId">Department</label>
-                            <select onchange="GetDepartmentCategories(this.value)" asp-for="@Model.Trainer.DepartmentId" asp-items="@(new SelectList(Model.Departments, "DepartmentId", "DepartmentNameEN"))" class="form-select" data-choices data-choices-sorting="true" id="inlineFormSelectPref">
-                                <option selected disabled>Choose...</option>
-
-                            </select>
-                            <span asp-validation-for="@Model.Trainer.DepartmentId" class="text-danger"></span>
+                        <div class="mb-3" id="CategoryDepartmentId">
+                            <partial name="_categories" model="@Model.categories"   />
                         </div><!--end col-->
 
                         <div class="mb-3">
@@ -109,7 +105,7 @@
 
 <script src="~/pages/AddTrainer.js"></script>
 
-    <!-- prismjs plugin -->
+  @*   <!-- prismjs plugin -->
     <script src="~/assets/libs/prismjs/prism.js"></script>
 
     <script src="~/assets/js/app.js"></script>
@@ -120,4 +116,4 @@
 <script src="~/assets/js/pages/particles.app.js"></script>
 <!-- password-addon init -->
 <script src="~/assets/js/pages/password-addon.init.js"></script>
- 
+  *@

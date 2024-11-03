@@ -161,7 +161,7 @@
     vertical-align: middle;
     width: 100%;
     background-color: $form-select-bg;
-    padding: 0.25rem calc($form-select-padding-x + $form-select-indicator-padding) 0.1rem 0.5rem;
+    padding: 0.25rem ($form-select-padding-x + $form-select-indicator-padding) 0.1rem 0.5rem;
     border: $form-select-border-width solid $form-select-border-color;
     border-radius: $form-select-border-radius !important;
     font-size: $input-font-size;
@@ -205,8 +205,8 @@
         margin-right: 3.75px;
         margin-bottom: 3.75px;
         margin-top: 2px;
-        background-color: var(--#{$prefix}primary);
-        border: 1px solid var(--#{$prefix}primary);
+        background-color: $primary;
+        border: 1px solid $primary;
         word-break: break-all;
         box-sizing: border-box;
         color: $white;
@@ -216,8 +216,8 @@
         }
 
         &.is-highlighted {
-            background-color: var(--#{$prefix}primary);
-            border: 1px solid var(--#{$prefix}primary);
+            background-color: $primary;
+            border: 1px solid $primary;
         }
     }
 }
@@ -226,8 +226,8 @@
 .is-disabled {
     .choices__list--multiple {
         .choices__item {
-            background-color: var(--#{$prefix}secondary);
-            border: 1px solid var(--#{$prefix}secondary)
+            background-color: $secondary;
+            border: 1px solid $secondary
         }
     }
 }
@@ -237,7 +237,7 @@
     z-index: 1;
     position: absolute;
     width: 100%;
-    background-color: var(--#{$prefix}secondary-bg);
+    background-color: var(--#{$prefix}choices-bg);
     border: 1px solid var(--#{$prefix}border-color);
     box-shadow: $dropdown-box-shadow;
     top: 100%;
@@ -257,7 +257,7 @@
     }
 
     .choices__item--selectable.is-highlighted {
-        background-color: var(--#{$prefix}tertiary-bg);
+        background-color: var(--#{$prefix}choices-link-hover-bg);
     }
 
     .choices__list {
@@ -355,8 +355,8 @@
     font-weight: $font-weight-semibold;
     font-size: 12px;
     padding: 10px 16px;
-    border-bottom: 1px solid var(--#{$prefix}border-color);
-    color: var(--#{$prefix}secondary-color);
+    border-bottom: 1px solid $border-color;
+    color: $text-muted;
 }
   
 .choices__button {
@@ -397,7 +397,7 @@
 }
 
 
-[data-bs-theme="dark"]{
+[data-layout-mode="dark"]{
     .choices[data-type*=select-one]{
         .choices__button{
             filter: $btn-close-white-filter;

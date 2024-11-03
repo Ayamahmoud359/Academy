@@ -11,37 +11,21 @@ if (document.getElementById("table-gridjs"))
     new gridjs.Grid({
         columns: [{
                 name: 'ID',
-                width: '80px',
                 formatter: (function (cell) {
                     return gridjs.html('<span class="fw-semibold">' + cell + '</span>');
                 })
             },
-            {
-                name: 'Name',
-                width: '150px',
-            },
+            "Name",
             {
                 name: 'Email',
-                width: '220px',
                 formatter: (function (cell) {
                     return gridjs.html('<a href="">' + cell + '</a>');
                 })
             },
-            {
-                name: 'Position',
-                width: '250px',
-            },
-            {
-                name: 'Company',
-                width: '180px',
-            },
-            {
-                name: 'Country',
-                width: '180px',
-            },
+            "Position", "Company", "Country",
             {
                 name: 'Actions',
-                width: '150px',
+                width: '120px',
                 formatter: (function (cell) {
                     return gridjs.html("<a href='#' class='text-reset text-decoration-underline'>" +
                         "Details" +
@@ -71,22 +55,7 @@ if (document.getElementById("table-gridjs"))
 // card Table
 if (document.getElementById("table-card"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '150px',
-        },{
-            name: 'Email',
-            width: '250px',
-        }, {
-            name: 'Position',
-            width: '250px',
-        }, {
-            name: 'Company',
-            width: '250px',
-        }, {
-            name: 'Country',
-            width: '150px',
-        }],
+        columns: ["Name", "Email", "Position", "Company", "Country"],
         sort: true,
         pagination: {
             limit: 5
@@ -115,19 +84,7 @@ if (document.getElementById("table-pagination"))
                 formatter: (function (cell) {
                     return gridjs.html('<a href="" class="fw-medium">' + cell + '</a>');
                 })
-            }, {
-                name: 'Name',
-                width: '150px',
-            }, {
-                name: 'Date',
-                width: '180px',
-            }, {
-                name: 'Total',
-                width: '120px',
-            }, {
-                name: 'Status',
-                width: '120px',
-            },
+            }, "Name", "Date", "Total", "Status",
             {
                 name: 'Actions',
                 width: '100px',
@@ -159,22 +116,7 @@ if (document.getElementById("table-pagination"))
 // search Table
 if (document.getElementById("table-search"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '150px',
-        }, {
-            name: 'Email',
-            width: '250px',
-        }, {
-            name: 'Position',
-            width: '250px',
-        }, {
-            name: 'Company',
-            width: '250px',
-        }, {
-            name: 'Country',
-            width: '150px',
-        }],
+        columns: ["Name", "Email", "Position", "Company", "Country"],
         pagination: {
             limit: 5
         },
@@ -196,22 +138,7 @@ if (document.getElementById("table-search"))
 // Sorting Table
 if (document.getElementById("table-sorting"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '150px',
-        }, {
-            name: 'Email',
-            width: '250px',
-        }, {
-            name: 'Position',
-            width: '250px',
-        }, {
-            name: 'Company',
-            width: '250px',
-        }, {
-            name: 'Country',
-            width: '150px',
-        }],
+        columns: ["Name", "Email", "Position", "Company", "Country"],
         pagination: {
             limit: 5
         },
@@ -234,22 +161,7 @@ if (document.getElementById("table-sorting"))
 // Loading State Table
 if (document.getElementById("table-loading-state"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '150px',
-        }, {
-            name: 'Email',
-            width: '250px',
-        }, {
-            name: 'Position',
-            width: '250px',
-        }, {
-            name: 'Company',
-            width: '250px',
-        }, {
-            name: 'Country',
-            width: '150px',
-        }],
+        columns: ["Name", "Email", "Position", "Company", "Country"],
         pagination: {
             limit: 5
         },
@@ -278,22 +190,7 @@ if (document.getElementById("table-loading-state"))
 // Fixed Header
 if (document.getElementById("table-fixed-header"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '150px',
-        }, {
-            name: 'Email',
-            width: '250px',
-        }, {
-            name: 'Position',
-            width: '250px',
-        }, {
-            name: 'Company',
-            width: '250px',
-        }, {
-            name: 'Country',
-            width: '150px',
-        }],
+        columns: ["Name", "Email", "Position", "Company", "Country"],
         sort: true,
         pagination: true,
         fixedHeader: true,
@@ -316,19 +213,7 @@ if (document.getElementById("table-fixed-header"))
 // Hidden Columns
 if (document.getElementById("table-hidden-column"))
     new gridjs.Grid({
-        columns: [{
-            name: 'Name',
-            width: '120px',
-        }, {
-                name: 'Email',
-                width: '250px',
-            }, {
-                name: 'Position',
-                width: '250px',
-            }, {
-                name: 'Company',
-                width: '250px',
-            },
+        columns: ["Name", "Email", "Position", "Company",
             {
                 name: 'Country',
                 hidden: true
