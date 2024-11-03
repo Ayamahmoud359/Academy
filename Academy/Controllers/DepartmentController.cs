@@ -18,11 +18,12 @@ namespace Academy.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
+        public async Task<IActionResult> GetDepartments(DataSourceLoadOptions loadOptions)
         {
             var assets = _context.Departments.Select(i => new
             {
                 i.DepartmentNameAR,
+                
                 i.DepartmentId
 
 

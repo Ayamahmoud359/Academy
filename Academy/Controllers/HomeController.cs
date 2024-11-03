@@ -9,14 +9,14 @@ namespace Academy.Controllers
     [ApiExplorerSettings(IgnoreApi = true)]
     public class HomeController : Controller
     {
-        private readonly AcademyContext _context;
+       private readonly AcademyContext _context;
 
         public HomeController(AcademyContext context)
         {
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> Get(DataSourceLoadOptions loadOptions)
+        public async Task<IActionResult> GetDepartments(DataSourceLoadOptions loadOptions)
         {
             var assets = _context.Departments.Select(i => new
             {
