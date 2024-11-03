@@ -23,8 +23,6 @@ namespace Academy.Controllers
                 i.DepartmentNameAR,
                 i.DepartmentId,
                 i.BranchId
-
-
             });
             return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
 

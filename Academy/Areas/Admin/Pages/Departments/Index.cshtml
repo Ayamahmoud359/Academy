@@ -1,12 +1,9 @@
 ﻿@page
 @model Academy.Areas.Admin.Pages.Departments.IndexModel
 @{
-    Layout = "~/Pages/Shared/_DevExtremeLayout.cshtml";
+    
 }
 
-
-
-          
                                 @(Html.DevExtreme().DataGrid<Department>()
                                     .ID("grid")
                                     .DataSource(ds => ds.Mvc()
@@ -17,28 +14,28 @@
                                 .DeleteAction("Delete") *@
                                     .Key("DepartmentId")
                                     )
-                                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                                    @*.Selection(s => s
+                                   .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                    .Selection(s => s
                                 .Mode(SelectionMode.Multiple)
-                                )*@
-                                    @*.ColumnChooser(cc => cc.Enabled(true))*@
+                                )
+                                    .ColumnChooser(cc => cc.Enabled(true))
                                     .ColumnAutoWidth(true)
-                                    //.WordWrapEnabled(true)
+                                   .WordWrapEnabled(true)
                                     .ShowBorders(true)
-                                    .Paging(p => p.PageSize(10))
+                                   .Paging(p => p.PageSize(10))
                                     .Pager(p => p.ShowPageSizeSelector(true).AllowedPageSizes(new[] { 10, 20, 40, 80 }))
                                     .SearchPanel(s => s.Visible(true).HighlightCaseSensitive(true))
                                     .FilterRow(filterRow => filterRow
                                     .Visible(true)
-                                    .ApplyFilter(GridApplyFilterMode.Auto)
-                                    )
-                                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                    .ApplyFilter(GridApplyFilterMode.Auto) 
+                                   )
+                                   .HeaderFilter(headerFilter => headerFilter.Visible(true))
 
                                     .Columns(columns =>
                                     {
 
 
-                                        columns.AddFor(m => m.DepartmentNameAR).Width(100)
+                                        columns.AddFor(m => m.DepartmentNameAR)
                                         .AllowFiltering(false)
                                         .AllowSorting(false)
                                         @* .CellTemplate(@<text>
@@ -50,9 +47,6 @@
 
 
                                     })
-
-
-
 
                                     .RemoteOperations(true)@* .Columns(columns =>
                                 {
