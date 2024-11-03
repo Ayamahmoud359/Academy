@@ -1,4 +1,4 @@
-﻿using CRM.Data;
+﻿using Academy.Data;
 using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Mvc;
 using Microsoft.AspNetCore.Mvc;
