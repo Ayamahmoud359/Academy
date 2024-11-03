@@ -4,7 +4,7 @@
     
 }
 
-                                @(Html.DevExtreme().DataGrid<Department>()
+                            @(Html.DevExtreme().DataGrid<Department>()
                                     .ID("grid")
                                     .DataSource(ds => ds.Mvc()
                                     .Controller("Home")
@@ -48,7 +48,7 @@
 
                                     })
 
-                                    .RemoteOperations(true)@* .Columns(columns =>
+                                    .RemoteOperations(true).Columns(columns =>
                                 {
                                 columns.Add().Width(160).Alignment(HorizontalAlignment.Center)
                                 .CellTemplate(@<text>
@@ -56,6 +56,7 @@
                                 @Html.DevExtreme().Button().Text("View").OnClick("function (e) { viewButtonClick(data) }")
                                 </text>);
 
-                                }) *@
+                                })
 
+                                    )
                                     )
