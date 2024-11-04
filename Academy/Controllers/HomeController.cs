@@ -1,6 +1,5 @@
 ﻿using Academy.Data;
-using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Mvc;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Academy.Controllers
@@ -15,18 +14,19 @@ namespace Academy.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public async Task<IActionResult> GetDepartments(DataSourceLoadOptions loadOptions)
-        {
-            var assets = _context.Departments.Select(i => new
-            {
-                i.DepartmentNameAR,
-                i.DepartmentId,
-                i.BranchId
-            });
-            return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
+        //[HttpGet]
+        //public async Task<IActionResult> GetDepartments(DataSourceLoadOptions loadOptions)
+        //{
+        //    var assets = _context.Departments.Select(i => new
+        //    {
+        //        i.DepartmentNameAR,
+        //        i.DepartmentId,
+        //        i.BranchId
+        //    });
+        //    return Json(await DataSourceLoader.LoadAsync(assets, loadOptions));
 
 
-        }
+        //}
+   
     }
 }
