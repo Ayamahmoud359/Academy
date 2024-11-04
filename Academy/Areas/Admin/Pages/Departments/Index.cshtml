@@ -42,7 +42,7 @@
 
                         @Html.DevExtreme().Button().Text("Delete")
                         @Html.DevExtreme().Button().Text("View")
-                        @Html.DevExtreme().Button().Text("Add Category")
+                        @Html.DevExtreme().Button().Text("Add Category").OnClick("function (e) { editButtonClick() }" )
                     </div>
                 </text>);
                     })
